@@ -18,21 +18,35 @@ class HomeHeader: UICollectionReusableView {
         super.awakeFromNib()
         
         thumbnail.layer.masksToBounds = true
-        thumbnail.layer.cornerRadius = 20
+        thumbnail.layer.cornerRadius = 25
+        moreButton.layer.borderWidth = 1
+        moreButton.layer.borderColor = CGColor(gray: 0.5, alpha: 0.5)
+        moreButton.layer.cornerRadius = 12
     }
     
     func configure(section: String) {
         switch section {
         case "Listen Again":
             nameLabel.text = "김태형"
+            moreButton.isHidden = false
+            thumbnail.isHidden = false
+            sectionTitleLabel.text = section
+
         case "Quick Selection":
             nameLabel.text = "이 노래로 뮤직 스테이션 시작하기"
             moreButton.isHidden = true
             thumbnail.isHidden = true
+            sectionTitleLabel.text = section
+
+        case "My Music Station":
+            nameLabel.text = "뮤직 스테이션 만들기"
+            moreButton.isHidden = true
+            thumbnail.isHidden = true
+            sectionTitleLabel.text = section
+
         default:
             break
         }
-        sectionTitleLabel.text = section
     }
 }
 

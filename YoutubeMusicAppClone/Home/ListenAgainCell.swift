@@ -15,7 +15,8 @@ class ListenAgainCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        thumbnailImageView.layer.cornerRadius = 5
+        thumbnailImageView.layer.cornerRadius = 4
+        
     }
     
     func configure(item: ListenAgain) {

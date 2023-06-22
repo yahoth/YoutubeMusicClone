@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar Controller-->
         <scene sceneID="vuk-Df-5mF">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="qjy-Vc-ETi" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="qjy-Vc-ETi" customClass="MainTabBarController" customModule="YoutubeMusicAppClone" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7Ie-fb-Efy">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -49,7 +49,7 @@
         <!--홈-->
         <scene sceneID="6Mr-iR-9Dg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ecf-H8-XAF" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ecf-H8-XAF" customClass="HomeNavigationController" customModule="YoutubeMusicAppClone" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="홈" image="home" landscapeImage="home" id="9EG-VU-Svz"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WtY-ST-RqM">
