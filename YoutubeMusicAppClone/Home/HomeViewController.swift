@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 class HomeViewController: UIViewController {
-/// Data: Snapshot, Presentation: Diffable, Layout: Compositional
+    /// Data: Snapshot, Presentation: Diffable, Layout: Compositional
     @IBOutlet weak var collectionView: UICollectionView!
     
     var datasource: UICollectionViewDiffableDataSource<Section, Item>!
@@ -38,6 +38,41 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureCollectionView()
+        bind()
+        navigationItem.backButtonDisplayMode = .minimal
+        updateNavigationItem()
+        setNavigationBarlogo()
+    }
+    
+    private func setNavigationBarlogo() {
+        let logoImage = UIImage(named: "logo")
+        let logoImageView = UIImageView(image: logoImage)
+        logoImageView.frame = CGRect(x: -12, y: 0, width: 80, height: 44)
+        logoImageView.contentMode = .scaleAspectFit
+        let logoView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 44))
+        logoView.clipsToBounds = false
+        logoView.addSubview(logoImageView)
+        let logoItem = UIBarButtonItem(customView: logoView)
+        navigationItem.leftBarButtonItem = logoItem
+    }
+    
+    private func updateNavigationItem() {
+        let connectConfig = CustomBarItemConfiguration(image: UIImage(named: "connect"), handler: {print("connect") })
+        let connectItem = UIBarButtonItem.generate(config: connectConfig, width: 30)
+        
+        let searchConfig = CustomBarItemConfiguration(image: UIImage(systemName: "magnifyingglass"), handler: {print("search") })
+        let searchItem = UIBarButtonItem.generate(config: searchConfig, width: 30, height: 30)
+        
+        let nameConfig = CustomBarItemConfiguration(title: "태형", handler: {print("태형")})
+        let nameItem = UIBarButtonItem.generate(config: nameConfig, width: 28, height: 28)
+        
+        nameItem.customView?.backgroundColor = .systemTeal
+        nameItem.customView?.layer.cornerRadius = 14
+        navigationItem.rightBarButtonItems = [nameItem, searchItem, connectItem]
+    }
+    
+    private func configureCollectionView() {
         datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
             guard let section = Section(rawValue: indexPath.section) else { return nil }
             
@@ -62,9 +97,8 @@ class HomeViewController: UIViewController {
         
         collectionView.collectionViewLayout = layout()
         collectionView.delegate = self
-        
-        bind()
     }
+    
     private func configureCell(section: Section, item: Item, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell? {
         switch section {
         case .listenAgain:
@@ -84,7 +118,7 @@ class HomeViewController: UIViewController {
                 return nil
             }
         case .myStation:
-            if let item = item as? MyStation {
+            if item is MyStation {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyStationCell", for: indexPath) as! MyStationCell
                 return cell
             } else {
@@ -92,7 +126,6 @@ class HomeViewController: UIViewController {
             }
         }
     }
-    
     private func bind() {
         didSelect
             .receive(on: RunLoop.main)
@@ -102,7 +135,7 @@ class HomeViewController: UIViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }.store(in: &subscriptions)
     }
-
+    
     private func layout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             switch sectionIndex {
@@ -153,10 +186,12 @@ class HomeViewController: UIViewController {
                 return section
             case 2:
                 let padding: CGFloat = 20
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.5))
+                let sectionWidth = self.collectionView.bounds.size.width - (2 * padding)
+                let sectionHeight = sectionWidth / 2
+                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(sectionWidth), heightDimension: .absolute(sectionHeight))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.5))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(sectionWidth), heightDimension: .absolute(sectionHeight))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: 50, trailing: padding)
@@ -171,8 +206,7 @@ class HomeViewController: UIViewController {
             default: return nil
             }
         }
-        layout.configuration.interSectionSpacing = 100
-        //        let layout = UICollectionViewCompositionalLayout(section: section)
+        
         return layout
     }
 }
@@ -182,4 +216,14 @@ extension HomeViewController: UICollectionViewDelegate {
         let item = items[indexPath.item]
         didSelect.send(item)
     }
+    
+    //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    //        if scrollView.contentOffset.y > 0 {
+    //            // 스크롤이 발생한 경우 네비게이션 바 숨기기
+    //            navigationController?.setNavigationBarHidden(true, animated: true)
+    //        } else {
+    //            // 스크롤이 맨 위로 돌아온 경우 네비게이션 바 표시
+    //            navigationController?.setNavigationBarHidden(false, animated: true)
+    //        }
+    //    }
 }

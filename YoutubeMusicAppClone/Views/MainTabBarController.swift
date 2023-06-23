@@ -11,8 +11,19 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.backButtonDisplayMode = .minimal
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        print(self.selectedViewController!)
+        delegate = self
+        
+        
+    }
+}
 
+extension MainTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        print(viewController)
+    }
 }

@@ -138,7 +138,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="209"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mystation" translatesAutoresizingMaskIntoConstraints="NO" id="PXv-Av-pWP">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mystation" translatesAutoresizingMaskIntoConstraints="NO" id="PXv-Av-pWP">
                                                     <rect key="frame" x="0.0" y="0.0" width="430" height="209"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="PXv-Av-pWP" secondAttribute="height" multiplier="2:1" id="vHo-3S-zLN"/>
@@ -167,7 +167,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="태형" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Zd-zO-zes">
                                                     <rect key="frame" x="0.0" y="0.0" width="59" height="59"/>
-                                                    <color key="backgroundColor" red="0.87843137979999997" green="0.65882354970000001" blue="0.74901962280000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="backgroundColor" systemColor="systemTealColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="6Zd-zO-zes" secondAttribute="height" multiplier="1:1" id="Pal-Ub-QU8"/>
                                                         <constraint firstAttribute="height" constant="50" id="mkA-fk-r2F"/>
@@ -254,7 +254,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1023" y="1471"/>
+            <point key="canvasLocation" x="-1024.1860465116279" y="1470.3862660944208"/>
         </scene>
     </scenes>
     <resources>
@@ -263,6 +263,9 @@
         <image name="mystation" width="1852" height="876"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

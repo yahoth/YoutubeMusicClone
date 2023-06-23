@@ -15,5 +15,6 @@ class BrowseViewController: UIViewController {
         super.viewDidLoad()
 
         label = nil
-    }
+        
+    }    
 }
