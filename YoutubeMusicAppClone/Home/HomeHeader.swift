@@ -24,25 +24,31 @@ class HomeHeader: UICollectionReusableView {
         moreButton.layer.cornerRadius = 12
     }
     
-    func configure(section: String) {
-        switch section {
-        case "Listen Again":
+    func configure(sectionIndex: Int) {
+        switch sectionIndex {
+        case 0:
             nameLabel.text = "김태형"
             moreButton.isHidden = false
             thumbnail.isHidden = false
-            sectionTitleLabel.text = section
+            sectionTitleLabel.text = "Listen Again"
 
-        case "Quick Selection":
+        case 1:
             nameLabel.text = "이 노래로 뮤직 스테이션 시작하기"
             moreButton.isHidden = true
             thumbnail.isHidden = true
-            sectionTitleLabel.text = section
+            sectionTitleLabel.text = "Quick Selection"
 
-        case "My Music Station":
+        case 2:
             nameLabel.text = "뮤직 스테이션 만들기"
             moreButton.isHidden = true
             thumbnail.isHidden = true
-            sectionTitleLabel.text = section
+            sectionTitleLabel.text = "My Music Station"
+            
+        case 3:
+            nameLabel.text = ""
+            moreButton.isHidden = false
+            thumbnail.isHidden = true
+            sectionTitleLabel.text = "Custom Mix"
 
         default:
             break

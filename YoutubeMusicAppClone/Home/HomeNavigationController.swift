@@ -17,5 +17,4 @@ class HomeNavigationController: UINavigationController {
         navigationBar.backIndicatorTransitionMaskImage = backImage
         navigationBar.tintColor = .white
     }
-    
 }
