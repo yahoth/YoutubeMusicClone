@@ -9,7 +9,6 @@ import UIKit
 import Combine
 
 class HomeViewController: UIViewController {
-    /// Data: Snapshot, Presentation: Diffable, Layout: Compositional
     @IBOutlet weak var collectionView: UICollectionView!
     
     var datasource: UICollectionViewDiffableDataSource<Section, Item>!
@@ -20,24 +19,10 @@ class HomeViewController: UIViewController {
         case myStation
         case customMix
         case playlistCard
-        
-        var title: String {
-            switch self {
-            case .listenAgain: return "Listen Agian"
-            case .quickSelection: return "Quick Selection"
-            case .myStation: return "My Music Station"
-            case .customMix: return "Custom Mix"
-            case .playlistCard: return "Playlist"
-            }
-        }
     }
     
-    let items = ListenAgain.mocks
-    let quickSelections = QuickSelection.mocks
-    let myStation = MyStation.mock
-    let customMix = CustomMix.mocks
-    let recommendList = RecommendList.mock
-    var didSelect = PassthroughSubject<Item, Never>()
+    var vm = HomeViewModel(networkConfig: .default)
+    
     var subscriptions = Set<AnyCancellable>()
     
     override func viewDidLoad() {
@@ -45,7 +30,10 @@ class HomeViewController: UIViewController {
         
         configureCollectionView()
         bind()
-        navigationItem.backButtonDisplayMode = .minimal
+        vm.fetch()
+        vm.fetchListenAgain()
+
+        vm.fetchData()
         updateNavigationItem()
         setNavigationBarlogo()
     }
@@ -75,6 +63,7 @@ class HomeViewController: UIViewController {
         nameItem.customView?.backgroundColor = .systemTeal
         nameItem.customView?.layer.cornerRadius = 14
         navigationItem.rightBarButtonItems = [nameItem, searchItem, connectItem]
+        navigationItem.backButtonDisplayMode = .minimal
     }
     
     private func configureCollectionView() {
@@ -88,8 +77,7 @@ class HomeViewController: UIViewController {
         
         datasource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HomeHeader", for: indexPath) as? HomeHeader else { return nil }
-//            let allSection = Section.allCases
-//            let section = allSection[indexPath.section]
+            
             let sectionIndex = Section(rawValue: indexPath.section)!.rawValue
             header.configure(sectionIndex: sectionIndex)
             return header
@@ -97,18 +85,57 @@ class HomeViewController: UIViewController {
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections(Section.allCases)
-        snapshot.appendItems(items, toSection: .listenAgain)
-        snapshot.appendItems(quickSelections, toSection: .quickSelection)
-        snapshot.appendItems([myStation], toSection: .myStation)
-        snapshot.appendItems(customMix, toSection: .customMix)
-        snapshot.appendItems([recommendList], toSection: .playlistCard)
+        snapshot.appendItems([], toSection: .listenAgain)
+        snapshot.appendItems([], toSection: .quickSelection)
+        snapshot.appendItems([], toSection: .myStation)
+        snapshot.appendItems([], toSection: .customMix)
+        snapshot.appendItems([], toSection: .playlistCard)
         datasource.apply(snapshot)
         
         collectionView.collectionViewLayout = layout()
         collectionView.delegate = self
     }
     
+    private func applySnapshot(to section: Section, items: [AnyHashable]) {
+        var snapshot = datasource.snapshot()
+        snapshot.appendItems(items, toSection: section)
+        datasource.apply(snapshot)
+    }
+    
+    private func bind() {
+        vm.agains
+            .receive(on: RunLoop.main)
+            .sink { items in
+                self.applySnapshot(to: .listenAgain, items: items)
+            }.store(in: &subscriptions)
+        vm.quickSelections
+            .receive(on: RunLoop.main)
+            .sink { items in
+                self.applySnapshot(to: .quickSelection, items: items)
+            }.store(in: &subscriptions)
+        vm.myStation
+            .receive(on: RunLoop.main)
+            .sink { item in
+                self.applySnapshot(to: .myStation, items: [item])
+            }.store(in: &subscriptions)
+        
+        vm.customMixes
+            .receive(on: RunLoop.main)
+            .sink { items in
+                self.applySnapshot(to: .customMix, items: items)
+            }.store(in: &subscriptions)
+        
+        vm.cardPlayList
+            .receive(on: RunLoop.main)
+            .sink { item in
+                self.applySnapshot(to: .playlistCard, items: [item])
+            }.store(in: &subscriptions)
+        
+        
+    }
+    
     private func configureCell(section: Section, item: Item, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell? {
+        
         switch section {
         case .listenAgain:
             if let item = item as? ListenAgain {
@@ -134,17 +161,17 @@ class HomeViewController: UIViewController {
                 return nil
             }
         case .customMix:
-            if let item = item as? CustomMix {
+            if let item = item as? PlayList {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMixCell", for: indexPath) as! CustomMixCell
                 cell.configure(item: item)
                 return cell
             } else {
                 return nil
             }
-
+            
         case .playlistCard:
-            if let item = item as? RecommendList {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistCardCell", for: indexPath) as! PlaylistCardCell
+            if let item = item as? CardPlayList {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistCardCell", for: indexPath) as! CardPlayListCell
                 cell.configure(item: item)
                 return cell
             } else {
@@ -152,35 +179,26 @@ class HomeViewController: UIViewController {
             }
         }
     }
-    private func bind() {
-        didSelect
-            .receive(on: RunLoop.main)
-            .sink { item in
-                let storyboad = UIStoryboard(name: "Detail", bundle: nil)
-                let vc = storyboad.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-                self.navigationController?.pushViewController(vc, animated: true)
-            }.store(in: &subscriptions)
-    }
+    
     
     private func layout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
             switch sectionIndex {
+                
             case 0:
                 let padding: CGFloat = 20
                 let interGroupSpacing: CGFloat = 16
                 let itemWidth = (self.collectionView.bounds.size.width - (2 * padding) - (2 * interGroupSpacing)) / 3
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(150))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                
                 let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(380))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 2)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 30, trailing: 0)
-                
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = interGroupSpacing
                 section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: 20, trailing: padding)
                 section.orthogonalScrollingBehavior = .continuous
-                
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .absolute(50))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
@@ -188,7 +206,7 @@ class HomeViewController: UIViewController {
                                                                          alignment: .top)
                 section.boundarySupplementaryItems = [header]
                 return section
-            
+                
             case 1:
                 let paddig: CGFloat = 20
                 let interGroupSpacing: CGFloat = 16
@@ -196,7 +214,6 @@ class HomeViewController: UIViewController {
                 let itemWidth: CGFloat = self.collectionView.bounds.size.width - (paddig * 2)
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(100))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                
                 let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(300))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 4)
                 group.interItemSpacing = .fixed(interItemSpacing)
@@ -217,12 +234,10 @@ class HomeViewController: UIViewController {
                 let sectionHeight = sectionWidth / 2
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(sectionWidth), heightDimension: .absolute(sectionHeight))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                
                 let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(sectionWidth), heightDimension: .absolute(sectionHeight))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: 50, trailing: padding)
-                
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .absolute(50))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
@@ -233,22 +248,17 @@ class HomeViewController: UIViewController {
             case 3:
                 let padding: CGFloat = 20
                 let interItemSpacing: CGFloat = 16
-                
                 let groupWidth = self.collectionView.bounds.size.width - padding * 2
                 let itemWidth = (groupWidth - interItemSpacing) / 2
-                
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                
-                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(groupWidth), heightDimension: .fractionalHeight(0.5))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(groupWidth), heightDimension: .estimated(itemWidth + 100))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
-                
                 group.interItemSpacing = .fixed(interItemSpacing)
-                
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 16
                 section.orthogonalScrollingBehavior = .continuous
-                section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: padding, trailing: padding)
+                section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: 50, trailing: padding)
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .absolute(50))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
@@ -259,16 +269,16 @@ class HomeViewController: UIViewController {
                 
             case 4:
                 let padding: CGFloat = 20
-//                let sectionWidth = self.collectionView.bounds.size.width - (2 * padding)
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(520))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
                 let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .none
                 section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: padding, trailing: padding)
-
                 return section
+                
             default: return nil
             }
         }
@@ -278,17 +288,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = items[indexPath.item]
-        didSelect.send(item)
+        let item = datasource.itemIdentifier(for: indexPath)
+        print(item)
     }
-    
-    //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    //        if scrollView.contentOffset.y > 0 {
-    //            // 스크롤이 발생한 경우 네비게이션 바 숨기기
-    //            navigationController?.setNavigationBarHidden(true, animated: true)
-    //        } else {
-    //            // 스크롤이 맨 위로 돌아온 경우 네비게이션 바 표시
-    //            navigationController?.setNavigationBarHidden(false, animated: true)
-    //        }
-    //    }
 }

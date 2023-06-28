@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlaylistCardCell: UICollectionViewCell {
+class CardPlayListCell: UICollectionViewCell {
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -54,7 +54,7 @@ class PlaylistCardCell: UICollectionViewCell {
         addPlaylistButton.layer.borderColor = CGColor(gray: 0.5, alpha: 0.5)
     }
     
-    func configure(item: RecommendList) {
+    func configure(item: CardPlayList) {
         thumbnailImageView.image = UIImage(named: item.imageName)
         titleLabel.text = item.title
         recommenderLabel.text = item.recommender

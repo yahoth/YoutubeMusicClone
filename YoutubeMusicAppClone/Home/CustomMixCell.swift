@@ -6,15 +6,23 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CustomMixCell: UICollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var artistsLabel: UILabel!
     
-    func configure(item: CustomMix) {
-        thumbnailImageView.image = UIImage(named: item.imageName)
-        titleLabel.text = item.title
-        artistsLabel.text = item.artists
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        thumbnailImageView.layer.cornerRadius = 5
+    }
+    
+    func configure(item: PlayList) {
+        let url = URL(string: item.images[0].url)
+        thumbnailImageView.kf.setImage(with: url)
+        titleLabel.text = item.name
+        artistsLabel.text = item.description
     }
 }
