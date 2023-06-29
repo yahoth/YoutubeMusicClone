@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CardPlayListCell: UICollectionViewCell {
+class PlaylistCardCell: UICollectionViewCell {
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -33,17 +33,15 @@ class CardPlayListCell: UICollectionViewCell {
     
     
     override func awakeFromNib() {
-
         self.layer.cornerRadius = 20
-     setupUI()
+        setupUI()
     }
     
     private func setupUI() {
-        
-        thumbnailImageView.layer.cornerRadius = 5
-        firstAlbumImageView.layer.cornerRadius = 5
-        secondAlbumImageView.layer.cornerRadius = 5
-        thirdAlbumImageView.layer.cornerRadius = 5
+        thumbnailImageView.layer.cornerRadius = 4
+        firstAlbumImageView.layer.cornerRadius = 4
+        secondAlbumImageView.layer.cornerRadius = 4
+        thirdAlbumImageView.layer.cornerRadius = 4
 
         playButton.layer.cornerRadius = 30
         shuffleButton.layer.cornerRadius = 30
@@ -54,24 +52,25 @@ class CardPlayListCell: UICollectionViewCell {
         addPlaylistButton.layer.borderColor = CGColor(gray: 0.5, alpha: 0.5)
     }
     
-    func configure(item: CardPlayList) {
-        thumbnailImageView.image = UIImage(named: item.imageName)
+    func configure(item: PlaylistCard) {
+        
+        thumbnailImageView.kf.setImage(with: URL(string: item.imageName))
         titleLabel.text = item.title
-        recommenderLabel.text = item.recommender
-        listCountLabel.text = "노래 \(item.list.count)곡"
+        recommenderLabel.text = "YouTube Music"
+        listCountLabel.text = "노래 \(item.tracks.count)곡"
         descriptionLabel.text = item.description
         
-        firstAlbumImageView.image = UIImage(named: item.list[0].imageName)
-        firstAlbumTitleLabel.text = item.list[0].title
-        firstSubTitleLabel.text = item.list[0].subTitle
+        firstAlbumImageView.kf.setImage(with: URL(string: item.tracks[0].imageName))
+        firstAlbumTitleLabel.text = item.tracks[0].title
+        firstSubTitleLabel.text = item.tracks[0].subTitle
         
-        secondAlbumImageView.image = UIImage(named: item.list[1].imageName)
-        secondAlbumTitleLabel.text = item.list[1].title
-        secondSubTitleLabel.text = item.list[1].subTitle
+        secondAlbumImageView.kf.setImage(with: URL(string: item.tracks[1].imageName))
+        secondAlbumTitleLabel.text = item.tracks[1].title
+        secondSubTitleLabel.text = item.tracks[1].subTitle
         
-        thirdAlbumImageView.image = UIImage(named: item.list[2].imageName)
-        thirdAlbumTitleLabel.text = item.list[2].title
-        thirdSubTitleLabel.text = item.list[2].subTitle
+        thirdAlbumImageView.kf.setImage(with: URL(string: item.tracks[2].imageName))
+        thirdAlbumTitleLabel.text = item.tracks[2].title
+        thirdSubTitleLabel.text = item.tracks[2].subTitle
 
     }
 }

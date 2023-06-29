@@ -14,12 +14,12 @@ class QuickSelectionCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         thumbnailImageView.layer.cornerRadius = 4
     }
     
     func configure(item: QuickSelection) {
-        thumbnailImageView.image = UIImage(named: item.imageName)
+        let url = URL(string: item.imageName)
+        thumbnailImageView.kf.setImage(with: url)
         titleLabel.text = item.title
         artistLabel.text = item.artist
     }

@@ -13,7 +13,6 @@ class MyStationCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         imageView.layer.cornerRadius = 4
     }
     

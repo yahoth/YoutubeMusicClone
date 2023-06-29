@@ -30,10 +30,8 @@ class HomeViewController: UIViewController {
         
         configureCollectionView()
         bind()
+        vm.requestAccessToken()
         vm.fetch()
-        vm.fetchListenAgain()
-
-        vm.fetchData()
         updateNavigationItem()
         setNavigationBarlogo()
     }
@@ -125,13 +123,11 @@ class HomeViewController: UIViewController {
                 self.applySnapshot(to: .customMix, items: items)
             }.store(in: &subscriptions)
         
-        vm.cardPlayList
+        vm.playlistCard
             .receive(on: RunLoop.main)
             .sink { item in
                 self.applySnapshot(to: .playlistCard, items: [item])
             }.store(in: &subscriptions)
-        
-        
     }
     
     private func configureCell(section: Section, item: Item, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell? {
@@ -161,7 +157,7 @@ class HomeViewController: UIViewController {
                 return nil
             }
         case .customMix:
-            if let item = item as? PlayList {
+            if let item = item as? CustomMix {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMixCell", for: indexPath) as! CustomMixCell
                 cell.configure(item: item)
                 return cell
@@ -170,8 +166,8 @@ class HomeViewController: UIViewController {
             }
             
         case .playlistCard:
-            if let item = item as? CardPlayList {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistCardCell", for: indexPath) as! CardPlayListCell
+            if let item = item as? PlaylistCard {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistCardCell", for: indexPath) as! PlaylistCardCell
                 cell.configure(item: item)
                 return cell
             } else {
@@ -289,6 +285,5 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = datasource.itemIdentifier(for: indexPath)
-        print(item)
     }
 }

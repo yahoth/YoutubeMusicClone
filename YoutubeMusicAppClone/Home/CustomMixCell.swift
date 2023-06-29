@@ -15,11 +15,10 @@ class CustomMixCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         thumbnailImageView.layer.cornerRadius = 5
     }
     
-    func configure(item: PlayList) {
+    func configure(item: CustomMix) {
         let url = URL(string: item.images[0].url)
         thumbnailImageView.kf.setImage(with: url)
         titleLabel.text = item.name
