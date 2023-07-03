@@ -56,7 +56,6 @@ final class HomeViewModel {
       }
     }
 
-    
     @Published var accessToken = ""
     init(networkConfig: URLSessionConfiguration) {
         self.networkService = NetworkService(configuration: networkConfig)
@@ -94,6 +93,7 @@ final class HomeViewModel {
                 }
             } receiveValue: { token in
                 let accessToken = "\(token.tokenType) \(token.accessToken)"
+                self.accessToken = accessToken
                 self.fetchListenAgain(accessToken: accessToken)
                 self.fetchCustomMix(accessToken: accessToken)
                 self.fetchQuickSelection(accessToken: accessToken)

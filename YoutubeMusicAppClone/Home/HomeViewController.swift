@@ -52,7 +52,14 @@ class HomeViewController: UIViewController {
         let connectConfig = CustomBarItemConfiguration(image: UIImage(named: "connect"), handler: {print("connect") })
         let connectItem = UIBarButtonItem.generate(config: connectConfig, width: 30)
         
-        let searchConfig = CustomBarItemConfiguration(image: UIImage(systemName: "magnifyingglass"), handler: {print("search") })
+        let searchConfig = CustomBarItemConfiguration(image: UIImage(systemName: "magnifyingglass")) {
+            print("search")
+            let sb = UIStoryboard(name: "Search", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+            vc.vm = SearchViewModel(accessToken: self.vm.accessToken, networkConfig: .default)
+            print("accesstoken: \(self.vm.accessToken)")
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
         let searchItem = UIBarButtonItem.generate(config: searchConfig, width: 30, height: 30)
         
         let nameConfig = CustomBarItemConfiguration(title: "태형", handler: {print("태형")})
@@ -179,9 +186,7 @@ class HomeViewController: UIViewController {
     
     private func layout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
             switch sectionIndex {
-                
             case 0:
                 let padding: CGFloat = 20
                 let interGroupSpacing: CGFloat = 16
