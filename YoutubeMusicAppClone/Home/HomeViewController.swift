@@ -57,7 +57,6 @@ class HomeViewController: UIViewController {
             let sb = UIStoryboard(name: "Search", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
             vc.vm = SearchViewModel(accessToken: self.vm.accessToken, networkConfig: .default)
-            print("accesstoken: \(self.vm.accessToken)")
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let searchItem = UIBarButtonItem.generate(config: searchConfig, width: 30, height: 30)

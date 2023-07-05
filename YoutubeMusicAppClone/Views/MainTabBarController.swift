@@ -17,13 +17,11 @@ class MainTabBarController: UITabBarController {
         super.viewWillAppear(animated)
 //        print(self.selectedViewController!)
         delegate = self
-        
-        
     }
 }
 
 extension MainTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        print(viewController)
+//        print(viewController)
     }
 }

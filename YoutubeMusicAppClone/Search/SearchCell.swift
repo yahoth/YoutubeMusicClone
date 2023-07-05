@@ -9,7 +9,9 @@ import UIKit
 
 class SearchCell: UICollectionViewCell {
     
-    func configure(item: SearchResult) {
-        
+    @IBOutlet weak var searchResultLabel: UILabel!
+    
+    func configure(item: SearchResponse.TracksItems) {
+        searchResultLabel.text = "\(item.album.artists[0].name)  \(item.name)"
     }
 }

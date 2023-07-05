@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class SearchResultViewController: UIViewController {
 
@@ -13,19 +14,38 @@ class SearchResultViewController: UIViewController {
     
     var datasource: UICollectionViewDiffableDataSource<Section, Item>!
     
-    typealias Item = SearchResult
+    typealias Item = SearchResponse.TracksItems
     enum Section {
         case main
     }
+    var subscriptions = Set<AnyCancellable>()
+    var vm: SearchResultViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureCollectionView()
+        bind()
         embedSearchControl()
         setNavigationItem()
         collectionView.collectionViewLayout = layout()
     }
+    
+    private func bind() {
+//        vm.searchResults.receive(on: RunLoop.main)
+//            .sink { items in
+//                print(items)
+//                self.applySnapshot(items: items)
+//            }.store(in: &subscriptions)
+    }
+    
+    private func applySnapshot(items: [SearchResponse.TracksItems]) {
+        var snapshot = datasource.snapshot()
+        snapshot.deleteAllItems()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(items, toSection: .main)
+        datasource.apply(snapshot)
+    }
+    
     
     private func configureCollectionView() {
         datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
@@ -43,13 +63,15 @@ class SearchResultViewController: UIViewController {
     }
     
     private func embedSearchControl() {
-        let searchBar = UISearchBar()
-        searchBar.sizeToFit()
-        navigationItem.titleView = searchBar
+        let searchController = UISearchBar()
+        searchController.sizeToFit()
+        searchController.placeholder = "노래, 앨범, 아티스트 검색"
+        searchController.text = vm.keyword
+        navigationItem.titleView = searchController
+//        searchController.delegate = self
     }
     
     private func setNavigationItem() {
-        
         let voiceSearchConfig = CustomBarItemConfiguration(
             image: UIImage(systemName: "mic.fill"),
             handler: {print("voice search")}

@@ -18,9 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vIM-sh-r7s">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vIM-sh-r7s">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Mk6-Le-r06">
                                     <size key="itemSize" width="393" height="67"/>
@@ -41,12 +40,16 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="I2W-cq-8hP">
                                                             <rect key="frame" x="0.0" y="1" width="30" height="65.333333333333329"/>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="30" id="Xg4-C8-8Bc"/>
+                                                                <constraint firstAttribute="width" constant="30" id="ysB-VH-EhJ"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BLl-qc-B4e">
                                                             <rect key="frame" x="50" y="0.0" width="293" height="67"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="70" id="6ea-Le-EDs"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -71,12 +74,21 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="393" height="67"/>
+                                        <connections>
+                                            <outlet property="searchResultLabel" destination="BLl-qc-B4e" id="6ec-b2-ErV"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vIM-sh-r7s" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="LqT-hu-e3w"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="vIM-sh-r7s" secondAttribute="trailing" id="Owe-ff-xYV"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="vIM-sh-r7s" secondAttribute="bottom" id="QAP-ci-yzv"/>
+                            <constraint firstItem="vIM-sh-r7s" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="yIp-MH-zEB"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="vIM-sh-r7s" id="455-6R-P55"/>

@@ -10,7 +10,7 @@ import Combine
 
 final class SearchViewModel {
     
-    private let accessToken: String
+    let accessToken: String
     
     let networkService: NetworkService
     
@@ -18,9 +18,12 @@ final class SearchViewModel {
         self.accessToken = accessToken
         self.networkService = NetworkService(configuration: networkConfig)
     }
+    let searchResults = PassthroughSubject<[SearchResponse.TracksItems], Never>()
+    
+    let searchButtonClicked = PassthroughSubject<[SearchResponse.TracksItems], Never>()
     
     var subscriptions = Set<AnyCancellable>()
-    
+        
     private var clientID: String {
       get {
         // 1
@@ -50,22 +53,19 @@ final class SearchViewModel {
         return value
       }
     }
-
-    let searchResult = PassthroughSubject<SearchResult, Never>()
     
     func search(keyword: String) {
-
-        let resource = Resource<SearchResult>(
+        let resource = Resource<SearchResponse>(
             base: "https://api.spotify.com/",
             path: "v1/search",
-            params: ["p": keyword,
-                     "type": "artist"],
-            header: ["Authorization": accessToken]
+            params: ["q": keyword,
+                     "type": "track"],
+            header: ["Authorization": self.accessToken]
         )
         
         networkService.load(resource)
-            .map { searchResult in
-                searchResult.artists.items
+            .tryMap { searchResult in
+                searchResult.tracks!.items
             }
             .receive(on: RunLoop.main)
             .sink { completion in
@@ -74,12 +74,36 @@ final class SearchViewModel {
                     print("error: \(error)")
                 case .finished: break
                 }
-            } receiveValue: { items in
-                print("토큰:\(self.accessToken)")
-
-                print(items)
+            } receiveValue: { items -> Void in
+//                print(items)
+                self.searchResults.send(items)
             }.store(in: &subscriptions)
-
     }
     
+    func searchClicked(keyword: String) {
+        let resource = Resource<SearchResponse>(
+            base: "https://api.spotify.com/",
+            path: "v1/search",
+            params: ["q": keyword,
+                     "type": "track"],
+            header: ["Authorization": self.accessToken]
+        )
+        
+        networkService.load(resource)
+            .tryMap { searchResult in
+                searchResult.tracks!.items
+            }
+            .receive(on: RunLoop.main)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("error: \(error)")
+                case .finished: break
+                }
+            } receiveValue: { items -> Void in
+//                print(items)
+                self.searchButtonClicked.send(items)
+            }.store(in: &subscriptions)
+    }
+
 }
