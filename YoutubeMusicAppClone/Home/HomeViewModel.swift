@@ -63,7 +63,6 @@ final class HomeViewModel {
     
     func fetch() {
         myStation.send(MyStation.mock)
-//        cardPlayList.send(PlaylistCard.mock)
     }
     
     func didSelect() {

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		760D4DD32A56DE4500C6CC09 /* MyStationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760D4DD22A56DE4500C6CC09 /* MyStationDetailViewController.swift */; };
+		760D4DD52A56DEBA00C6CC09 /* MyStationDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760D4DD42A56DEBA00C6CC09 /* MyStationDetailCell.swift */; };
+		760D4DD72A56E2CA00C6CC09 /* MyStationDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 760D4DD62A56E2CA00C6CC09 /* MyStationDetail.storyboard */; };
+		7615E5072A56EA0C003975B6 /* RelatedArtistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7615E5062A56EA0C003975B6 /* RelatedArtistsResponse.swift */; };
+		7615E5092A56EAB0003975B6 /* MyStationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7615E5082A56EAB0003975B6 /* MyStationDetailViewModel.swift */; };
 		762C77742A42C730008692C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762C77732A42C730008692C2 /* AppDelegate.swift */; };
 		762C77762A42C730008692C2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762C77752A42C730008692C2 /* SceneDelegate.swift */; };
 		762C777B2A42C730008692C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 762C77792A42C730008692C2 /* Main.storyboard */; };
@@ -51,6 +56,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		760D4DD22A56DE4500C6CC09 /* MyStationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStationDetailViewController.swift; sourceTree = "<group>"; };
+		760D4DD42A56DEBA00C6CC09 /* MyStationDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStationDetailCell.swift; sourceTree = "<group>"; };
+		760D4DD62A56E2CA00C6CC09 /* MyStationDetail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MyStationDetail.storyboard; path = YoutubeMusicAppClone/Home/MyStationDetail/MyStationDetail.storyboard; sourceTree = SOURCE_ROOT; };
+		7615E5062A56EA0C003975B6 /* RelatedArtistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedArtistsResponse.swift; sourceTree = "<group>"; };
+		7615E5082A56EAB0003975B6 /* MyStationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStationDetailViewModel.swift; sourceTree = "<group>"; };
 		762C77702A42C730008692C2 /* YoutubeMusicAppClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YoutubeMusicAppClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		762C77732A42C730008692C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		762C77752A42C730008692C2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +117,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		760D4DCF2A56DE1F00C6CC09 /* MyStationDetail */ = {
+			isa = PBXGroup;
+			children = (
+				760D4DD62A56E2CA00C6CC09 /* MyStationDetail.storyboard */,
+				760D4DD22A56DE4500C6CC09 /* MyStationDetailViewController.swift */,
+				760D4DD42A56DEBA00C6CC09 /* MyStationDetailCell.swift */,
+				7615E5082A56EAB0003975B6 /* MyStationDetailViewModel.swift */,
+			);
+			path = MyStationDetail;
+			sourceTree = "<group>";
+		};
 		762C77672A42C730008692C2 = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +180,7 @@
 				76F3AC8E2A444B1B0015A6CC /* MyStationCell.swift */,
 				7674ACC12A4AF998000B9FFA /* CustomMixCell.swift */,
 				769B506A2A4AB2F8008DFE78 /* PlaylistCardCell.swift */,
+				760D4DCF2A56DE1F00C6CC09 /* MyStationDetail */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -191,6 +213,7 @@
 				76E7DCE52A4C4652009503C3 /* Spotify.swift */,
 				76E65F982A4D68CA006F96A9 /* SpotifyAccessToken.swift */,
 				763D29FF2A52D04D00D80936 /* SearchResponse.swift */,
+				7615E5062A56EA0C003975B6 /* RelatedArtistsResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -318,6 +341,7 @@
 				767F78A42A431BB90006D60A /* Browse.storyboard in Resources */,
 				762C77802A42C730008692C2 /* LaunchScreen.storyboard in Resources */,
 				767F78A12A431B830006D60A /* Home.storyboard in Resources */,
+				760D4DD72A56E2CA00C6CC09 /* MyStationDetail.storyboard in Resources */,
 				762C777D2A42C730008692C2 /* Assets.xcassets in Resources */,
 				762C777B2A42C730008692C2 /* Main.storyboard in Resources */,
 				763D2A022A52D4F700D80936 /* Search.storyboard in Resources */,
@@ -351,10 +375,13 @@
 				769B506D2A4AC07A008DFE78 /* PlaylistCard.swift in Sources */,
 				76F3AC952A4475740015A6CC /* HomeNavigationController.swift in Sources */,
 				762C77762A42C730008692C2 /* SceneDelegate.swift in Sources */,
+				760D4DD32A56DE4500C6CC09 /* MyStationDetailViewController.swift in Sources */,
 				76E7DCE62A4C4652009503C3 /* Spotify.swift in Sources */,
+				760D4DD52A56DEBA00C6CC09 /* MyStationDetailCell.swift in Sources */,
 				7674ACC22A4AF998000B9FFA /* CustomMixCell.swift in Sources */,
 				762C778A2A42D15C008692C2 /* BrowseViewController.swift in Sources */,
 				762C77932A42D396008692C2 /* HomeHeader.swift in Sources */,
+				7615E5092A56EAB0003975B6 /* MyStationDetailViewModel.swift in Sources */,
 				76E7DCED2A4C492A009503C3 /* Resource.swift in Sources */,
 				76F3AC932A4463B80015A6CC /* MyStation.swift in Sources */,
 				763D2A002A52D04D00D80936 /* SearchResponse.swift in Sources */,
@@ -363,6 +390,7 @@
 				762C77882A42D12B008692C2 /* HomeViewController.swift in Sources */,
 				762C778E2A42D1F0008692C2 /* ListenAgainCell.swift in Sources */,
 				7698AF522A459BED00691292 /* CustomBarItem.swift in Sources */,
+				7615E5072A56EA0C003975B6 /* RelatedArtistsResponse.swift in Sources */,
 				762C77A02A430BC9008692C2 /* QuickSelectionCell.swift in Sources */,
 				762C77952A42D8D3008692C2 /* ListenAgain.swift in Sources */,
 			);
@@ -533,8 +561,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -562,8 +592,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

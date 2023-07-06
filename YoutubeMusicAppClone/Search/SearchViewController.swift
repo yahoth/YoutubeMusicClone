@@ -35,10 +35,8 @@ class SearchViewController: UIViewController {
     }
     
     private func addNewViewAndRemovePrevious(_ newView: UIView) {
-        // 이전 뷰가 있다면 제거합니다.
         previousView?.removeFromSuperview()
-        
-        // 새 뷰를 추가하고 previousView 변수에 참조를 저장합니다.
+
         self.view.addSubview(newView)
         previousView = newView
     }
@@ -63,7 +61,6 @@ class SearchViewController: UIViewController {
     
     private func bind() {
         //output
-        
         vm.searchResults.receive(on: RunLoop.main)
             .sink { items in
                 self.applySnapshot(items: items)
@@ -74,7 +71,6 @@ class SearchViewController: UIViewController {
             .sink { items in
                 self.configureSearchResultView(items: items)
             }.store(in: &subscriptions)
-        
     }
     
     private func applySnapshot(items: [SearchResponse.TracksItems]) {
@@ -113,8 +109,6 @@ class SearchViewController: UIViewController {
         )
         let voiceItem = UIBarButtonItem.generate(config: voiceSearchConfig)
         navigationItem.rightBarButtonItems = [voiceItem]
-//        navigationItem.backButtonDisplayMode = .minimal
-
     }
     
     private func layout() -> UICollectionViewCompositionalLayout {
@@ -128,15 +122,12 @@ class SearchViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
-    
-    
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let keyword = searchBar.text, !keyword.isEmpty else { return }
         vm.searchClicked(keyword: keyword)
-       
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

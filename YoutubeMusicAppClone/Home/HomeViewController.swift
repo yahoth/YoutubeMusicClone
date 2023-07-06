@@ -112,11 +112,13 @@ class HomeViewController: UIViewController {
             .sink { items in
                 self.applySnapshot(to: .listenAgain, items: items)
             }.store(in: &subscriptions)
+        
         vm.quickSelections
             .receive(on: RunLoop.main)
             .sink { items in
                 self.applySnapshot(to: .quickSelection, items: items)
             }.store(in: &subscriptions)
+        
         vm.myStation
             .receive(on: RunLoop.main)
             .sink { item in
@@ -289,5 +291,13 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = datasource.itemIdentifier(for: indexPath)
+        if item is MyStation {
+            let storyboard = UIStoryboard(name: "MyStationDetail", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
+            vc.vm = MyStationDetailViewModel(accessToken: self.vm.accessToken, networkConfig: .default)
+            present(vc, animated: true)
+        } else {
+            print(item)
+        }
     }
 }
