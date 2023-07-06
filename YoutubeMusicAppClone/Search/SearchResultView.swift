@@ -9,18 +9,16 @@ import UIKit
 import Combine
 
 class SearchResultView: UIView {
-
+    
     private var collectionView: UICollectionView!
-    
     var datasource: UICollectionViewDiffableDataSource<Section, Item>!
-    var subscriptions = Set<AnyCancellable>()
-
-    var searchButtonClicked: PassthroughSubject<[SearchResponse.TracksItems], Never>
-    
     typealias Item = SearchResponse.TracksItems
     enum Section {
         case main
     }
+    
+    var subscriptions = Set<AnyCancellable>()
+    var searchButtonClicked: PassthroughSubject<[SearchResponse.TracksItems], Never>
     
     override init(frame: CGRect) {
         searchButtonClicked = PassthroughSubject()
@@ -40,7 +38,7 @@ class SearchResultView: UIView {
                 self.applySnapshot(items: items)
             }.store(in: &subscriptions)
     }
-
+    
     private func applySnapshot(items: [SearchResponse.TracksItems]) {
         var snapshot = datasource.snapshot()
         snapshot.deleteAllItems()
@@ -48,7 +46,7 @@ class SearchResultView: UIView {
         snapshot.appendItems(items, toSection: .main)
         datasource.apply(snapshot)
     }
-
+    
     
     private func configureCollectionView() {
         let collectionViewFrame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
@@ -58,17 +56,18 @@ class SearchResultView: UIView {
             cell.configure(item: item)
             return cell
         })
+        
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: "SearchResultCell")
-
+        
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
         snapshot.appendItems([])
         datasource.apply(snapshot)
-//        collectionView.backgroundColor = .white
         collectionView.delegate = self
         addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -82,7 +81,7 @@ class SearchResultView: UIView {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(60))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0) // 각 셀 사이의 거리를 설정
+        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(60))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])

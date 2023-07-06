@@ -19,6 +19,8 @@ class SearchViewController: UIViewController {
         case main
     }
     
+    private var previousView: UIView?
+
     var vm: SearchViewModel!
     var subscriptions = Set<AnyCancellable>()
     
@@ -32,23 +34,33 @@ class SearchViewController: UIViewController {
         collectionView.collectionViewLayout = layout()
     }
     
-    private func configureCustomView(items: [SearchResponse.TracksItems]) {
+    private func addNewViewAndRemovePrevious(_ newView: UIView) {
+        // 이전 뷰가 있다면 제거합니다.
+        previousView?.removeFromSuperview()
+        
+        // 새 뷰를 추가하고 previousView 변수에 참조를 저장합니다.
+        self.view.addSubview(newView)
+        previousView = newView
+    }
+    
+    private func configureSearchResultView(items: [SearchResponse.TracksItems]) {
         let myView = SearchResultView()
         
         myView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
         
         myView.searchButtonClicked.send(items)
-
-        self.view.addSubview(myView)
-
+        
+        self.addNewViewAndRemovePrevious(myView)
+        let safeArea = view.safeAreaLayoutGuide
         myView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                myView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                myView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                myView.topAnchor.constraint(equalTo: self.view.topAnchor),
-                myView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-            ])
-        }
+        NSLayoutConstraint.activate([
+            myView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            myView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            myView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            myView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+        ])
+    }
+    
     private func bind() {
         //output
         
@@ -60,7 +72,7 @@ class SearchViewController: UIViewController {
         //input
         vm.searchButtonClicked.receive(on: RunLoop.main)
             .sink { items in
-                self.configureCustomView(items: items)
+                self.configureSearchResultView(items: items)
             }.store(in: &subscriptions)
         
     }
@@ -136,6 +148,6 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // go to SearchResult by 클릭한 검색어에 대해서
-//        print(datasource.itemIdentifier(for: indexPath))
+        print(datasource.itemIdentifier(for: indexPath))
     }
 }
