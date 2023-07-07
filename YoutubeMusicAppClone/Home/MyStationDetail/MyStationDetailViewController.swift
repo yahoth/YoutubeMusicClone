@@ -22,11 +22,23 @@ class MyStationDetailViewController: UIViewController {
     
     var vm: MyStationDetailViewModel!
     var subscriptions = Set<AnyCancellable>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
         vm.fetch()
         bind()
+        setNavigationItem()
+    }
+    
+    private func setNavigationItem() {
+        
+        let titleConfig = CustomBarItemConfiguration(title: "아티스트 선택", handler: {print("아티스트 선택")})
+        let titleItem = UIBarButtonItem.generate(config: titleConfig, fontSize: 20)
+        let dismissConfig = CustomBarItemConfiguration(image: UIImage(systemName: "xmark"), handler: {self.dismiss(animated: true)})
+        let dismissItem = UIBarButtonItem.generate(config: dismissConfig)
+        navigationItem.leftBarButtonItems = [titleItem]
+        navigationItem.rightBarButtonItems = [dismissItem]
     }
     
     private func bind() {
@@ -60,17 +72,17 @@ class MyStationDetailViewController: UIViewController {
     private func layout() -> UICollectionViewCompositionalLayout {
         let padding: CGFloat = 20
         let interItemSize: CGFloat = 10
-        let itemWidth = (collectionView.bounds.size.width - (padding * 2) - (interItemSize * 2)) / 3
-        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .absolute(itemWidth + 100))
+        let itemWidth: CGFloat = 110
+        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .absolute(itemWidth + 30))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(itemWidth + 100))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(itemWidth + 30))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
         
         group.interItemSpacing = .fixed(interItemSize)
         
         let section = NSCollectionLayoutSection(group: group)
-        
+        section.interGroupSpacing = 20
         section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: padding, trailing: padding)
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout

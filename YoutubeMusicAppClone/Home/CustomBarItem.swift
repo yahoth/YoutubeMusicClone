@@ -23,16 +23,16 @@ class CustomBarItemConfiguration {
 final class CustomBarItem: UIButton {
     let cumstomBarItemConfig: CustomBarItemConfiguration
     
-    init(config: CustomBarItemConfiguration) {
+    init(config: CustomBarItemConfiguration, fontSize: CGFloat) {
         self.cumstomBarItemConfig = config
         super.init(frame: .zero)
-        setupStyle()
+        setupStyle(fontSize: fontSize)
         updateConfig()
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
 
-    private func setupStyle() {
-        self.titleLabel?.font = .systemFont(ofSize: 12, weight: .bold)
+    private func setupStyle(fontSize: CGFloat) {
+        self.titleLabel?.font = .systemFont(ofSize: fontSize, weight: .bold)
         self.setTitleColor(.white, for: .normal)
         self.imageView?.tintColor = .white
     }

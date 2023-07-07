@@ -14,6 +14,10 @@ class HomeHeader: UICollectionReusableView {
     @IBOutlet weak var sectionTitleLabel: UILabel!
     @IBOutlet weak var moreButton: UIButton!
     
+    var sectionIndex: Int!
+
+    var vm: HomeViewModel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -24,8 +28,9 @@ class HomeHeader: UICollectionReusableView {
         moreButton.layer.cornerRadius = 12
     }
     
-    func configure(sectionIndex: Int) {
-        switch sectionIndex {
+    
+    func configure() {
+        switch self.sectionIndex {
         case 0:
             nameLabel.text = "김태형"
             moreButton.isHidden = false
@@ -53,6 +58,10 @@ class HomeHeader: UICollectionReusableView {
         default:
             break
         }
+    }
+    
+    @IBAction func moreButtonTapped(_ sender: Any) {
+        vm.moreButtonTapped.send(self.sectionIndex)
     }
 }
 

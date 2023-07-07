@@ -5,7 +5,7 @@
 //  Created by TAEHYOUNG KIM on 2023/06/28.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 final class HomeViewModel {
@@ -16,13 +16,15 @@ final class HomeViewModel {
     ///
     ///각 셀마다 데이터 설정해주기
     
-    let agains = PassthroughSubject<[ListenAgain], Never>()
+    @Published var agains: [ListenAgain] = []
     let quickSelections = PassthroughSubject<[QuickSelection], Never>()
     let myStation = PassthroughSubject<MyStation, Never>()
-    let customMixes = PassthroughSubject<[CustomMix], Never>()
+    let customMixes = CurrentValueSubject<[CustomMix], Never>([])
     let playlistCard = PassthroughSubject<PlaylistCard, Never>()
     
     var subscriptions = Set<AnyCancellable>()
+    
+    let moreButtonTapped = PassthroughSubject<Int, Never>()
     
     let networkService: NetworkService
     
@@ -57,6 +59,7 @@ final class HomeViewModel {
     }
 
     @Published var accessToken = ""
+    
     init(networkConfig: URLSessionConfiguration) {
         self.networkService = NetworkService(configuration: networkConfig)
     }
@@ -65,9 +68,6 @@ final class HomeViewModel {
         myStation.send(MyStation.mock)
     }
     
-    func didSelect() {
-        
-    }
     
     // accessToken이 받은지 1시간이 지나면 받아올 수 있도록 하는 메소드
     /// 받아온 기록이 없을 때 받아온다.
@@ -103,7 +103,7 @@ final class HomeViewModel {
     func fetchListenAgain(accessToken: String) {
         let base: String = "https://api.spotify.com"
         let path: String = "/v1/playlists/37i9dQZF1DX3ZeFHRhhi7Y/tracks"
-        let params: [String: String] = ["limit": "20"]
+        let params: [String: String] = [:]
         let header: [String: String] = ["Authorization": accessToken]
         let resource: Resource<PlaylistItemsResponse> = Resource(base: base, path: path, params: params, header: header)
         
@@ -128,14 +128,14 @@ final class HomeViewModel {
                     break
                 }
             } receiveValue: { items in
-                self.agains.send(items)
+                self.agains = items
             }.store(in: &subscriptions)
     }
     
     func fetchQuickSelection(accessToken: String) {
         let base: String = "https://api.spotify.com"
         let path: String = "/v1/playlists/0HqwnwTY7L4IYeg5iOcMsP/tracks"
-        let params: [String: String] = ["limit": "20"]
+        let params: [String: String] = [:]
         let header: [String: String] = ["Authorization": accessToken]
         let resource: Resource<PlaylistItemsResponse> = Resource(base: base, path: path, params: params, header: header)
         
@@ -200,7 +200,7 @@ final class HomeViewModel {
     func fetchCardPlaylist(accessToken: String) {
         let base: String = "https://api.spotify.com"
         let path: String = "/v1/playlists/37i9dQZF1DWT1y71ZcMPe5"
-        let params: [String: String] = ["limit": "20"]
+        let params: [String: String] = [:]
         let header: [String: String] = ["Authorization": accessToken]
         let resource: Resource<PlaylistResponse> = Resource(base: base, path: path, params: params, header: header)
         

@@ -1,13 +1,13 @@
 //
-//  DetailViewController.swift
+//  MusicPlayerViewController.swift
 //  YoutubeMusicAppClone
 //
-//  Created by TAEHYOUNG KIM on 2023/06/21.
+//  Created by TAEHYOUNG KIM on 2023/07/07.
 //
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class MusicPlayerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

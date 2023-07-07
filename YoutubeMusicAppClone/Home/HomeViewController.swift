@@ -80,10 +80,12 @@ class HomeViewController: UIViewController {
         })
         
         datasource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+            guard let section = Section(rawValue: indexPath.section) else { return nil }
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HomeHeader", for: indexPath) as? HomeHeader else { return nil }
+            header.vm = self.vm
+            header.sectionIndex = section.rawValue
+            header.configure()
             
-            let sectionIndex = Section(rawValue: indexPath.section)!.rawValue
-            header.configure(sectionIndex: sectionIndex)
             return header
         }
         
@@ -99,45 +101,7 @@ class HomeViewController: UIViewController {
         collectionView.collectionViewLayout = layout()
         collectionView.delegate = self
     }
-    
-    private func applySnapshot(to section: Section, items: [AnyHashable]) {
-        var snapshot = datasource.snapshot()
-        snapshot.appendItems(items, toSection: section)
-        datasource.apply(snapshot)
-    }
-    
-    private func bind() {
-        vm.agains
-            .receive(on: RunLoop.main)
-            .sink { items in
-                self.applySnapshot(to: .listenAgain, items: items)
-            }.store(in: &subscriptions)
-        
-        vm.quickSelections
-            .receive(on: RunLoop.main)
-            .sink { items in
-                self.applySnapshot(to: .quickSelection, items: items)
-            }.store(in: &subscriptions)
-        
-        vm.myStation
-            .receive(on: RunLoop.main)
-            .sink { item in
-                self.applySnapshot(to: .myStation, items: [item])
-            }.store(in: &subscriptions)
-        
-        vm.customMixes
-            .receive(on: RunLoop.main)
-            .sink { items in
-                self.applySnapshot(to: .customMix, items: items)
-            }.store(in: &subscriptions)
-        
-        vm.playlistCard
-            .receive(on: RunLoop.main)
-            .sink { item in
-                self.applySnapshot(to: .playlistCard, items: [item])
-            }.store(in: &subscriptions)
-    }
-    
+
     private func configureCell(section: Section, item: Item, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell? {
         
         switch section {
@@ -183,7 +147,69 @@ class HomeViewController: UIViewController {
             }
         }
     }
+
+    private func applySnapshot(to section: Section, items: [AnyHashable]) {
+        var snapshot = datasource.snapshot()
+        snapshot.appendItems(items, toSection: section)
+        datasource.apply(snapshot)
+    }
     
+    private func bind() {
+        vm.$agains
+            .receive(on: RunLoop.main)
+            .sink { items in
+                self.applySnapshot(to: .listenAgain, items: Array(items.prefix(20)))
+            }.store(in: &subscriptions)
+        
+        vm.quickSelections
+            .receive(on: RunLoop.main)
+            .sink { items in
+                self.applySnapshot(to: .quickSelection, items: Array(items.prefix(20)))
+            }.store(in: &subscriptions)
+        
+        vm.myStation
+            .receive(on: RunLoop.main)
+            .sink { item in
+                self.applySnapshot(to: .myStation, items: [item])
+            }.store(in: &subscriptions)
+        
+        vm.customMixes
+            .receive(on: RunLoop.main)
+            .sink { items in
+                self.applySnapshot(to: .customMix, items: Array(items.prefix(20)))
+            }.store(in: &subscriptions)
+        
+        vm.playlistCard
+            .receive(on: RunLoop.main)
+            .sink { item in
+                self.applySnapshot(to: .playlistCard, items: [item])
+            }.store(in: &subscriptions)
+        
+        vm.moreButtonTapped.receive(on: RunLoop.main)
+            .sink { sectionIndex in
+                switch sectionIndex {
+                case 0:
+                    print("다시듣기")
+                    let sb = UIStoryboard(name: "Detail", bundle: nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+                    vc.vm = HomeDetailViewModel(inputItems: self.vm.agains)
+                    print("items: \(self.vm.agains)")
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    
+                case 3:
+                    print("커스텀 믹스")
+                    let sb = UIStoryboard(name: "Detail", bundle: nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+                    vc.vm = HomeDetailViewModel(inputItems: self.vm.customMixes.value)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    
+                default:
+                    break
+                }
+            }.store(in: &subscriptions)
+    }
+    
+        
     
     private func layout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -295,7 +321,9 @@ extension HomeViewController: UICollectionViewDelegate {
             let storyboard = UIStoryboard(name: "MyStationDetail", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
             vc.vm = MyStationDetailViewModel(accessToken: self.vm.accessToken, networkConfig: .default)
-            present(vc, animated: true)
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .fullScreen
+            present(navController, animated: true)
         } else {
             print(item)
         }
