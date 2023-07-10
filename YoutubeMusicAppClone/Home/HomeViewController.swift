@@ -315,17 +315,25 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = datasource.itemIdentifier(for: indexPath)
-        if item is MyStation {
-            let storyboard = UIStoryboard(name: "MyStationDetail", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
-            vc.vm = MyStationDetailViewModel(accessToken: self.vm.accessToken, networkConfig: .default)
-            let navController = UINavigationController(rootViewController: vc)
-            navController.modalPresentationStyle = .fullScreen
-            present(navController, animated: true)
-        } else {
-            print(item)
-        }
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let item = datasource.itemIdentifier(for: indexPath)
+    if item is MyStation {
+      let storyboard = UIStoryboard(name: "MyStationDetail", bundle: nil)
+      let vc = storyboard.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
+      vc.vm = MyStationDetailViewModel(accessToken: self.vm.accessToken, networkConfig: .default)
+      let navController = UINavigationController(rootViewController: vc)
+      navController.modalPresentationStyle = .fullScreen
+      present(navController, animated: true)
+    } else {
+      let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
+      let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
+      vc.vm = MusicPlayerViewModel()
+      guard let item = item as? ListenAgain else {return}
+      vc.vm.item.send(item)
+      vc.modalPresentationStyle = .fullScreen
+      present(vc, animated: true)
+//      self.navigationController?.pushViewController(vc, animated: true)
     }
+  }
 }
+

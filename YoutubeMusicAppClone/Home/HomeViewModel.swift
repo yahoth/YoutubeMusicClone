@@ -92,6 +92,7 @@ final class HomeViewModel {
                 }
             } receiveValue: { token in
                 let accessToken = "\(token.tokenType) \(token.accessToken)"
+                print(accessToken)
                 self.accessToken = accessToken
                 self.fetchListenAgain(accessToken: accessToken)
                 self.fetchCustomMix(accessToken: accessToken)
