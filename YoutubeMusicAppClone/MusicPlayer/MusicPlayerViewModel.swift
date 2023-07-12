@@ -10,23 +10,32 @@ import AVFoundation
 import Combine
 
 final class MusicPlayerViewModel {
-  let player = AVPlayer()
-  var playerItem: AVPlayerItem?
+    let player = AVPlayer()
+    var playerItem: AVPlayerItem?
 
-  let item = CurrentValueSubject<ListenAgain?, Never>(nil)
+    let item = CurrentValueSubject<ListenAgain?, Never>(nil)
+    var subscriptions = Set<AnyCancellable>()
 
-  init() {
-    self.playerItem = AVPlayerItem(url: tempURL)
-    player.replaceCurrentItem(with: self.playerItem)
-  }
+    init() {
+        fetchPlayer()
+    }
 
-  let tempURL = URL(string: "https://p.scdn.co/mp3-preview/dab062e2cc708a2680ce84953a3581c5a679a230?cid=0b297fa8a249464ba34f5861d4140e58")!
+    func fetchPlayer() {
+        item.receive(on: RunLoop.main)
+            .sink { item in
+                let previewURL = URL(string: item?.preview_url ?? "")
+                guard let previewURL = previewURL else { return }
+                self.playerItem = AVPlayerItem(url: previewURL)
+                self.player.replaceCurrentItem(with: self.playerItem)
+            }
+            .store(in: &subscriptions)
+    }
 
-  func play() {
-      if player.timeControlStatus == .paused {
-        player.play()
-      } else {
-        player.pause()
-      }
-  }
+    func play() {
+        if player.timeControlStatus == .paused {
+            player.play()
+        } else {
+            player.pause()
+        }
+    }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7605CEAD2A5C05F9001206E8 /* CustomRoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7605CEAC2A5C05F9001206E8 /* CustomRoundButton.swift */; };
+		7605CEB02A5EC0FC001206E8 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7605CEAF2A5EC0FC001206E8 /* APIManager.swift */; };
 		760D4DD32A56DE4500C6CC09 /* MyStationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760D4DD22A56DE4500C6CC09 /* MyStationDetailViewController.swift */; };
 		760D4DD52A56DEBA00C6CC09 /* MyStationDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760D4DD42A56DEBA00C6CC09 /* MyStationDetailCell.swift */; };
 		760D4DD72A56E2CA00C6CC09 /* MyStationDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 760D4DD62A56E2CA00C6CC09 /* MyStationDetail.storyboard */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		7605CEAC2A5C05F9001206E8 /* CustomRoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRoundButton.swift; sourceTree = "<group>"; };
+		7605CEAF2A5EC0FC001206E8 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		760D4DD22A56DE4500C6CC09 /* MyStationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStationDetailViewController.swift; sourceTree = "<group>"; };
 		760D4DD42A56DEBA00C6CC09 /* MyStationDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStationDetailCell.swift; sourceTree = "<group>"; };
 		760D4DD62A56E2CA00C6CC09 /* MyStationDetail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MyStationDetail.storyboard; path = YoutubeMusicAppClone/Home/MyStationDetail/MyStationDetail.storyboard; sourceTree = SOURCE_ROOT; };
@@ -129,6 +131,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7605CEAE2A5EC0ED001206E8 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				7605CEAF2A5EC0FC001206E8 /* APIManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		760D4DCF2A56DE1F00C6CC09 /* MyStationDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +171,7 @@
 			children = (
 				762C77752A42C730008692C2 /* SceneDelegate.swift */,
 				762C77732A42C730008692C2 /* AppDelegate.swift */,
+				7605CEAE2A5EC0ED001206E8 /* Manager */,
 				76E7DCEE2A4C4939009503C3 /* Utils */,
 				76E7DCE92A4C48E4009503C3 /* Network */,
 				763D29F72A52C80000D80936 /* Search */,
@@ -420,6 +431,7 @@
 				76320D1A2A5584B3007F6BFD /* SearchResultView.swift in Sources */,
 				762C77882A42D12B008692C2 /* HomeViewController.swift in Sources */,
 				762C778E2A42D1F0008692C2 /* ListenAgainCell.swift in Sources */,
+				7605CEB02A5EC0FC001206E8 /* APIManager.swift in Sources */,
 				7698AF522A459BED00691292 /* CustomBarItem.swift in Sources */,
 				7615E5072A56EA0C003975B6 /* RelatedArtistsResponse.swift in Sources */,
 				762C77A02A430BC9008692C2 /* QuickSelectionCell.swift in Sources */,

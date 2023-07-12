@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="x0H-Og-gtS">
-                                <rect key="frame" x="20" y="119" width="353" height="639"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="x0H-Og-gtS">
+                                <rect key="frame" x="20" y="119" width="353" height="613"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D2r-2A-NVD">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="353"/>
@@ -28,10 +27,10 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qRy-Rj-4oY">
-                                        <rect key="frame" x="0.0" y="393" width="353" height="46.666666666666686"/>
+                                        <rect key="frame" x="0.0" y="383" width="353" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b8a-55-yG4">
-                                                <rect key="frame" x="0.0" y="0.0" width="30" height="46.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="30" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="us9-GJ-RlT"/>
                                                 </constraints>
@@ -40,19 +39,19 @@
                                                 <state key="normal" image="hand.thumbsdown" catalog="system"/>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xtv-qA-I7v">
-                                                <rect key="frame" x="30" y="0.0" width="293" height="46.666666666666664"/>
+                                                <rect key="frame" x="30" y="0.0" width="293" height="50"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="o4T-w2-AMp">
-                                                        <rect key="frame" x="30" y="0.0" width="233" height="46.666666666666664"/>
+                                                        <rect key="frame" x="30" y="0.0" width="233" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LabelLabelLabelLabelLabelLabelLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fwm-3H-Ll0">
-                                                                <rect key="frame" x="0.0" y="0.0" width="233" height="28.666666666666668"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="233" height="32"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="asadasdasdasdasdasdasdasdasdasdasdasdasdasd" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hw-Ou-D7M">
-                                                                <rect key="frame" x="0.0" y="28.666666666666629" width="233" height="18"/>
+                                                                <rect key="frame" x="0.0" y="32" width="233" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -69,7 +68,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hf-Bo-MN2">
-                                                <rect key="frame" x="323" y="0.0" width="30" height="46.666666666666664"/>
+                                                <rect key="frame" x="323" y="0.0" width="30" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="eni-JW-f48"/>
                                                 </constraints>
@@ -80,20 +79,20 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jEi-Ay-QMc">
-                                        <rect key="frame" x="0.0" y="479.66666666666663" width="353" height="49.333333333333371"/>
+                                        <rect key="frame" x="0.0" y="463" width="353" height="50"/>
                                         <subviews>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="FoF-fW-vTc">
-                                                <rect key="frame" x="-2" y="0.0" width="357" height="45.666666666666664"/>
+                                                <rect key="frame" x="-2" y="0.0" width="357" height="47"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRZ-bW-7AA">
-                                                <rect key="frame" x="0.0" y="36.333333333333371" width="26.333333333333332" height="12"/>
+                                                <rect key="frame" x="0.0" y="37" width="26.333333333333332" height="12"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MR6-Zg-x13">
-                                                <rect key="frame" x="326.66666666666669" y="36.333333333333371" width="26.333333333333314" height="12"/>
+                                                <rect key="frame" x="326.66666666666669" y="37" width="26.333333333333314" height="12"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -112,7 +111,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="MVs-Kq-OXt">
-                                        <rect key="frame" x="0.0" y="569" width="353" height="70"/>
+                                        <rect key="frame" x="0.0" y="543" width="353" height="70"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cxp-Nl-jhq">
                                                 <rect key="frame" x="0.0" y="0.0" width="36" height="70"/>
@@ -149,6 +148,9 @@
                                                         <state key="normal" image="backward.end.fill" catalog="system">
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24" weight="ultraLight"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="rewindButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="xsH-L5-Faf"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -162,25 +164,22 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oom-mF-fKK">
                                                 <rect key="frame" x="140.66666666666666" y="0.0" width="72" height="70"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ywg-8j-WlJ" customClass="CustomRoundButton" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ywg-8j-WlJ" customClass="CustomRoundButton" customModule="YoutubeMusicAppClone" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="-1" width="72" height="72"/>
                                                         <color key="backgroundColor" red="0.49726997779999998" green="0.54636113529999997" blue="0.51393562839999996" alpha="0.50165219033232633" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="Ywg-8j-WlJ" secondAttribute="height" multiplier="1:1" id="iXy-UI-c3q"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal">
-                                                            <imageReference key="image" image="play.fill" catalog="system" symbolScale="default"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36" weight="ultraLight"/>
+                                                        <state key="normal" image="play.fill" catalog="system">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="playButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Hjr-Fp-uvi"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="Ywg-8j-WlJ" firstAttribute="leading" secondItem="oom-mF-fKK" secondAttribute="leading" id="3kj-HU-gps"/>
                                                     <constraint firstAttribute="width" constant="72" id="fqo-tu-Bds"/>
@@ -201,6 +200,9 @@
                                                         <state key="normal" image="forward.end.fill" catalog="system">
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24" weight="ultraLight"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="fastFowardButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="hjb-6k-vGh"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>

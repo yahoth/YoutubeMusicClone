@@ -22,6 +22,8 @@ class SearchViewController: UIViewController {
     private var previousView: UIView?
 
     var vm: SearchViewModel!
+    var apiManager: APIManager!
+    
     var subscriptions = Set<AnyCancellable>()
     
     override func viewDidLoad() {
@@ -61,13 +63,13 @@ class SearchViewController: UIViewController {
     
     private func bind() {
         //output
-        vm.searchResults.receive(on: RunLoop.main)
+        apiManager.searchResults.receive(on: RunLoop.main)
             .sink { items in
                 self.applySnapshot(items: items)
             }.store(in: &subscriptions)
         
         //input
-        vm.searchButtonClicked.receive(on: RunLoop.main)
+        apiManager.searchButtonClicked.receive(on: RunLoop.main)
             .sink { items in
                 self.configureSearchResultView(items: items)
             }.store(in: &subscriptions)
@@ -127,12 +129,12 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let keyword = searchBar.text, !keyword.isEmpty else { return }
-        vm.searchClicked(keyword: keyword)
+        apiManager.searchClicked(keyword: keyword)
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let keyword = searchBar.text, !keyword.isEmpty else { return }
-        vm.search(keyword: keyword)
+        apiManager.search(keyword: keyword)
     }
 }
 

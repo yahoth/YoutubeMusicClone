@@ -21,8 +21,8 @@ class HomeViewController: UIViewController {
         case playlistCard
     }
     
-    var vm = HomeViewModel(networkConfig: .default)
-    
+    var vm = HomeViewModel()
+    var apiManager = APIManager(networkConfig: .default)
     var subscriptions = Set<AnyCancellable>()
     
     override func viewDidLoad() {
@@ -30,9 +30,9 @@ class HomeViewController: UIViewController {
         
         configureCollectionView()
         bind()
-        vm.requestAccessToken()
-        vm.fetch()
-        updateNavigationItem()
+        apiManager.requestAccessToken()
+        apiManager.fetch()
+        setNavigationItem()
         setNavigationBarlogo()
     }
     
@@ -48,7 +48,7 @@ class HomeViewController: UIViewController {
         navigationItem.leftBarButtonItem = logoItem
     }
     
-    private func updateNavigationItem() {
+    private func setNavigationItem() {
         let connectConfig = CustomBarItemConfiguration(image: UIImage(named: "connect"), handler: {print("connect") })
         let connectItem = UIBarButtonItem.generate(config: connectConfig, width: 30)
         
@@ -56,7 +56,8 @@ class HomeViewController: UIViewController {
             print("search")
             let sb = UIStoryboard(name: "Search", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
-            vc.vm = SearchViewModel(accessToken: self.vm.accessToken, networkConfig: .default)
+            vc.vm = SearchViewModel()
+            vc.apiManager = self.apiManager
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let searchItem = UIBarButtonItem.generate(config: searchConfig, width: 30, height: 30)
@@ -155,31 +156,31 @@ class HomeViewController: UIViewController {
     }
     
     private func bind() {
-        vm.$agains
+        apiManager.$agains
             .receive(on: RunLoop.main)
             .sink { items in
                 self.applySnapshot(to: .listenAgain, items: Array(items.prefix(20)))
             }.store(in: &subscriptions)
         
-        vm.quickSelections
+        apiManager.quickSelections
             .receive(on: RunLoop.main)
             .sink { items in
                 self.applySnapshot(to: .quickSelection, items: Array(items.prefix(20)))
             }.store(in: &subscriptions)
         
-        vm.myStation
+        apiManager.myStation
             .receive(on: RunLoop.main)
             .sink { item in
                 self.applySnapshot(to: .myStation, items: [item])
             }.store(in: &subscriptions)
         
-        vm.customMixes
+        apiManager.customMixes
             .receive(on: RunLoop.main)
             .sink { items in
                 self.applySnapshot(to: .customMix, items: Array(items.prefix(20)))
             }.store(in: &subscriptions)
         
-        vm.playlistCard
+        apiManager.playlistCard
             .receive(on: RunLoop.main)
             .sink { item in
                 self.applySnapshot(to: .playlistCard, items: [item])
@@ -192,15 +193,14 @@ class HomeViewController: UIViewController {
                     print("다시듣기")
                     let sb = UIStoryboard(name: "Detail", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-                    vc.vm = HomeDetailViewModel(inputItems: self.vm.agains)
-                    print("items: \(self.vm.agains)")
+                    vc.vm = HomeDetailViewModel(inputItems: self.apiManager.agains)
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 case 3:
                     print("커스텀 믹스")
                     let sb = UIStoryboard(name: "Detail", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-                    vc.vm = HomeDetailViewModel(inputItems: self.vm.customMixes.value)
+                    vc.vm = HomeDetailViewModel(inputItems: self.apiManager.customMixes.value)
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 default:
@@ -209,7 +209,7 @@ class HomeViewController: UIViewController {
             }.store(in: &subscriptions)
     }
     
-        
+
     
     private func layout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -315,25 +315,28 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let item = datasource.itemIdentifier(for: indexPath)
-    if item is MyStation {
-      let storyboard = UIStoryboard(name: "MyStationDetail", bundle: nil)
-      let vc = storyboard.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
-      vc.vm = MyStationDetailViewModel(accessToken: self.vm.accessToken, networkConfig: .default)
-      let navController = UINavigationController(rootViewController: vc)
-      navController.modalPresentationStyle = .fullScreen
-      present(navController, animated: true)
-    } else {
-      let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
-      let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
-      vc.vm = MusicPlayerViewModel()
-      guard let item = item as? ListenAgain else {return}
-      vc.vm.item.send(item)
-      vc.modalPresentationStyle = .fullScreen
-      present(vc, animated: true)
-//      self.navigationController?.pushViewController(vc, animated: true)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = datasource.itemIdentifier(for: indexPath)
+        if item is MyStation {
+            let storyboard = UIStoryboard(name: "MyStationDetail", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
+            vc.vm = MyStationDetailViewModel()
+            vc.apiManager = self.apiManager
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .fullScreen
+            present(navController, animated: true)
+        } else {
+            let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
+            vc.vm = MusicPlayerViewModel()
+            vc.apiManager = self.apiManager
+            guard let item = item as? ListenAgain else {return}
+            vc.vm.item.send(item)
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .fullScreen
+            present(navController, animated: true)
+
+        }
     }
-  }
 }
 

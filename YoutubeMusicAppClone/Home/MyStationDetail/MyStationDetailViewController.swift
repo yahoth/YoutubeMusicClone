@@ -19,18 +19,30 @@ class MyStationDetailViewController: UIViewController {
     enum Section {
         case main
     }
-    
+    var apiManager: APIManager!
     var vm: MyStationDetailViewModel!
     var subscriptions = Set<AnyCancellable>()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNextButton()
         configureCollectionView()
-        vm.fetch()
+        apiManager.fetchArtists()
         bind()
         setNavigationItem()
     }
-    
+
+    private func configureNextButton() {
+        nextButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        nextButton.titleEdgeInsets = .init(top: 0, left: -8, bottom: 0, right: 0)
+        nextButton.imageEdgeInsets = .init(top: 20, left: 8, bottom: 20, right: 0)
+        nextButton.contentEdgeInsets = .init(top: 0, left: 8, bottom: 0, right: 8)
+        nextButton.setTitle("다음", for: .normal)
+        nextButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        nextButton.semanticContentAttribute = .forceRightToLeft
+        nextButton.layer.cornerRadius = 30
+    }
+
     private func setNavigationItem() {
         
         let titleConfig = CustomBarItemConfiguration(title: "아티스트 선택", handler: {print("아티스트 선택")})
@@ -42,7 +54,7 @@ class MyStationDetailViewController: UIViewController {
     }
     
     private func bind() {
-        vm.artists.receive(on: RunLoop.main)
+        apiManager.artists.receive(on: RunLoop.main)
             .sink { artissts in
                 self.applySnapshot(to: .main, items: artissts)
             }.store(in: &subscriptions)

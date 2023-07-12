@@ -19,7 +19,7 @@ class DetailViewController: UIViewController {
     }
     var subscriptions = Set<AnyCancellable>()
     var vm: HomeDetailViewModel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
