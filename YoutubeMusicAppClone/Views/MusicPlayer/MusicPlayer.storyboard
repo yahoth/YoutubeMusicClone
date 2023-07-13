@@ -84,15 +84,18 @@
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="FoF-fW-vTc">
                                                 <rect key="frame" x="-2" y="0.0" width="357" height="47"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <connections>
+                                                    <action selector="playbackSliderValueChaged:" destination="Y6W-OH-hqX" eventType="valueChanged" id="ZTa-Mz-ysN"/>
+                                                </connections>
                                             </slider>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRZ-bW-7AA">
-                                                <rect key="frame" x="0.0" y="37" width="26.333333333333332" height="12"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRZ-bW-7AA">
+                                                <rect key="frame" x="0.0" y="37" width="29" height="12"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MR6-Zg-x13">
-                                                <rect key="frame" x="326.66666666666669" y="37" width="26.333333333333314" height="12"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MR6-Zg-x13">
+                                                <rect key="frame" x="324" y="37" width="29" height="12"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -176,7 +179,7 @@
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="playButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Hjr-Fp-uvi"/>
+                                                            <action selector="playAndPauseButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Hjr-Fp-uvi"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -255,9 +258,11 @@
                     </view>
                     <connections>
                         <outlet property="artistLabel" destination="1hw-Ou-D7M" id="nWF-PV-FNx"/>
+                        <outlet property="currentTimeLabel" destination="xRZ-bW-7AA" id="E1p-BL-4A6"/>
+                        <outlet property="durationLabel" destination="MR6-Zg-x13" id="QuN-gi-mKR"/>
                         <outlet property="fastforwardButton" destination="Ky7-UP-4zd" id="9PU-LU-c4I"/>
-                        <outlet property="playButton" destination="Ywg-8j-WlJ" id="hHa-d9-Phn"/>
-                        <outlet property="progressBar" destination="FoF-fW-vTc" id="bHM-ur-jAg"/>
+                        <outlet property="playAndPauseButton" destination="Ywg-8j-WlJ" id="hHa-d9-Phn"/>
+                        <outlet property="playbackSlider" destination="FoF-fW-vTc" id="bHM-ur-jAg"/>
                         <outlet property="repeatButton" destination="ADh-1O-ijH" id="cBM-QZ-S7c"/>
                         <outlet property="rewindButton" destination="DNI-hq-Nev" id="64D-yi-av1"/>
                         <outlet property="shuffleButton" destination="UZw-f2-LOT" id="Auk-dK-LXc"/>

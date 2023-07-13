@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,33 +16,14 @@
                     <view key="view" contentMode="scaleToFill" id="Fzq-Ef-ZyN">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ej1-SV-uCb">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bPu-F5-wWI">
-                                    <size key="itemSize" width="128" height="128"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                            </collectionView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vgD-ue-LSs"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="ej1-SV-uCb" firstAttribute="top" secondItem="vgD-ue-LSs" secondAttribute="top" id="1xe-YY-Aoi"/>
-                            <constraint firstItem="vgD-ue-LSs" firstAttribute="trailing" secondItem="ej1-SV-uCb" secondAttribute="trailing" id="bAk-9T-Tzy"/>
-                            <constraint firstItem="ej1-SV-uCb" firstAttribute="leading" secondItem="vgD-ue-LSs" secondAttribute="leading" id="teZ-cc-Cxh"/>
-                            <constraint firstItem="vgD-ue-LSs" firstAttribute="bottom" secondItem="ej1-SV-uCb" secondAttribute="bottom" id="xQz-pL-1ON"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="둘러보기" image="browse" id="dg5-GB-PUu"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r7c-Td-zzv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="133.58778625954199" y="793.66197183098598"/>
+            <point key="canvasLocation" x="-50" y="837"/>
         </scene>
     </scenes>
     <resources>

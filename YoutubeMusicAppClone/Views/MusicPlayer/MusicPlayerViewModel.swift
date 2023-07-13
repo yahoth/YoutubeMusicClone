@@ -12,6 +12,7 @@ import Combine
 final class MusicPlayerViewModel {
     let player = AVPlayer()
     var playerItem: AVPlayerItem?
+    var timeObserverToken: AnyObject?
 
     let item = CurrentValueSubject<ListenAgain?, Never>(nil)
     var subscriptions = Set<AnyCancellable>()
@@ -31,11 +32,17 @@ final class MusicPlayerViewModel {
             .store(in: &subscriptions)
     }
 
-    func play() {
+    func playAndPause() {
         if player.timeControlStatus == .paused {
             player.play()
         } else {
             player.pause()
         }
     }
+
+    func pause() {
+        player.pause()
+    }
+
+    
 }
