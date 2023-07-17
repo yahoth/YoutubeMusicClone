@@ -63,7 +63,7 @@ class PlaylistDetailViewController: UIViewController {
             }
         case .track:
             if let item = item as? AudioTrack {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistCell", for: indexPath) as! PlaylistTrackCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistTrackCell", for: indexPath) as! PlaylistTrackCell
                 cell.configure(item: item)
                 return cell
             } else {
