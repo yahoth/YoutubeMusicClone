@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Playlist Detail View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="PlaylistDetailViewController" id="Y6W-OH-hqX" customClass="PlaylistDetailViewController" customModule="YoutubeMusicAppClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2e3-jK-tf7">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eD9-6Z-l2W">
+                                    <size key="itemSize" width="393" height="346"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PlaylistInfoCell" id="PI8-jS-cSV" customClass="PlaylistInfoCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="341"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5LP-jZ-sr5">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="341"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZWn-2e-8oO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="341"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d72-4X-zy9">
+                                                            <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
+                                                            <subviews>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q7P-Zb-nv8">
+                                                                    <rect key="frame" x="96.666666666666686" y="0.0" width="200" height="200"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="200" id="BZQ-u4-liK"/>
+                                                                        <constraint firstAttribute="width" secondItem="q7P-Zb-nv8" secondAttribute="height" multiplier="1:1" id="Vyi-nL-pM0"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="q7P-Zb-nv8" secondAttribute="bottom" id="98f-VV-fUN"/>
+                                                                <constraint firstItem="q7P-Zb-nv8" firstAttribute="centerX" secondItem="d72-4X-zy9" secondAttribute="centerX" id="IHu-Q2-uuQ"/>
+                                                                <constraint firstItem="q7P-Zb-nv8" firstAttribute="top" secondItem="d72-4X-zy9" secondAttribute="top" id="gOr-G9-YOq"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGA-r7-ad1">
+                                                            <rect key="frame" x="0.0" y="210.66666666666666" width="393" height="28.666666666666657"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpB-S1-tZU">
+                                                            <rect key="frame" x="0.0" y="250.00000000000003" width="393" height="20.333333333333343"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="XeF-UT-GEo">
+                                                            <rect key="frame" x="0.0" y="281" width="393" height="60"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jjc-el-KSc">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="44" height="60"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2x7-Kc-mcS" customClass="CustomRoundButton" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="8" width="44" height="44"/>
+                                                                            <color key="backgroundColor" red="0.25089905753968256" green="0.25089905753968256" blue="0.25089905753968256" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" secondItem="2x7-Kc-mcS" secondAttribute="height" multiplier="1:1" id="Vpb-aL-f4B"/>
+                                                                                <constraint firstAttribute="width" constant="44" id="gPj-NR-csq"/>
+                                                                            </constraints>
+                                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" image="arrow.down.to.line" catalog="system"/>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="2x7-Kc-mcS" firstAttribute="centerX" secondItem="jjc-el-KSc" secondAttribute="centerX" id="Frw-mk-0Uf"/>
+                                                                        <constraint firstItem="2x7-Kc-mcS" firstAttribute="centerY" secondItem="jjc-el-KSc" secondAttribute="centerY" id="hgX-XV-1NV"/>
+                                                                        <constraint firstItem="2x7-Kc-mcS" firstAttribute="leading" secondItem="jjc-el-KSc" secondAttribute="leading" id="nMQ-kk-rnz"/>
+                                                                    </constraints>
+                                                                </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OjU-hl-YeI">
+                                                                    <rect key="frame" x="83.333333333333329" y="0.0" width="44" height="60"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LOJ-FG-Ir2" customClass="CustomRoundButton" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="8" width="44" height="44"/>
+                                                                            <color key="backgroundColor" red="0.25089905750000002" green="0.25089905750000002" blue="0.25089905750000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" secondItem="LOJ-FG-Ir2" secondAttribute="height" multiplier="1:1" id="0QJ-1k-0GN"/>
+                                                                                <constraint firstAttribute="width" constant="44" id="Hkv-fE-Q4d"/>
+                                                                            </constraints>
+                                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" image="plus.square.on.square" catalog="system"/>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="LOJ-FG-Ir2" firstAttribute="centerX" secondItem="OjU-hl-YeI" secondAttribute="centerX" id="1wF-Z7-Bxt"/>
+                                                                        <constraint firstItem="LOJ-FG-Ir2" firstAttribute="centerY" secondItem="OjU-hl-YeI" secondAttribute="centerY" id="YJI-ER-PuY"/>
+                                                                        <constraint firstItem="LOJ-FG-Ir2" firstAttribute="leading" secondItem="OjU-hl-YeI" secondAttribute="leading" id="jCz-Ts-dih"/>
+                                                                    </constraints>
+                                                                </view>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RuM-3R-agV" customClass="CustomRoundButton" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                                                    <rect key="frame" x="166.66666666666666" y="0.0" width="60" height="60"/>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="60" id="GSZ-F7-JE0"/>
+                                                                        <constraint firstAttribute="width" secondItem="RuM-3R-agV" secondAttribute="height" multiplier="1:1" id="ObE-7W-1TF"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" image="play.fill" catalog="system"/>
+                                                                </button>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IqG-3h-7nd">
+                                                                    <rect key="frame" x="265.66666666666669" y="0.0" width="44" height="60"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u20-yE-Egi" customClass="CustomRoundButton" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="8" width="44" height="44"/>
+                                                                            <color key="backgroundColor" red="0.25089905750000002" green="0.25089905750000002" blue="0.25089905750000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" secondItem="u20-yE-Egi" secondAttribute="height" multiplier="1:1" id="Pzw-4f-KpT"/>
+                                                                                <constraint firstAttribute="width" constant="44" id="x32-1h-RZ4"/>
+                                                                            </constraints>
+                                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" image="arrowshape.turn.up.right" catalog="system"/>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="u20-yE-Egi" firstAttribute="centerX" secondItem="IqG-3h-7nd" secondAttribute="centerX" id="8Ax-gU-3lm"/>
+                                                                        <constraint firstItem="u20-yE-Egi" firstAttribute="leading" secondItem="IqG-3h-7nd" secondAttribute="leading" id="eYa-SW-PIq"/>
+                                                                        <constraint firstItem="u20-yE-Egi" firstAttribute="centerY" secondItem="IqG-3h-7nd" secondAttribute="centerY" id="vNj-BY-Vxe"/>
+                                                                    </constraints>
+                                                                </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="elF-lD-iY9">
+                                                                    <rect key="frame" x="349" y="0.0" width="44" height="60"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uj2-Vd-5na" customClass="CustomRoundButton" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="8" width="44" height="44"/>
+                                                                            <color key="backgroundColor" red="0.25089905750000002" green="0.25089905750000002" blue="0.25089905750000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" secondItem="uj2-Vd-5na" secondAttribute="height" multiplier="1:1" id="OLH-y1-Qw0"/>
+                                                                                <constraint firstAttribute="width" constant="44" id="YFP-xT-kvJ"/>
+                                                                            </constraints>
+                                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                                                            <state key="normal" image="ellipsis.vertical.white"/>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="uj2-Vd-5na" firstAttribute="centerX" secondItem="elF-lD-iY9" secondAttribute="centerX" id="Q7s-T7-XfB"/>
+                                                                        <constraint firstItem="uj2-Vd-5na" firstAttribute="centerY" secondItem="elF-lD-iY9" secondAttribute="centerY" id="ccw-rp-3MR"/>
+                                                                        <constraint firstItem="uj2-Vd-5na" firstAttribute="leading" secondItem="elF-lD-iY9" secondAttribute="leading" id="dks-GY-9Dq"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="ZWn-2e-8oO" secondAttribute="bottom" id="0N6-nh-XGj"/>
+                                                <constraint firstItem="ZWn-2e-8oO" firstAttribute="leading" secondItem="5LP-jZ-sr5" secondAttribute="leading" id="ZUo-bo-489"/>
+                                                <constraint firstItem="ZWn-2e-8oO" firstAttribute="top" secondItem="5LP-jZ-sr5" secondAttribute="top" id="ZpO-NV-3Y2"/>
+                                                <constraint firstAttribute="trailing" secondItem="ZWn-2e-8oO" secondAttribute="trailing" id="mty-Uw-LlS"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="393" height="341"/>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="kpB-S1-tZU" id="38T-k6-l9M"/>
+                                            <outlet property="thumbnailImageView" destination="q7P-Zb-nv8" id="7Lu-X6-zGm"/>
+                                            <outlet property="titleLabel" destination="OGA-r7-ad1" id="F5D-VN-Xym"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PlaylistTrackCell" id="HrO-x3-0Ot" customClass="PlaylistTrackCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="351" width="393" height="96"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zR6-Q5-cki">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="96"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zwB-lh-oJS">
+                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="96"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LRn-Y2-tAc">
+                                                            <rect key="frame" x="0.0" y="0.0" width="96" height="96"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="LRn-Y2-tAc" secondAttribute="height" multiplier="1:1" id="dqn-J5-pS4"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRv-Db-LNr">
+                                                            <rect key="frame" x="96" y="0.0" width="267" height="96"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="밤은 짧아 걸어 아가씨야 Moonwolk in Kyoto asdasda" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6U-KR-Cyo">
+                                                                    <rect key="frame" x="15.999999999999986" y="19.333333333333332" width="224.66666666666663" height="33.666666666666671"/>
+                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day6(데이식스)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acT-lu-ipJ">
+                                                                    <rect key="frame" x="16" y="57" width="92.333333333333329" height="17"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="R6U-KR-Cyo" secondAttribute="trailing" constant="16" id="0MU-ja-ora"/>
+                                                                <constraint firstItem="R6U-KR-Cyo" firstAttribute="leading" secondItem="DRv-Db-LNr" secondAttribute="leading" constant="16" id="M86-ko-ag3"/>
+                                                                <constraint firstItem="acT-lu-ipJ" firstAttribute="top" secondItem="R6U-KR-Cyo" secondAttribute="bottom" constant="4" id="Vmk-a1-a8R"/>
+                                                                <constraint firstItem="R6U-KR-Cyo" firstAttribute="centerY" secondItem="DRv-Db-LNr" secondAttribute="centerY" constant="-12" id="WF9-j9-0Wg"/>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="acT-lu-ipJ" secondAttribute="trailing" constant="16" id="WdB-eh-kg3"/>
+                                                                <constraint firstItem="R6U-KR-Cyo" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DRv-Db-LNr" secondAttribute="top" constant="1" id="lq3-Gp-7eH"/>
+                                                                <constraint firstItem="acT-lu-ipJ" firstAttribute="leading" secondItem="R6U-KR-Cyo" secondAttribute="leading" id="nNg-5H-Qdk"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipsis.vertical.white" translatesAutoresizingMaskIntoConstraints="NO" id="Nm0-Nb-Mnv">
+                                                            <rect key="frame" x="363" y="0.0" width="30" height="96"/>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="aAe-Oy-2T0"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="zwB-lh-oJS" secondAttribute="trailing" id="Hfw-N1-vf6"/>
+                                                <constraint firstItem="zwB-lh-oJS" firstAttribute="top" secondItem="zR6-Q5-cki" secondAttribute="top" id="Yck-fz-gm6"/>
+                                                <constraint firstAttribute="bottom" secondItem="zwB-lh-oJS" secondAttribute="bottom" id="d1N-OT-T7o"/>
+                                                <constraint firstItem="zwB-lh-oJS" firstAttribute="leading" secondItem="zR6-Q5-cki" secondAttribute="leading" id="nni-tO-q7i"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="393" height="96"/>
+                                        <connections>
+                                            <outlet property="subtitleLabel" destination="acT-lu-ipJ" id="mf4-Zl-66y"/>
+                                            <outlet property="thumbnailImageView" destination="LRn-Y2-tAc" id="Dvb-Qe-p82"/>
+                                            <outlet property="titleLabel" destination="R6U-KR-Cyo" id="UHF-LD-Gch"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2e3-jK-tf7" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="6Rw-aY-dr2"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="2e3-jK-tf7" secondAttribute="trailing" id="802-34-1Ar"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="2e3-jK-tf7" secondAttribute="bottom" id="B1M-X0-09A"/>
+                            <constraint firstItem="2e3-jK-tf7" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="lK0-1n-R3o"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="2e3-jK-tf7" id="S18-0Q-rEi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139.69465648854961" y="3.5211267605633805"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="arrow.down.to.line" catalog="system" width="110" height="128"/>
+        <image name="arrowshape.turn.up.right" catalog="system" width="128" height="104"/>
+        <image name="ellipsis.vertical.white" width="512" height="512"/>
+        <image name="play.fill" catalog="system" width="117" height="128"/>
+        <image name="plus.square.on.square" catalog="system" width="128" height="116"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

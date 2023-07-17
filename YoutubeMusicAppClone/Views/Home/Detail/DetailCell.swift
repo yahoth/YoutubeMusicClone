@@ -20,7 +20,7 @@ class DetailCell: UICollectionViewCell {
     }
     
     func configure(item: AnyHashable) {
-        if let item = item as? ListenAgain {
+        if let item = item as? AudioTrack {
             let imageURL = URL(string: item.imageName)
             thumbnailImageView.kf.setImage(with: imageURL)
             titleLabel.text = item.title

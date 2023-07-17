@@ -15,6 +15,7 @@ struct SpotifyImage: Decodable, Hashable {
 
 
 //get featured-playlists
+//click시 id를 통해 api호출하여 리스트를 뽑는다.
 struct FeaturedPlaylistResponse: Decodable{
     let playlists: Item
 

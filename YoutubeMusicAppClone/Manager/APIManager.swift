@@ -9,7 +9,23 @@ import Foundation
 import Combine
 
 final class APIManager {
+
+    enum CurrentPlaying {
+        case listenAgain
+        case quickSelection
+    }
+
+    var currentPlayingState: CurrentPlaying?
+
     let networkService: NetworkService
+
+    var currentPlayingTracks: CurrentValueSubject<[AudioTrack], Never>? {
+        guard let currentPlayingState else { return nil }
+        switch currentPlayingState {
+        case .listenAgain: return self.agains
+        case .quickSelection: return self.quickSelections
+        }
+    }
 
     private var clientID: String {
       get {
@@ -45,8 +61,9 @@ final class APIManager {
         self.networkService = NetworkService(configuration: networkConfig)
     }
 
-    @Published var agains: [ListenAgain] = []
-    let quickSelections = PassthroughSubject<[QuickSelection], Never>()
+//    @Published var agains: [AudioTrack] = []
+    let agains = CurrentValueSubject<[AudioTrack], Never>([])
+    let quickSelections = CurrentValueSubject<[AudioTrack], Never>([])
     let myStation = PassthroughSubject<MyStation, Never>()
     let customMixes = CurrentValueSubject<[CustomMix], Never>([])
     let playlistCard = PassthroughSubject<PlaylistCard, Never>()
@@ -162,29 +179,30 @@ final class APIManager {
                 let accessToken = "\(token.tokenType) \(token.accessToken)"
                 print(accessToken)
                 self.accessToken = accessToken
-                self.fetchListenAgain(accessToken: accessToken)
+                self.fetchPlaylistItem(playlistID: "37i9dQZF1DX3ZeFHRhhi7Y", tracks: self.agains)
                 self.fetchCustomMix(accessToken: accessToken)
                 self.fetchQuickSelection(accessToken: accessToken)
                 self.fetchCardPlaylist(accessToken: accessToken)
             }.store(in: &subscriptions)
     }
 
-    func fetchListenAgain(accessToken: String) {
+    // Fetch Playlist item: ListeAgain, QuickSelection
+    func fetchPlaylistItem(playlistID: String, tracks: CurrentValueSubject<[AudioTrack], Never>){
         let base: String = "https://api.spotify.com"
-        let path: String = "/v1/playlists/37i9dQZF1DX3ZeFHRhhi7Y/tracks"
+        let path: String = "/v1/playlists/\(playlistID)/tracks"
         let params: [String: String] = [:]
         let header: [String: String] = ["Authorization": accessToken]
         let resource: Resource<PlaylistItemsResponse> = Resource(base: base, path: path, params: params, header: header)
 
         networkService.load(resource)
-            .map({ first -> [ListenAgain] in
+            .map({ first -> [AudioTrack] in
                 let listenAgains = first.items.map { item in
                     let artist = item.track.album.artists[0].name
                     let image = item.track.album.images[0]
                     let title = item.track.name
                     let id = item.track.id
                     let preview = item.track.preview_url ?? ""
-                    let song = ListenAgain(id: id, imageName: image.url, title: title, artist: artist, preview_url: preview)
+                    let song = AudioTrack(id: id, imageName: image.url, title: title, artist: artist, preview_url: preview)
 
                     return song
                 }
@@ -199,8 +217,9 @@ final class APIManager {
                     break
                 }
             } receiveValue: { items in
-                self.agains = items
-            }.store(in: &subscriptions)
+                tracks.send(items)
+            }
+            .store(in: &subscriptions)
     }
 
     func fetchQuickSelection(accessToken: String) {
@@ -211,13 +230,14 @@ final class APIManager {
         let resource: Resource<PlaylistItemsResponse> = Resource(base: base, path: path, params: params, header: header)
 
         networkService.load(resource)
-            .map({ first -> [QuickSelection] in
+            .map({ first -> [AudioTrack] in
                 let quickSelections = first.items.map { item in
                     let artist = item.track.album.artists[0].name
                     let image = item.track.album.images[0]
                     let title = item.track.name
                     let id = item.track.id
-                    let song = QuickSelection(id: id, imageName: image.url, title: title, artist: artist)
+                    let previewURL = item.track.preview_url ?? ""
+                    let song = AudioTrack(id: id, imageName: image.url, title: title, artist: artist, preview_url: previewURL)
                     return song
                 }
                 return quickSelections
@@ -267,6 +287,7 @@ final class APIManager {
                 self.customMixes.send(items)
             }.store(in: &subscriptions)
     }
+
     // Playlist
     func fetchCardPlaylist(accessToken: String) {
         let base: String = "https://api.spotify.com"

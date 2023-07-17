@@ -14,7 +14,7 @@ final class MusicPlayerViewModel {
     var playerItem: AVPlayerItem?
     var timeObserverToken: AnyObject?
 
-    let item = CurrentValueSubject<ListenAgain?, Never>(nil)
+    let item = CurrentValueSubject<AudioTrack?, Never>(nil)
     var subscriptions = Set<AnyCancellable>()
 
     init() {
@@ -24,10 +24,10 @@ final class MusicPlayerViewModel {
     func fetchPlayer() {
         item.receive(on: RunLoop.main)
             .sink { item in
-                let previewURL = URL(string: item?.preview_url ?? "")
-                guard let previewURL = previewURL else { return }
-                self.playerItem = AVPlayerItem(url: previewURL)
-                self.player.replaceCurrentItem(with: self.playerItem)
+                    let previewURL = URL(string: item?.preview_url ?? "")
+                    guard let previewURL = previewURL else { return }
+                    self.playerItem = AVPlayerItem(url: previewURL)
+                    self.player.replaceCurrentItem(with: self.playerItem)
             }
             .store(in: &subscriptions)
     }
@@ -44,5 +44,10 @@ final class MusicPlayerViewModel {
         player.pause()
     }
 
+    func playAfter2Seconds() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.player.play()
+        }
+    }
     
 }

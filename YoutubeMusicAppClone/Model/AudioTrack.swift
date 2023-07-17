@@ -1,18 +1,16 @@
 //
-//  ListenAgain.swift
+//  AudioTrack.swift
 //  YoutubeMusicAppClone
 //
-//  Created by TAEHYOUNG KIM on 2023/06/21.
+//  Created by TAEHYOUNG KIM on 2023/07/17.
 //
 
 import Foundation
 
-struct ListenAgain: Hashable, Identifiable, Decodable {
+struct AudioTrack: Hashable, Identifiable, Decodable {
     let id: String
     let imageName: String
     let title: String
     let artist: String
     let preview_url: String
 }
-
-

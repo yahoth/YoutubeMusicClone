@@ -38,7 +38,6 @@ class MusicPlayerViewController: UIViewController {
         setupPlaybackSlider()
         configurePlaybackSlider()
         setNavigationItem()
-        vm.playAndPause()
         setupTimeObserver()
     }
 
@@ -114,13 +113,14 @@ class MusicPlayerViewController: UIViewController {
 
     private func bind() {
         vm.item.receive(on: RunLoop.main)
-            .compactMap {$0}
+            .compactMap { $0 }
             .sink { item in
                 self.configure(item: item)
+                self.vm.playAfter2Seconds()
             }.store(in: &subscriptions)
     }
 
-    private func configure(item: ListenAgain) {
+    private func configure(item: AudioTrack) {
         let imageURL = URL(string: item.imageName)
         thumbnailImageView.kf.setImage(with: imageURL)
         titleLabel.text = item.title
@@ -135,7 +135,9 @@ class MusicPlayerViewController: UIViewController {
     }
 
     @IBAction func rewindButtonTapped(_ sender: Any) {
-        let tracks = apiManager.agains
+        vm.pause()
+        vm.playAfter2Seconds()
+        guard let tracks = apiManager.currentPlayingTracks?.value else { return }
         let currentTrackIndex = tracks.firstIndex { $0 == vm.item.value }
         guard let currentTrackIndex else { return }
         if currentTrackIndex - 1 < 0 {
@@ -146,7 +148,9 @@ class MusicPlayerViewController: UIViewController {
     }
 
     @IBAction func fastFowardButtonTapped(_ sender: Any) {
-        let tracks = apiManager.agains
+        vm.pause()
+        vm.playAfter2Seconds()
+        guard let tracks = apiManager.currentPlayingTracks?.value else { return }
         let currentTrackIndex = tracks.firstIndex { $0 == vm.item.value }
         guard let currentTrackIndex else { return }
         if currentTrackIndex + 1 > tracks.count - 1 {

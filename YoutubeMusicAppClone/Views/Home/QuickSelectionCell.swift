@@ -17,7 +17,7 @@ class QuickSelectionCell: UICollectionViewCell {
         thumbnailImageView.layer.cornerRadius = 4
     }
     
-    func configure(item: QuickSelection) {
+    func configure(item: AudioTrack) {
         let url = URL(string: item.imageName)
         thumbnailImageView.kf.setImage(with: url)
         titleLabel.text = item.title
