@@ -26,7 +26,7 @@ class DetailCell: UICollectionViewCell {
             titleLabel.text = item.title
             subTitleLabel.text = item.artist
             
-        } else if let item = item as? CustomMix {
+        } else if let item = item as? Playlist {
             let imageURL = URL(string: item.images[0].url)
             thumbnailImageView.kf.setImage(with: imageURL)
             titleLabel.text = item.name

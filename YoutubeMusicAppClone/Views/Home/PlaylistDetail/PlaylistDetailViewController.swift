@@ -25,7 +25,6 @@ class PlaylistDetailViewController: UIViewController {
 
     var vm: PlaylistDetailViewModel!
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
@@ -33,15 +32,17 @@ class PlaylistDetailViewController: UIViewController {
     }
 
     private func bind() {
-
         vm.$playlistInfo.receive(on: RunLoop.main)
             .sink { info in
                 self.applySnapshot(to: .info, items: [info])
             }.store(in: &subscriptions)
 
-        vm.playlistTrack.receive(on: RunLoop.main)
+        vm.playlistTrack
+            .compactMap { $0 }
+            .receive(on: RunLoop.main)
             .sink { track in
                 self.applySnapshot(to: .track, items: track)
+                print(track)
             }.store(in: &subscriptions)
     }
 
@@ -54,7 +55,7 @@ class PlaylistDetailViewController: UIViewController {
     private func configureCell(section: Section, item: Item, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell? {
         switch section {
         case .info:
-            if let item = item as? CustomMix {
+            if let item = item as? Playlist {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistInfoCell", for: indexPath) as! PlaylistInfoCell
                 cell.configure(item: item)
                 return cell
@@ -127,5 +128,16 @@ class PlaylistDetailViewController: UIViewController {
 }
 
 extension PlaylistDetailViewController: UICollectionViewDelegate {
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = datasource.itemIdentifier(for: indexPath)
+        let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
+        vc.vm = MusicPlayerViewModel()
+        guard let item = item as? AudioTrack else {return}
+        vc.vm.currentPlayingTracks.send(self.vm.playlistTrack.value)
+        vc.vm.item.send(item)
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
+    }
 }

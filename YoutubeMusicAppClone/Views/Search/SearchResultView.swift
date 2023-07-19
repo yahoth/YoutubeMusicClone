@@ -34,7 +34,6 @@ class SearchResultView: UIView {
     private func bind() {
         searchButtonClicked.receive(on: RunLoop.main)
             .sink { items in
-                print(items)
                 self.applySnapshot(items: items)
             }.store(in: &subscriptions)
     }

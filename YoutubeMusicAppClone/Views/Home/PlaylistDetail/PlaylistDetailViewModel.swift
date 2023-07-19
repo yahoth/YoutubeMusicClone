@@ -14,11 +14,11 @@ final class PlaylistDetailViewModel {
 
     var apiManager: APIManager!
 
-    @Published var playlistInfo: CustomMix
+    @Published var playlistInfo: Playlist
 
     let playlistTrack = CurrentValueSubject<[AudioTrack], Never>([])
 
-    init(apiManager: APIManager, playlistInfo: CustomMix) {
+    init(apiManager: APIManager, playlistInfo: Playlist) {
         self.apiManager = apiManager
         self.playlistInfo = playlistInfo
         bind()

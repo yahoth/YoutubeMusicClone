@@ -11,8 +11,11 @@ import Combine
 final class HomeDetailViewModel {
     
     @Published var items: [AnyHashable] = []
-    
-    init(inputItems: [AnyHashable]) {
+
+    var apiManager: APIManager
+
+    init(inputItems: [AnyHashable], apiManager: APIManager) {
         self.items = inputItems
+        self.apiManager = apiManager
     }
 }

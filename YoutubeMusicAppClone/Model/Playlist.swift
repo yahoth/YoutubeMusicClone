@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct CustomMix: Hashable, Identifiable {
+struct Playlist: Hashable {
     let id: String
+    let uuid = UUID().uuidString
     let description: String
     let images: [SpotifyImage]
     let name: String

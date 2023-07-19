@@ -20,7 +20,7 @@ class PlaylistInfoCell: UICollectionViewCell {
         thumbnailImageView.layer.cornerRadius = 4
     }
 
-    func configure(item: CustomMix) {
+    func configure(item: Playlist) {
         let imageURL = URL(string: item.images[0].url)
         thumbnailImageView.kf.setImage(with: imageURL)
         titleLabel.text = item.name

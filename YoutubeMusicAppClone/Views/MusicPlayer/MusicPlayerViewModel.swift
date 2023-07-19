@@ -17,6 +17,8 @@ final class MusicPlayerViewModel {
     let item = CurrentValueSubject<AudioTrack?, Never>(nil)
     var subscriptions = Set<AnyCancellable>()
 
+    var currentPlayingTracks = CurrentValueSubject<[AudioTrack]?, Never>([])
+
     init() {
         fetchPlayer()
     }

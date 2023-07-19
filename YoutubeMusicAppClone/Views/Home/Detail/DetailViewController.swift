@@ -30,7 +30,6 @@ class DetailViewController: UIViewController {
         vm.$items.receive(on: RunLoop.main)
             .sink { items in
                 self.applySnapshot(items: items)
-                print("item11: \(items)")
             }.store(in: &subscriptions)
     }
     
@@ -82,6 +81,15 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        guard let item = datasource.itemIdentifier(for: indexPath) else { return }
+
+        if let audioTrack = item as? AudioTrack {
+            print(audioTrack.title)
+        } else if let customMix = item as? Playlist {
+            let sb = UIStoryboard(name: "PlaylistDetail", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "PlaylistDetailViewController") as! PlaylistDetailViewController
+            vc.vm = PlaylistDetailViewModel(apiManager: vm.apiManager, playlistInfo: customMix)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

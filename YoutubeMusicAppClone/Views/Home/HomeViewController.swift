@@ -30,7 +30,6 @@ class HomeViewController: UIViewController {
         
         configureCollectionView()
         bind()
-        apiManager.requestAccessToken()
         apiManager.fetch()
         setNavigationItem()
         setNavigationBarlogo()
@@ -130,7 +129,7 @@ class HomeViewController: UIViewController {
                 return nil
             }
         case .customMix:
-            if let item = item as? CustomMix {
+            if let item = item as? Playlist {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMixCell", for: indexPath) as! CustomMixCell
                 cell.configure(item: item)
                 return cell
@@ -186,21 +185,20 @@ class HomeViewController: UIViewController {
                 self.applySnapshot(to: .playlistCard, items: [item])
             }.store(in: &subscriptions)
         
-        vm.moreButtonTapped.receive(on: RunLoop.main)
+        vm.moreButtonTapped
+            .receive(on: RunLoop.main)
             .sink { sectionIndex in
                 switch sectionIndex {
                 case 0:
-                    print("다시듣기")
                     let sb = UIStoryboard(name: "Detail", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-                    vc.vm = HomeDetailViewModel(inputItems: self.apiManager.agains.value)
+                    vc.vm = HomeDetailViewModel(inputItems: self.apiManager.agains.value, apiManager: self.apiManager)
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 case 3:
-                    print("커스텀 믹스")
                     let sb = UIStoryboard(name: "Detail", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-                    vc.vm = HomeDetailViewModel(inputItems: self.apiManager.customMixes.value)
+                    vc.vm = HomeDetailViewModel(inputItems: self.apiManager.customMixes.value, apiManager: self.apiManager)
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 default:
@@ -319,36 +317,16 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = datasource.itemIdentifier(for: indexPath)
-//        if item is MyStation {
-//            let storyboard = UIStoryboard(name: "MyStationDetail", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
-//            vc.vm = MyStationDetailViewModel()
-//            vc.apiManager = self.apiManager
-//            let navController = UINavigationController(rootViewController: vc)
-//            navController.modalPresentationStyle = .fullScreen
-//            present(navController, animated: true)
-//        } else {
-//            let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
-//            let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
-//            vc.vm = MusicPlayerViewModel()
-//            vc.apiManager = self.apiManager
-//
-//            guard let item = item as? AudioTrack else {return}
-//            vc.vm.item.send(item)
-//            let navController = UINavigationController(rootViewController: vc)
-//            navController.modalPresentationStyle = .fullScreen
-//            present(navController, animated: true)
-//        }
 
         guard let section = Section(rawValue: indexPath.section) else { return }
+
         switch section {
         case .listenAgain:
             let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
             vc.vm = MusicPlayerViewModel()
-            vc.apiManager = self.apiManager
-            self.apiManager.currentPlayingState = .listenAgain
             guard let item = item as? AudioTrack else {return}
+            vc.vm.currentPlayingTracks.send(self.apiManager.agains.value)
             vc.vm.item.send(item)
             let navController = UINavigationController(rootViewController: vc)
             navController.modalPresentationStyle = .fullScreen
@@ -358,9 +336,7 @@ extension HomeViewController: UICollectionViewDelegate {
             let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
             vc.vm = MusicPlayerViewModel()
-            vc.apiManager = self.apiManager
-            self.apiManager.currentPlayingState = .quickSelection
-
+            vc.vm.currentPlayingTracks.send(self.apiManager.quickSelections.value)
             guard let item = item as? AudioTrack else {return}
             vc.vm.item.send(item)
             let navController = UINavigationController(rootViewController: vc)
@@ -371,7 +347,6 @@ extension HomeViewController: UICollectionViewDelegate {
             let storyboard = UIStoryboard(name: "MyStationDetail", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
             vc.vm = MyStationDetailViewModel()
-            vc.apiManager = self.apiManager
             let navController = UINavigationController(rootViewController: vc)
             navController.modalPresentationStyle = .fullScreen
             present(navController, animated: true)
@@ -379,16 +354,13 @@ extension HomeViewController: UICollectionViewDelegate {
         case .customMix:
             let sb = UIStoryboard(name: "PlaylistDetail", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "PlaylistDetailViewController") as! PlaylistDetailViewController
-            guard let item = item as? CustomMix else {return}
+            guard let item = item as? Playlist else {return}
             vc.vm = PlaylistDetailViewModel(apiManager: self.apiManager, playlistInfo: item)
             self.navigationController?.pushViewController(vc, animated: true)
 
-            print(item.id)
         case .playlistCard:
             print("hello")
         }
-
-
     }
 }
 

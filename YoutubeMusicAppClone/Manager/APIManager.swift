@@ -10,22 +10,8 @@ import Combine
 
 final class APIManager {
 
-    enum CurrentPlaying {
-        case listenAgain
-        case quickSelection
-    }
-
-    var currentPlayingState: CurrentPlaying?
-
     let networkService: NetworkService
 
-    var currentPlayingTracks: CurrentValueSubject<[AudioTrack], Never>? {
-        guard let currentPlayingState else { return nil }
-        switch currentPlayingState {
-        case .listenAgain: return self.agains
-        case .quickSelection: return self.quickSelections
-        }
-    }
 
     private var clientID: String {
       get {
@@ -59,13 +45,14 @@ final class APIManager {
 
     init(networkConfig: URLSessionConfiguration) {
         self.networkService = NetworkService(configuration: networkConfig)
+        requestAccessToken()
     }
 
 //    @Published var agains: [AudioTrack] = []
     let agains = CurrentValueSubject<[AudioTrack], Never>([])
     let quickSelections = CurrentValueSubject<[AudioTrack], Never>([])
     let myStation = PassthroughSubject<MyStation, Never>()
-    let customMixes = CurrentValueSubject<[CustomMix], Never>([])
+    let customMixes = CurrentValueSubject<[Playlist], Never>([])
     let playlistCard = PassthroughSubject<PlaylistCard, Never>()
 
     var subscriptions = Set<AnyCancellable>()
@@ -124,7 +111,6 @@ final class APIManager {
                 case .finished: break
                 }
             } receiveValue: { items -> Void in
-//                print(items)
                 self.searchResults.send(items)
             }.store(in: &subscriptions)
     }
@@ -150,7 +136,6 @@ final class APIManager {
                 case .finished: break
                 }
             } receiveValue: { items -> Void in
-//                print(items)
                 self.searchButtonClicked.send(items)
             }.store(in: &subscriptions)
     }
@@ -177,8 +162,9 @@ final class APIManager {
                 }
             } receiveValue: { token in
                 let accessToken = "\(token.tokenType) \(token.accessToken)"
-                print(accessToken)
                 self.accessToken = accessToken
+                print("fetch:\(accessToken)")
+                print("self token:\(self.accessToken)")
                 self.fetchPlaylistItem(playlistID: "37i9dQZF1DX3ZeFHRhhi7Y", tracks: self.agains)
                 self.fetchCustomMix(accessToken: accessToken)
                 self.fetchQuickSelection(accessToken: accessToken)
@@ -263,14 +249,14 @@ final class APIManager {
         let resource: Resource<FeaturedPlaylistResponse> = Resource(base: base, path: path, params: params, header: header)
 
         networkService.load(resource)
-            .map({ response -> [CustomMix] in
+            .map({ response -> [Playlist] in
                 let customMixes = response.playlists.items.map { item in
                     let id = item.id
                     let description = item.description
                     let images = item.images
                     let name = item.name
 
-                    let song = CustomMix(id: id, description: description, images: images, name: name)
+                    let song = Playlist(id: id, description: description, images: images, name: name)
                     return song
                 }
                 return customMixes

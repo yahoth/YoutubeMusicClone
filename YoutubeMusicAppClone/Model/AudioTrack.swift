@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct AudioTrack: Hashable, Identifiable, Decodable {
+struct AudioTrack: Hashable {
     let id: String
+    let uuid = UUID().uuidString
     let imageName: String
     let title: String
     let artist: String

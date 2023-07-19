@@ -29,7 +29,6 @@ class MusicPlayerViewController: UIViewController {
     @IBOutlet weak var durationLabel: UILabel!
 
     var vm: MusicPlayerViewModel!
-    var apiManager: APIManager!
     var subscriptions = Set<AnyCancellable>()
 
     override func viewDidLoad() {
@@ -137,7 +136,7 @@ class MusicPlayerViewController: UIViewController {
     @IBAction func rewindButtonTapped(_ sender: Any) {
         vm.pause()
         vm.playAfter2Seconds()
-        guard let tracks = apiManager.currentPlayingTracks?.value else { return }
+        guard let tracks = vm.currentPlayingTracks.value else { return }
         let currentTrackIndex = tracks.firstIndex { $0 == vm.item.value }
         guard let currentTrackIndex else { return }
         if currentTrackIndex - 1 < 0 {
@@ -150,7 +149,7 @@ class MusicPlayerViewController: UIViewController {
     @IBAction func fastFowardButtonTapped(_ sender: Any) {
         vm.pause()
         vm.playAfter2Seconds()
-        guard let tracks = apiManager.currentPlayingTracks?.value else { return }
+        guard let tracks = vm.currentPlayingTracks.value else { return }
         let currentTrackIndex = tracks.firstIndex { $0 == vm.item.value }
         guard let currentTrackIndex else { return }
         if currentTrackIndex + 1 > tracks.count - 1 {
