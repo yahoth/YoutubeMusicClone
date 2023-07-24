@@ -42,7 +42,6 @@ class PlaylistDetailViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { track in
                 self.applySnapshot(to: .track, items: track)
-                print(track)
             }.store(in: &subscriptions)
     }
 

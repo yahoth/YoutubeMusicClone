@@ -14,8 +14,8 @@ final class HomeDetailViewModel {
 
     var apiManager: APIManager
 
-    init(inputItems: [AnyHashable], apiManager: APIManager) {
-        self.items = inputItems
+    init(with items: [AnyHashable], apiManager: APIManager) {
+        self.items = items
         self.apiManager = apiManager
     }
 }

@@ -30,4 +30,9 @@ final class PlaylistDetailViewModel {
                 self.apiManager.fetchPlaylistItem(playlistID: info.id, tracks: self.playlistTrack)
             }.store(in: &subscriptions)
     }
+
+    deinit {
+        print("PlaylistDetailViewModel deinit")
+    }
+
 }

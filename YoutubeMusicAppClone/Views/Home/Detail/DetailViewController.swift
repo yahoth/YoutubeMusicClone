@@ -84,7 +84,15 @@ extension DetailViewController: UICollectionViewDelegate {
         guard let item = datasource.itemIdentifier(for: indexPath) else { return }
 
         if let audioTrack = item as? AudioTrack {
-            print(audioTrack.title)
+            let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
+            vc.vm = MusicPlayerViewModel()
+            guard let items = vm.items as? [AudioTrack] else { return }
+            vc.vm.currentPlayingTracks.send(items)
+            vc.vm.item.send(audioTrack)
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .fullScreen
+            present(navController, animated: true)
         } else if let customMix = item as? Playlist {
             let sb = UIStoryboard(name: "PlaylistDetail", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "PlaylistDetailViewController") as! PlaylistDetailViewController

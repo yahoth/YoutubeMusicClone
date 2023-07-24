@@ -6,7 +6,18 @@
 //
 
 import Foundation
+import Combine
 
 final class MyStationDetailViewModel {
+    var apiManager: APIManager
     
+    init(apiManager: APIManager) {
+        self.apiManager = apiManager
+    }
+
+    let artists = PassthroughSubject<[RelatedArtistsResponse.Artists], Never>()
+
+    func fetch() {
+        apiManager.fetchArtists(artists: artists)
+    }
 }

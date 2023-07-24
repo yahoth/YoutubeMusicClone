@@ -13,5 +13,6 @@ struct AudioTrack: Hashable {
     let imageName: String
     let title: String
     let artist: String
-    let preview_url: String
+    let previewURL: String?
+    let duration: Int
 }

@@ -43,7 +43,16 @@ struct PlaylistItemsResponse: Hashable, Decodable {
         let album: Album
         let name: String
         let id: String
-        let preview_url: String?
+        let previewURL: String?
+        let duration: Int
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case album
+            case name
+            case duration = "duration_ms"
+            case previewURL = "preview_url"
+        }
     }
 
     struct Album: Hashable, Decodable {

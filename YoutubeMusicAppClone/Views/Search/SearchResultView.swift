@@ -12,13 +12,13 @@ class SearchResultView: UIView {
     
     private var collectionView: UICollectionView!
     var datasource: UICollectionViewDiffableDataSource<Section, Item>!
-    typealias Item = SearchResponse.TracksItems
+    typealias Item = AudioTrack
     enum Section {
         case main
     }
     
     var subscriptions = Set<AnyCancellable>()
-    var searchButtonClicked: PassthroughSubject<[SearchResponse.TracksItems], Never>
+    var searchButtonClicked: PassthroughSubject<[AudioTrack], Never>
     
     override init(frame: CGRect) {
         searchButtonClicked = PassthroughSubject()
@@ -38,7 +38,7 @@ class SearchResultView: UIView {
             }.store(in: &subscriptions)
     }
     
-    private func applySnapshot(items: [SearchResponse.TracksItems]) {
+    private func applySnapshot(items: [AudioTrack]) {
         var snapshot = datasource.snapshot()
         snapshot.deleteAllItems()
         snapshot.appendSections([.main])
@@ -94,6 +94,16 @@ class SearchResultView: UIView {
 
 extension SearchResultView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(datasource.itemIdentifier(for: indexPath))
+        guard let audioTrack = datasource.itemIdentifier(for: indexPath) else { return }
+//        let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
+//        let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
+//        vc.vm = MusicPlayerViewModel()
+////        vc.vm.currentPlayingTracks.send(self.vm.playlistTrack.value)
+//        vc.vm.item.send(audioTrack)
+//        let navController = UINavigationController(rootViewController: vc)
+//        navController.modalPresentationStyle = .fullScreen
+//
+//        present(navController, animated: true)
+
     }
 }

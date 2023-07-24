@@ -11,7 +11,7 @@ class SearchCell: UICollectionViewCell {
     
     @IBOutlet weak var searchResultLabel: UILabel!
     
-    func configure(item: SearchResponse.TracksItems) {
-        searchResultLabel.text = "\(item.album.artists[0].name)  \(item.name)"
+    func configure(item: AudioTrack) {
+        searchResultLabel.text = "\(item.artist)  \(item.title)"
     }
 }

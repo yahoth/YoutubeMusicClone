@@ -26,7 +26,7 @@ final class MusicPlayerViewModel {
     func fetchPlayer() {
         item.receive(on: RunLoop.main)
             .sink { item in
-                    let previewURL = URL(string: item?.preview_url ?? "")
+                    let previewURL = URL(string: item?.previewURL ?? "")
                     guard let previewURL = previewURL else { return }
                     self.playerItem = AVPlayerItem(url: previewURL)
                     self.player.replaceCurrentItem(with: self.playerItem)
@@ -51,5 +51,10 @@ final class MusicPlayerViewModel {
             self.player.play()
         }
     }
+
+    deinit {
+        print("MusicPlayerViewModel deinit")
+    }
+
     
 }

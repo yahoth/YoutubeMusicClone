@@ -19,7 +19,6 @@ class MyStationDetailViewController: UIViewController {
     enum Section {
         case main
     }
-    var apiManager: APIManager!
     var vm: MyStationDetailViewModel!
     var subscriptions = Set<AnyCancellable>()
 
@@ -27,7 +26,7 @@ class MyStationDetailViewController: UIViewController {
         super.viewDidLoad()
         configureNextButton()
         configureCollectionView()
-        apiManager.fetchArtists()
+        vm.fetch()
         bind()
         setNavigationItem()
     }
@@ -44,7 +43,6 @@ class MyStationDetailViewController: UIViewController {
     }
 
     private func setNavigationItem() {
-        
         let titleConfig = CustomBarItemConfiguration(title: "아티스트 선택", handler: {print("아티스트 선택")})
         let titleItem = UIBarButtonItem.generate(config: titleConfig, fontSize: 20)
         let dismissConfig = CustomBarItemConfiguration(image: UIImage(systemName: "xmark"), handler: {self.dismiss(animated: true)})
@@ -54,7 +52,8 @@ class MyStationDetailViewController: UIViewController {
     }
     
     private func bind() {
-        apiManager.artists.receive(on: RunLoop.main)
+        vm.artists
+            .receive(on: RunLoop.main)
             .sink { artissts in
                 self.applySnapshot(to: .main, items: artissts)
             }.store(in: &subscriptions)

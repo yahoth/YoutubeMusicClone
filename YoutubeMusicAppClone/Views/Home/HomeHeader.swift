@@ -10,7 +10,7 @@ import UIKit
 class HomeHeader: UICollectionReusableView {
         
     @IBOutlet weak var thumbnail: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var sectionHeaderLabel: UILabel!
     @IBOutlet weak var sectionTitleLabel: UILabel!
     @IBOutlet weak var moreButton: UIButton!
     
@@ -28,35 +28,25 @@ class HomeHeader: UICollectionReusableView {
         moreButton.layer.cornerRadius = 12
     }
     
-    
     func configure() {
         switch self.sectionIndex {
         case 0:
-            nameLabel.text = "김태형"
-            moreButton.isHidden = false
-            thumbnail.isHidden = false
-            sectionTitleLabel.text = "Listen Again"
-
+            configureBySection(header: "김태형", title: "다시 듣기", isMoreButtonHidden: false, isThumbnailHidden: false)
         case 1:
-            nameLabel.text = "이 노래로 뮤직 스테이션 시작하기"
-            moreButton.isHidden = true
-            thumbnail.isHidden = true
-            sectionTitleLabel.text = "Quick Selection"
-
+            configureBySection(header: "이 노래로 뮤직 스테이션 시작하기", title: "빠른 선곡", isMoreButtonHidden: true, isThumbnailHidden: true)
         case 2:
-            nameLabel.text = "뮤직 스테이션 만들기"
-            moreButton.isHidden = true
-            thumbnail.isHidden = true
-            sectionTitleLabel.text = "My Music Station"
-            
+            configureBySection(header: "뮤직 스테이션 만들기", title: "나만의 뮤직 스테이션", isMoreButtonHidden: true, isThumbnailHidden: true)
         case 3:
-            nameLabel.text = ""
-            moreButton.isHidden = false
-            thumbnail.isHidden = true
-            sectionTitleLabel.text = "Custom Mix"
-
+            configureBySection(header: nil, title: "맞춤 믹스", isMoreButtonHidden: false, isThumbnailHidden: true)
         default:
             break
+        }
+
+        func configureBySection(header: String?, title: String, isMoreButtonHidden: Bool, isThumbnailHidden: Bool) {
+            sectionHeaderLabel.text = header
+            sectionTitleLabel.text = title
+            moreButton.isHidden = isMoreButtonHidden
+            thumbnail.isHidden = isThumbnailHidden
         }
     }
     

@@ -14,7 +14,7 @@ class SearchViewController: UIViewController {
     
     var datasource: UICollectionViewDiffableDataSource<Section, Item>!
     
-    typealias Item = SearchResponse.TracksItems
+    typealias Item = AudioTrack
     enum Section {
         case main
     }
@@ -22,8 +22,6 @@ class SearchViewController: UIViewController {
     private var previousView: UIView?
 
     var vm: SearchViewModel!
-    var apiManager: APIManager!
-    
     var subscriptions = Set<AnyCancellable>()
     
     override func viewDidLoad() {
@@ -43,7 +41,7 @@ class SearchViewController: UIViewController {
         previousView = newView
     }
     
-    private func configureSearchResultView(items: [SearchResponse.TracksItems]) {
+    private func configureSearchResultView(items: [AudioTrack]) {
         let myView = SearchResultView()
         
         myView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
@@ -62,20 +60,18 @@ class SearchViewController: UIViewController {
     }
     
     private func bind() {
-        //output
-        apiManager.searchResults.receive(on: RunLoop.main)
+        vm.searchResults.receive(on: RunLoop.main)
             .sink { items in
                 self.applySnapshot(items: items)
             }.store(in: &subscriptions)
-        
-        //input
-        apiManager.searchButtonClicked.receive(on: RunLoop.main)
+
+        vm.searchButtonClicked.receive(on: RunLoop.main)
             .sink { items in
                 self.configureSearchResultView(items: items)
             }.store(in: &subscriptions)
     }
     
-    private func applySnapshot(items: [SearchResponse.TracksItems]) {
+    private func applySnapshot(items: [AudioTrack]) {
         var snapshot = datasource.snapshot()
         snapshot.deleteAllItems()
         snapshot.appendSections([.main])
@@ -127,14 +123,15 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let keyword = searchBar.text, !keyword.isEmpty else { return }
-        apiManager.searchClicked(keyword: keyword)
-    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let keyword = searchBar.text, !keyword.isEmpty else { return }
-        apiManager.search(keyword: keyword)
+        vm.search(keyword: keyword)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let keyword = searchBar.text, !keyword.isEmpty else { return }
+        vm.searchButtonClicked(keyword: keyword)
     }
 }
 
