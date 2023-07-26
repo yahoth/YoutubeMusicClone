@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Combine
 
 class HomeViewController: UIViewController {
@@ -51,10 +52,13 @@ class HomeViewController: UIViewController {
         
         let searchConfig = CustomBarItemConfiguration(image: UIImage(systemName: "magnifyingglass")) {
             print("search")
-            let sb = UIStoryboard(name: "Search", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
-            vc.vm = SearchViewModel(apiManager: self.vm.apiManager)
-            self.navigationController?.pushViewController(vc, animated: true)
+            let vm = SearchViewModel(apiManager: self.vm.apiManager)
+            let searchView = SearchView(vm: vm) {
+                self.dismiss(animated: false)
+            }
+            let vc = UIHostingController(rootView: searchView)
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: false)
         }
         let searchItem = UIBarButtonItem.generate(config: searchConfig, width: 30, height: 30)
         

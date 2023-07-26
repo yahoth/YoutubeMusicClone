@@ -8,6 +8,10 @@
 import Foundation
 import Combine
 
+enum SpotifyError: Error {
+    case invalidToken
+}
+
 final class APIManager {
 
     let networkService: NetworkService
@@ -56,8 +60,10 @@ final class APIManager {
             }.store(in: &subscriptions)
     }
 
-    func search(keyword: String, items: PassthroughSubject<[AudioTrack], Never>) {
-        guard let accessToken else { return print("access token is nil")}
+    func search(keyword: String) -> AnyPublisher<[AudioTrack], Error>{
+        guard let accessToken else {
+            return .fail(SpotifyError.invalidToken)
+        }
 
         let resource = Resource<SearchResponse>(
             base: "https://api.spotify.com/",
@@ -67,7 +73,7 @@ final class APIManager {
             header: ["Authorization": accessToken]
         )
 
-        networkService.load(resource)
+        return networkService.load(resource)
             .map { searchResult in
                 let tracks = searchResult.tracks.items.map { item in
 
@@ -82,17 +88,8 @@ final class APIManager {
                 }
                 return tracks
             }
-            .receive(on: RunLoop.main)
-            .sink { completion in
-                switch completion {
-                case .failure(let error):
-                    print("error: \(error)")
-                case .finished: break
-                }
-            } receiveValue: {
-                items.send($0)
-            }
-            .store(in: &subscriptions)
+            .eraseToAnyPublisher()
+
     }
 
     func requestAccessToken() {
@@ -247,3 +244,4 @@ extension APIManager {
         return value
     }
 }
+

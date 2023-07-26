@@ -34,10 +34,8 @@ class MusicPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
-        setupPlaybackSlider()
         configurePlaybackSlider()
         setNavigationItem()
-        setupTimeObserver()
     }
 
     @IBAction func playbackSliderValueChaged(_ sender: UISlider) {
@@ -79,10 +77,14 @@ class MusicPlayerViewController: UIViewController {
     }
 
     func updateCurrentTimeLabel() {
-        let currentTime = Int(CMTimeGetSeconds(vm.player.currentTime()))
-        let minutes = currentTime / 60
-        let seconds = currentTime % 60
-        currentTimeLabel.text = String(format: "%02d:%02d", minutes, seconds)
+        if CMTimeGetSeconds(vm.player.currentTime()) == .infinity || CMTimeGetSeconds(vm.player.currentTime()) == .nan {
+            currentTimeLabel.text = "00:00"
+        } else {
+            let currentTime = Int(CMTimeGetSeconds(vm.player.currentTime()))
+            let minutes = currentTime / 60
+            let seconds = currentTime % 60
+            currentTimeLabel.text = String(format: "%02d:%02d", minutes, seconds)
+        }
     }
 
     func updateDurationTimeLabel() {
@@ -91,7 +93,6 @@ class MusicPlayerViewController: UIViewController {
         let seconds = durationTime % 60
         durationLabel.text = String(format: "%02d:%02d", minutes, seconds)
     }
-
 
     private func setupPlaybackSlider() {
         let assetDuration = vm.playerItem?.asset.duration
@@ -115,7 +116,9 @@ class MusicPlayerViewController: UIViewController {
             .compactMap { $0 }
             .sink { item in
                 self.configure(item: item)
-                self.vm.playAfter2Seconds()
+                self.setupPlaybackSlider()
+                self.setupTimeObserver()
+                self.vm.play()
             }.store(in: &subscriptions)
     }
 
@@ -125,43 +128,22 @@ class MusicPlayerViewController: UIViewController {
         titleLabel.text = item.title
         artistLabel.text = item.artist
         playAndPauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-        playAndPauseButton.setImage(UIImage(systemName: "play.fill"), for: .selected)
     }
 
     @IBAction func playAndPauseButtonTapped(_ sender: Any) {
-        vm.playAndPause()
-        playAndPauseButton.isSelected.toggle()
+        vm.playAndPauseButtonTapped(button: playAndPauseButton)
     }
 
     @IBAction func rewindButtonTapped(_ sender: Any) {
-        vm.pause()
-        vm.playAfter2Seconds()
-        guard let tracks = vm.currentPlayingTracks.value else { return }
-        let currentTrackIndex = tracks.firstIndex { $0 == vm.item.value }
-        guard let currentTrackIndex else { return }
-        if currentTrackIndex - 1 < 0 {
-            vm.item.send(tracks[tracks.count - 1])
-        } else {
-            vm.item.send(tracks[currentTrackIndex - 1])
-        }
+        vm.rewindButtonTapped()
     }
 
     @IBAction func fastFowardButtonTapped(_ sender: Any) {
-        vm.pause()
-        vm.playAfter2Seconds()
-        guard let tracks = vm.currentPlayingTracks.value else { return }
-        let currentTrackIndex = tracks.firstIndex { $0 == vm.item.value }
-        guard let currentTrackIndex else { return }
-        if currentTrackIndex + 1 > tracks.count - 1 {
-            vm.item.send(tracks[0])
-        } else {
-            vm.item.send(tracks[currentTrackIndex + 1])
-        }
+        vm.fastFowardButtonTapped()
     }
 
     deinit {
         removeTimeObserver()
         print("deinit")
     }
-
 }
