@@ -86,7 +86,7 @@ extension DetailViewController: UICollectionViewDelegate {
         if let audioTrack = item as? AudioTrack {
             let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
-            vc.vm = MusicPlayerViewModel()
+            vc.vm = MusicPlayerViewModel.shared
             guard let items = vm.items as? [AudioTrack] else { return }
             vc.vm.currentPlayingTracks.send(items)
             vc.vm.item.send(audioTrack)

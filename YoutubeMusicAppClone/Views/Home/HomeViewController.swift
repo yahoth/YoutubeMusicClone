@@ -308,7 +308,7 @@ extension HomeViewController: UICollectionViewDelegate {
         guard let audioTrack = item as? AudioTrack else { return }
         let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
-        vc.vm = MusicPlayerViewModel()
+        vc.vm = MusicPlayerViewModel.shared
         vc.vm.currentPlayingTracks.send(tracks)
         vc.vm.item.send(audioTrack)
         let navController = UINavigationController(rootViewController: vc)

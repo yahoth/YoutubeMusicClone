@@ -40,7 +40,7 @@ class MusicPlayerViewController: UIViewController {
 
     @IBAction func playbackSliderValueChaged(_ sender: UISlider) {
         let currentTime = CMTime(seconds: Double(sender.value), preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        vm.player.seek(to: currentTime)
+        vm.player?.seek(to: currentTime)
         updateCurrentTimeLabel()
     }
 
@@ -55,7 +55,7 @@ class MusicPlayerViewController: UIViewController {
     }
 
     @objc func updateSliderAndLabel() {
-        let currentTime = CMTimeGetSeconds(vm.player.currentTime())
+        let currentTime = CMTimeGetSeconds(vm.player?.currentTime() ?? CMTime())
         playbackSlider.value = Float(currentTime)
         updateCurrentTimeLabel()
         updateDurationTimeLabel()
@@ -63,27 +63,29 @@ class MusicPlayerViewController: UIViewController {
 
     func setupTimeObserver() {
         let interval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        vm.timeObserverToken = vm.player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [weak self] time in
+        vm.timeObserverToken = vm.player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [weak self] time in
             self?.updateSliderAndLabel()
         } as AnyObject
     }
 
     func removeTimeObserver() {
         if let token = vm.timeObserverToken {
-            vm.player.removeTimeObserver(token)
+            vm.player?.removeTimeObserver(token)
             vm.timeObserverToken = nil
         }
         print("remove")
     }
 
     func updateCurrentTimeLabel() {
-        if CMTimeGetSeconds(vm.player.currentTime()) == .infinity || CMTimeGetSeconds(vm.player.currentTime()) == .nan {
-            currentTimeLabel.text = "00:00"
-        } else {
-            let currentTime = Int(CMTimeGetSeconds(vm.player.currentTime()))
+        let currentTime = CMTimeGetSeconds(vm.player?.currentTime() ?? CMTime())
+
+        if isValueValid(value: Float(currentTime)) {
+            let currentTime = Int(CMTimeGetSeconds(vm.player?.currentTime() ?? CMTime()))
             let minutes = currentTime / 60
             let seconds = currentTime % 60
             currentTimeLabel.text = String(format: "%02d:%02d", minutes, seconds)
+        } else {
+            currentTimeLabel.text = "00:00"
         }
     }
 
@@ -94,9 +96,16 @@ class MusicPlayerViewController: UIViewController {
         durationLabel.text = String(format: "%02d:%02d", minutes, seconds)
     }
 
+    func isValueValid(value: Float) -> Bool {
+        return value > 0 && !value.isNaN
+    }
+
     private func setupPlaybackSlider() {
         let assetDuration = vm.playerItem?.asset.duration
-        playbackSlider.maximumValue = Float(CMTimeGetSeconds(assetDuration ?? CMTime()))
+        playbackSlider.minimumValue = 0
+
+        let maximauValue = Float(CMTimeGetSeconds(assetDuration ?? CMTime()))
+        playbackSlider.maximumValue = isValueValid(value: maximauValue) ? maximauValue : 100
         playbackSlider.value = 0
     }
 

@@ -12,63 +12,89 @@ import Kingfisher
 
 struct SearchView: View {
     @StateObject var vm: SearchViewModel
+    @State var isPresented = false
     @State var subscriptions = Set<AnyCancellable>()
     var dismiss: () -> Void
 
     var body: some View {
         ZStack {
             NavigationView {
-                VStack {
+                VStack(spacing: 20) {
                     SearchBar(vm: vm, dismiss: dismiss)
                         .padding(.horizontal, 8)
 
-                    ScrollView(showsIndicators: false) {
-                        VStack(alignment: .leading, spacing: vm.searchState == .searching ? 32 : 16) {
-                            if !vm.isTextEmpty {
+                    if vm.isTextEmpty {
+                        VStack(alignment: .center) {
+                            Text("No search results")
+                        }
+                    } else if vm.searchState == .searching {
+                        ScrollView(showsIndicators: false) {
+                            VStack(alignment: .leading, spacing: 0) {
                                 ForEach(vm.searchResults, id: \.uuid) { result in
-                                    let keyword = "\(result.artist) \(result.title)"
-                                    if vm.searchState == .searching {
-                                        HStack(spacing: 20) {
-                                            Image(systemName: "magnifyingglass")
+                                    HStack(spacing: 20) {
+                                        Image(systemName: "magnifyingglass")
 
-                                            Text(keyword)
-                                                .lineLimit(1)
+                                        Text("\(result.artist) \(result.title)")
+                                            .lineLimit(1)
 
-                                            Spacer()
+                                        Spacer()
 
-                                            Image(systemName: "arrow.up.left")
-                                        }
-                                        .onTapGesture {
-                                            vm.search(keyword: keyword, searchState: .suggestedClick)
-                                        }
-                                    } else {
-                                        HStack(spacing: 16) {
-                                            let imageURL = URL(string: result.imageName)
-                                            KFImage(imageURL)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 60, height: 60)
-
-                                            VStack(alignment: .leading) {
-                                                Text(result.title)
-                                                    .lineLimit(2)
-                                                Text("\(result.artist) • \(result.FormattedDurationTime)")
-                                                    .foregroundColor(.gray)
-                                            }
-
-                                            Spacer()
-
-                                            Image(systemName: "ellipsis")
-                                                .rotationEffect(Angle(degrees: 90))
-                                        }
+                                        Image(systemName: "arrow.up.left")
+                                    }
+                                    .padding(20)
+                                    .onTapGesture {
+                                        vm.search(keyword: "\(result.artist) \(result.title)", searchState: .suggestedClick)
                                     }
                                 }
                             }
                         }
-                    }
-                    .padding(20)
+                    } else {
+                        ScrollView(showsIndicators: false) {
+                            VStack(alignment: .leading, spacing: 16) {
+                                ForEach(vm.searchResults, id: \.uuid) { result in
+                                    HStack(spacing: 16) {
+                                        let imageURL = URL(string: result.imageName)
+                                        KFImage(imageURL)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 60, height: 60)
 
+                                        VStack(alignment: .leading) {
+                                            Text(result.title)
+                                                .lineLimit(2)
+                                            Text("\(result.artist) • \(result.FormattedDurationTime)")
+                                                .foregroundColor(.gray)
+                                        }
+
+                                        Spacer()
+
+                                        Image(systemName: "ellipsis")
+                                            .rotationEffect(Angle(degrees: 90))
+                                    }
+                                    .onTapGesture {
+                                        vm.selectedAudioTrack = result
+                                        isPresented.toggle()
+                                    }
+                                    .padding(.horizontal, 20)
+                                }
+                            }
+                        }
+                    }
+                    
                     Spacer()
+                }
+                .fullScreenCover(isPresented: $isPresented) {
+                    let playerViewModel = MusicPlayerViewModel.shared
+                    NavigationView {
+                        MusicPlayerView(vm: playerViewModel)
+                    }
+                        .onAppear {
+                            vm.$selectedAudioTrack.receive(on: RunLoop.main)
+                                .sink { audioTrack in
+                                    playerViewModel.item.send(audioTrack)
+                                    playerViewModel.currentPlayingTracks.send(self.vm.searchResults)
+                                }.store(in: &subscriptions)
+                        }
                 }
             }.navigationBarHidden(true)
         }
@@ -80,4 +106,22 @@ struct SearchView_Previews: PreviewProvider {
         SearchView(vm: SearchViewModel(apiManager: APIManager(networkConfig: .default)), dismiss: {})
             .preferredColorScheme(.dark)
     }
+}
+
+struct MusicPlayerView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UINavigationController
+    var vm: MusicPlayerViewModel
+
+    func makeUIViewController(context: Context) -> UIViewControllerType {
+        let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
+            vc.vm = self.vm
+        let navigationController = UINavigationController(rootViewController: vc)
+            return navigationController
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        //
+    }
+
 }

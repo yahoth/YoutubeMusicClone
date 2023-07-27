@@ -33,6 +33,7 @@ final class SearchViewModel: ObservableObject {
         text.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 ? false : true
     }
 
+    @Published var selectedAudioTrack: AudioTrack?
     @Published var searchResults: [AudioTrack] = []
 
     func search(keyword: String, searchState: SearchState) {

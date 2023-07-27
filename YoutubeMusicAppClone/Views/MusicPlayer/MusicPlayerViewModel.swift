@@ -10,7 +10,10 @@ import AVFoundation
 import Combine
 
 final class MusicPlayerViewModel {
-    var player = AVPlayer()
+
+    static let shared = MusicPlayerViewModel()
+
+    var player: AVPlayer?
     var playerItem: AVPlayerItem?
     var timeObserverToken: AnyObject?
 
@@ -20,7 +23,8 @@ final class MusicPlayerViewModel {
     var currentPlayingTracks = CurrentValueSubject<[AudioTrack]?, Never>([])
 
     var workItem: DispatchWorkItem?
-    init() {
+    
+    private init() {
         fetchPlayer()
     }
 
@@ -33,17 +37,17 @@ final class MusicPlayerViewModel {
                     let previewURL = URL(string: previewStr)
                     guard let previewURL = previewURL else { return }
                     self.playerItem = AVPlayerItem(url: previewURL)
-                    self.player.replaceCurrentItem(with: self.playerItem)
+                self.player?.replaceCurrentItem(with: self.playerItem)
             }
             .store(in: &subscriptions)
     }
 
     func playAndPauseButtonTapped(button: UIButton) {
-        if player.timeControlStatus == .playing {
-            player.pause()
+        if player?.timeControlStatus == .playing {
+            player?.pause()
             button.setImage(UIImage(systemName: "play.fill"), for: .normal)
         } else {
-            player.play()
+            player?.play()
             button.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         }
     }
@@ -71,10 +75,11 @@ final class MusicPlayerViewModel {
 
     }
     func pause() {
-        player.pause()
+        player?.pause()
+
     }
 
     func play() {
-        player.play()
+        player?.play()
     }
 }
