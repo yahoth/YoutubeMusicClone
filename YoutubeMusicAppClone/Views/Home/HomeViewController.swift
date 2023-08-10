@@ -54,19 +54,22 @@ class HomeViewController: UIViewController {
             print("search")
             let vm = SearchViewModel(apiManager: self.vm.apiManager)
             let searchView = SearchView(vm: vm) {
-                self.dismiss(animated: false)
+                self.dismiss(animated: true)
             }
             let vc = UIHostingController(rootView: searchView)
             vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: false)
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true)
         }
         let searchItem = UIBarButtonItem.generate(config: searchConfig, width: 30, height: 30)
         
-        let nameConfig = CustomBarItemConfiguration(title: "태형", handler: {print("태형")})
-        let nameItem = UIBarButtonItem.generate(config: nameConfig, width: 28, height: 28)
-        
-        nameItem.customView?.backgroundColor = .systemTeal
+        let nameConfig = CustomBarItemConfiguration(image: UIImage(named: "profileImage"), handler: { print("profile") })
+        let nameItem = UIBarButtonItem.generate(config: nameConfig, width: 28, height: 28, contentMode: .scaleAspectFill)
+        nameItem.customView?.clipsToBounds = true
         nameItem.customView?.layer.cornerRadius = 14
+        nameItem.customView?.layer.borderWidth = 1
+        nameItem.customView?.layer.borderColor = CGColor(gray: 1, alpha: 1)
+
         navigationItem.rightBarButtonItems = [nameItem, searchItem, connectItem]
         navigationItem.backButtonDisplayMode = .minimal
     }
@@ -206,10 +209,9 @@ class HomeViewController: UIViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(380))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 2)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 30, trailing: 0)
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = interGroupSpacing
-                section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: 20, trailing: padding)
+                section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: padding, trailing: padding)
                 section.orthogonalScrollingBehavior = .continuous
                 section.boundarySupplementaryItems = [header]
                 return section
@@ -285,8 +287,8 @@ extension HomeViewController: UICollectionViewDelegate {
             presentMusicPlyer(with: item, tracks: vm.quickSelections.value)
 
         case .myStation:
-            let storyboard = UIStoryboard(name: "MyStationDetail", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
+            let sb = UIStoryboard(name: "MyStationDetail", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
             vc.vm = MyStationDetailViewModel(apiManager: self.vm.apiManager)
             let navController = UINavigationController(rootViewController: vc)
             navController.modalPresentationStyle = .fullScreen
@@ -300,7 +302,7 @@ extension HomeViewController: UICollectionViewDelegate {
             self.navigationController?.pushViewController(vc, animated: true)
 
         case .playlistCard:
-            print("hello")
+            print("play list card clicked")
         }
     }
 

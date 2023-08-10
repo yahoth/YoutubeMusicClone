@@ -12,12 +12,13 @@ class MyStationDetailCell: UICollectionViewCell {
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        thumbnailImageView.layer.cornerRadius = 55
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        thumbnailImageView.layer.cornerRadius = thumbnailImageView.bounds.width / 2
+        thumbnailImageView.layer.masksToBounds = true
     }
-    
+
     func configure(item: RelatedArtistsResponse.Artists) {
         let imageURL = URL(string: item.images[0].url)
         thumbnailImageView.kf.setImage(with: imageURL)

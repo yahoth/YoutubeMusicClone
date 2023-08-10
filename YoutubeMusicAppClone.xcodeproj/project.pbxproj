@@ -198,12 +198,12 @@
 				762C77872A42D12B008692C2 /* HomeViewController.swift */,
 				76F3AC942A4475740015A6CC /* HomeNavigationController.swift */,
 				762C77922A42D396008692C2 /* HomeHeader.swift */,
-				7698AF512A459BED00691292 /* CustomBarItem.swift */,
 				762C778D2A42D1F0008692C2 /* ListenAgainCell.swift */,
 				762C779F2A430BC9008692C2 /* QuickSelectionCell.swift */,
 				76F3AC8E2A444B1B0015A6CC /* MyStationCell.swift */,
 				7674ACC12A4AF998000B9FFA /* CustomMixCell.swift */,
 				769B506A2A4AB2F8008DFE78 /* PlaylistCardCell.swift */,
+				7698AF512A459BED00691292 /* CustomBarItem.swift */,
 				76734C332A656D9C0070E9EC /* PlaylistDetail */,
 				762C779C2A42EF1A008692C2 /* Detail */,
 				760D4DCF2A56DE1F00C6CC09 /* MyStationDetail */,
@@ -320,10 +320,10 @@
 				762C77792A42C730008692C2 /* Main.storyboard */,
 				76F3AC992A44775A0015A6CC /* MainTabBarController.swift */,
 				762C778F2A42D310008692C2 /* Home */,
-				762C77902A42D333008692C2 /* Browse */,
-				762C77912A42D33C008692C2 /* Store */,
 				76C188DB2A58033B00173A9E /* MusicPlayer */,
 				763D29F72A52C80000D80936 /* Search */,
+				762C77902A42D333008692C2 /* Browse */,
+				762C77912A42D33C008692C2 /* Store */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -622,6 +622,7 @@
 				DEVELOPMENT_TEAM = 54ZG4WU22U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YoutubeMusicAppClone/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -653,6 +654,7 @@
 				DEVELOPMENT_TEAM = 54ZG4WU22U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YoutubeMusicAppClone/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

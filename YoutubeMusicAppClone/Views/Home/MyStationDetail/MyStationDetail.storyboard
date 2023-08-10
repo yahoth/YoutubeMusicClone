@@ -37,14 +37,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Oc6-RS-a43">
-                                                    <rect key="frame" x="0.0" y="0.0" width="131" height="110"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="131" height="131"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="110" id="H43-yb-48r"/>
-                                                        <constraint firstAttribute="width" constant="110" id="kWK-fx-IxR"/>
+                                                        <constraint firstAttribute="width" secondItem="Oc6-RS-a43" secondAttribute="height" multiplier="1:1" id="o54-pi-6KZ"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Emz-hh-0Uj">
-                                                    <rect key="frame" x="45.666666666666671" y="114" width="39.666666666666671" height="55"/>
+                                                    <rect key="frame" x="45.666666666666671" y="135" width="39.666666666666671" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -52,7 +51,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Emz-hh-0Uj" firstAttribute="centerX" secondItem="GQd-p8-724" secondAttribute="centerX" id="1el-S1-2Vw"/>
-                                                <constraint firstAttribute="bottom" secondItem="Emz-hh-0Uj" secondAttribute="bottom" id="6F9-b3-jkz"/>
+                                                <constraint firstAttribute="bottom" secondItem="Emz-hh-0Uj" secondAttribute="bottom" constant="1" id="6F9-b3-jkz"/>
                                                 <constraint firstItem="Oc6-RS-a43" firstAttribute="top" secondItem="GQd-p8-724" secondAttribute="top" id="9MC-eK-jDt"/>
                                                 <constraint firstItem="Oc6-RS-a43" firstAttribute="leading" secondItem="GQd-p8-724" secondAttribute="leading" id="EPQ-St-e4q"/>
                                                 <constraint firstItem="Emz-hh-0Uj" firstAttribute="top" secondItem="Oc6-RS-a43" secondAttribute="bottom" constant="4" id="RU2-19-7Vj"/>

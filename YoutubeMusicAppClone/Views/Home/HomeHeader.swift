@@ -9,7 +9,7 @@ import UIKit
 
 class HomeHeader: UICollectionReusableView {
         
-    @IBOutlet weak var thumbnail: UILabel!
+    @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var sectionHeaderLabel: UILabel!
     @IBOutlet weak var sectionTitleLabel: UILabel!
     @IBOutlet weak var moreButton: UIButton!
@@ -21,17 +21,23 @@ class HomeHeader: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        thumbnail.layer.masksToBounds = true
-        thumbnail.layer.cornerRadius = 25
-        moreButton.layer.borderWidth = 1
-        moreButton.layer.borderColor = CGColor(gray: 0.5, alpha: 0.5)
-        moreButton.layer.cornerRadius = 12
+        thumbnail.clipsToBounds = true
+        thumbnail.contentMode = .scaleAspectFill
+        setBorderForView(thumbnail, borderWidth: 1, borderColor: CGColor(gray: 1, alpha: 1), cornerRadius: 25)
+        setBorderForView(moreButton, borderWidth: 1, borderColor: CGColor(gray: 0.5, alpha: 0.5), cornerRadius: 12)
+
     }
-    
+
+    private func setBorderForView(_ view: UIView, borderWidth: CGFloat, borderColor: CGColor, cornerRadius: CGFloat) {
+        view.layer.borderWidth = borderWidth
+        view.layer.borderColor = borderColor
+        view.layer.cornerRadius = cornerRadius
+    }
+
     func configure() {
         switch self.sectionIndex {
         case 0:
-            configureBySection(header: "김태형", title: "다시 듣기", isMoreButtonHidden: false, isThumbnailHidden: false)
+            configureBySection(header: "User", title: "다시 듣기", isMoreButtonHidden: false, isThumbnailHidden: false)
         case 1:
             configureBySection(header: "이 노래로 뮤직 스테이션 시작하기", title: "빠른 선곡", isMoreButtonHidden: true, isThumbnailHidden: true)
         case 2:

@@ -8,10 +8,10 @@
 import UIKit
 
 extension UIBarButtonItem {
-    static func generate(config: CustomBarItemConfiguration, width: CGFloat? = nil, height: CGFloat? = nil, fontSize: CGFloat = 12) -> UIBarButtonItem {
+    static func generate(config: CustomBarItemConfiguration, width: CGFloat? = nil, height: CGFloat? = nil, fontSize: CGFloat = 12, contentMode: UIView.ContentMode = .scaleAspectFit) -> UIBarButtonItem {
         let customView = CustomBarItem(config: config, fontSize: fontSize)
 
-        customView.imageView?.contentMode = .scaleAspectFit
+        customView.imageView?.contentMode = contentMode
         
         if let width = width {
             NSLayoutConstraint.activate([

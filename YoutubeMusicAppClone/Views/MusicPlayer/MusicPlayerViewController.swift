@@ -33,6 +33,7 @@ class MusicPlayerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupAudioSession()
         bind()
         configurePlaybackSlider()
         setNavigationItem()
@@ -118,6 +119,21 @@ class MusicPlayerViewController: UIViewController {
 
         playbackSlider.setThumbImage(normalThumb, for: .normal)
         playbackSlider.setThumbImage(highlightedThumb, for: .highlighted)
+    }
+
+    //Mute 모드일 때도 재생가능
+    private func setupAudioSession() {
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+
+            // Set the audio session category
+            try audioSession.setCategory(.playback, options: .duckOthers)
+
+            // Activate the audio session
+            try audioSession.setActive(true)
+        } catch {
+            print("Error setting up audio session: \(error)")
+        }
     }
 
     private func bind() {

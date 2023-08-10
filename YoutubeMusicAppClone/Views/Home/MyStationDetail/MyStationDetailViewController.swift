@@ -83,11 +83,12 @@ class MyStationDetailViewController: UIViewController {
     private func layout() -> UICollectionViewCompositionalLayout {
         let padding: CGFloat = 20
         let interItemSize: CGFloat = 10
-        let itemWidth: CGFloat = 110
-        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .absolute(itemWidth + 30))
+        let itemWidth = (collectionView.bounds.size.width - (padding * 2) - (interItemSize * 2)) / 3
+        let itemHeight = itemWidth + 40
+        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(itemHeight))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(itemWidth + 30))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(itemHeight))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
         
         group.interItemSpacing = .fixed(interItemSize)

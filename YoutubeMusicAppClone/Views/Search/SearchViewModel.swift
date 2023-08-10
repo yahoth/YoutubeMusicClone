@@ -52,8 +52,6 @@ final class SearchViewModel: ObservableObject {
                 if searchState != .searching {
                     self.searchState = .searchCompleted
                 }
-//                self.searchState = searchState == .searching ? .searching : .searchCompleted
-
             }
             .store(in: &subscriptions)
         self.text = keyword
