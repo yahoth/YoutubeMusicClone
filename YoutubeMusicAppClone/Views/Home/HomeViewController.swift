@@ -24,6 +24,9 @@ class HomeViewController: UIViewController {
     
     var vm = HomeViewModel(apiManager: APIManager(networkConfig: .default))
     var subscriptions = Set<AnyCancellable>()
+
+    private let refreshControl = UIRefreshControl()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +35,19 @@ class HomeViewController: UIViewController {
         setNavigationBarlogo()
         vm.fetch()
         bind()
+        addRefreshControl()
     }
-    
+
+    private func addRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(refreshView), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
+    }
+
+    @objc private func refreshView() {
+        vm.refresh()
+        self.refreshControl.endRefreshing()
+    }
+
     private func setNavigationBarlogo() {
         let logoImage = UIImage(named: "logo")
         let logoImageView = UIImageView(image: logoImage)
@@ -143,7 +157,7 @@ class HomeViewController: UIViewController {
             
         case .playlistCard:
             if let item = item as? PlaylistCard {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistCardCell", for: indexPath) as! PlaylistCardCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardCell", for: indexPath) as! CardCell
                 cell.configure(item: item)
                 return cell
             } else {
@@ -154,6 +168,9 @@ class HomeViewController: UIViewController {
 
     private func applySnapshot(to section: Section, items: [AnyHashable]) {
         var snapshot = datasource.snapshot()
+        // 해당 섹션의 현재 아이템을 삭제
+        let currentItems = snapshot.itemIdentifiers(inSection: section)
+        snapshot.deleteItems(currentItems)
         snapshot.appendItems(items, toSection: section)
         datasource.apply(snapshot)
     }
@@ -162,7 +179,7 @@ class HomeViewController: UIViewController {
         vm.agains
             .receive(on: RunLoop.main)
             .sink { items in
-                self.applySnapshot(to: .listenAgain, items: Array(items.prefix(20)))
+                self.applySnapshot(to: .listenAgain, items: Array(items))
             }.store(in: &subscriptions)
         
         vm.quickSelections
@@ -317,5 +334,4 @@ extension HomeViewController: UICollectionViewDelegate {
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
     }
-
 }

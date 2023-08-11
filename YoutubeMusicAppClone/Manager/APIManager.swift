@@ -83,8 +83,8 @@ final class APIManager {
                     let artist = item.album.artists[0].name
                     let previewURL = item.previewURL
                     let duration = item.duration
-                    let song = AudioTrack(id: id, imageName: imageName, title: title, artist: artist, previewURL: previewURL, duration: duration)
-                    return song
+                    let track = AudioTrack(id: id, imageName: imageName, title: title, artist: artist, previewURL: previewURL, duration: duration)
+                    return track
                 }
                 return tracks
             }
@@ -133,9 +133,9 @@ final class APIManager {
                     let id = item.track.id
                     let preview = item.track.previewURL
                     let duration = item.track.duration
-                    let song = AudioTrack(id: id, imageName: image.url, title: title, artist: artist, previewURL: preview, duration: duration)
+                    let track = AudioTrack(id: id, imageName: image.url, title: title, artist: artist, previewURL: preview, duration: duration)
 
-                    return song
+                    return track
                 }
                 return tracks
             }
@@ -149,6 +149,43 @@ final class APIManager {
                 }
             } receiveValue: { items in
                 tracks.send(items)
+            }
+            .store(in: &subscriptions)
+    }
+    func fetchPlaylistItemReverse(playlistID: String, tracks: CurrentValueSubject<[AudioTrack], Never>){
+        guard let accessToken else { return print("access token is nil")}
+
+        let base: String = "https://api.spotify.com"
+        let path: String = "/v1/playlists/\(playlistID)/tracks"
+        let params: [String: String] = [:]
+        let header: [String: String] = ["Authorization": accessToken]
+        let resource: Resource<PlaylistItemsResponse> = Resource(base: base, path: path, params: params, header: header)
+
+        networkService.load(resource)
+            .map { tracks in
+                let tracks = tracks.items.map { item in
+                    let artist = item.track.album.artists[0].name
+                    let image = item.track.album.images[0]
+                    let title = item.track.name
+                    let id = item.track.id
+                    let preview = item.track.previewURL
+                    let duration = item.track.duration
+                    let track = AudioTrack(id: id, imageName: image.url, title: title, artist: artist, previewURL: preview, duration: duration)
+
+                    return track
+                }
+                return tracks
+            }
+            .receive(on: RunLoop.main)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("sink error: \(error)")
+                case .finished:
+                    break
+                }
+            } receiveValue: { items in
+                tracks.send(items.reversed())
             }
             .store(in: &subscriptions)
     }
@@ -171,8 +208,8 @@ final class APIManager {
                     let images = item.images
                     let name = item.name
 
-                    let song = Playlist(id: id, description: description, images: images, name: name)
-                    return song
+                    let track = Playlist(id: id, description: description, images: images, name: name)
+                    return track
                 }
                 return playlists
             })
@@ -205,16 +242,17 @@ final class APIManager {
                 let title = response.name
                 let imageName = response.images[0].url
                 let description = response.description
-                let tracks = response.tracks.items.map { item -> Track in
+                let tracks = response.tracks.items.map { item -> AudioTrack in
                     let id = item.track.id
                     let imageName = item.track.album.images[0].url
                     let title = item.track.name
                     let artist = item.track.album.artists[0].name
                     let releaseDate = item.track.album.releaseDate
+                    let previewURL = item.track.album.previewURL
+                    let duration = item.track.album.duration
 
-                    let song = Track(id: id, imageName: imageName, title: title, artist: artist, releaseDate: releaseDate)
-
-                    return song
+                    let track = AudioTrack(id: id, imageName: imageName, title: title, artist: artist, previewURL: previewURL, duration: duration)
+                    return track
                 }
                 let playlist = PlaylistCard(id: id, title: title, imageName: imageName, description: description, tracks: tracks)
 

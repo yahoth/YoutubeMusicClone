@@ -36,6 +36,13 @@ final class HomeViewModel {
             }.store(in: &subscriptions)
     }
 
+    func refresh() {
+        self.apiManager.fetchPlaylistItemReverse(playlistID: "37i9dQZF1DX3ZeFHRhhi7Y", tracks: self.agains) // ListenAgain
+        self.apiManager.fetchPlaylistItemReverse(playlistID: "0HqwnwTY7L4IYeg5iOcMsP", tracks: self.quickSelections) // QuickSelection
+        self.apiManager.fetchFeaturedPlaylists(playlist: self.customMixes) // CustomMix
+        self.apiManager.fetchPlaylist(playlist: self.playlistCard) // PlaylistCard
+    }
+
 //    private func fetchMyStation() {
 //        myStation.send(MyStation.mock)
 //    }

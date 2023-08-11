@@ -90,11 +90,15 @@ struct PlaylistResponse: Hashable, Decodable {
         let artists: [Artists]
         let releaseDate: String
         let images: [SpotifyImage]
+        let previewURL: String?
+        let duration: Int
 
         enum CodingKeys: String, CodingKey {
             case artists
             case releaseDate = "release_date"
             case images
+            case previewURL = "preview_url"
+            case duration = "duration_ms"
         }
     }
 

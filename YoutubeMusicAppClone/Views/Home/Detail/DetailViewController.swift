@@ -24,6 +24,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         configureCollectionView()
         bind()
+        navigationItem.backButtonDisplayMode = .minimal
     }
     
     private func bind() {

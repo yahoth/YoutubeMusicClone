@@ -18,6 +18,8 @@ final class PlaylistDetailViewModel {
 
     let playlistTrack = CurrentValueSubject<[AudioTrack], Never>([])
 
+    let musicStarted = PassthroughSubject<AudioTrack, Never>()
+
     init(apiManager: APIManager, playlistInfo: Playlist) {
         self.apiManager = apiManager
         self.playlistInfo = playlistInfo

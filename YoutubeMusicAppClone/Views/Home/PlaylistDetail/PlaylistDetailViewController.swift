@@ -31,8 +31,13 @@ class PlaylistDetailViewController: UIViewController {
         bind()
     }
 
+    @IBAction func playButtonClicked(_ sender: Any) {
+        vm.musicStarted.send(vm.playlistTrack.value[0])
+    }
+
     private func bind() {
-        vm.$playlistInfo.receive(on: RunLoop.main)
+        vm.$playlistInfo
+            .receive(on: RunLoop.main)
             .sink { info in
                 self.applySnapshot(to: .info, items: [info])
             }.store(in: &subscriptions)
@@ -43,6 +48,20 @@ class PlaylistDetailViewController: UIViewController {
             .sink { track in
                 self.applySnapshot(to: .track, items: track)
             }.store(in: &subscriptions)
+
+        vm.musicStarted
+            .receive(on: RunLoop.main)
+            .sink { track in
+                let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
+                vc.vm = MusicPlayerViewModel.shared
+                vc.vm.currentPlayingTracks.send(self.vm.playlistTrack.value)
+                vc.vm.item.send(track)
+                let navController = UINavigationController(rootViewController: vc)
+                navController.modalPresentationStyle = .fullScreen
+                self.present(navController, animated: true)
+            }
+            .store(in: &subscriptions)
     }
 
     private func applySnapshot(to section: Section, items: [AnyHashable]) {
@@ -129,14 +148,7 @@ class PlaylistDetailViewController: UIViewController {
 extension PlaylistDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = datasource.itemIdentifier(for: indexPath)
-        let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
-        vc.vm = MusicPlayerViewModel.shared
         guard let item = item as? AudioTrack else {return}
-        vc.vm.currentPlayingTracks.send(self.vm.playlistTrack.value)
-        vc.vm.item.send(item)
-        let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .fullScreen
-        present(navController, animated: true)
+        vm.musicStarted.send(item)
     }
 }

@@ -32,6 +32,7 @@
 		762CCD312A71600900543AA5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762CCD2E2A71600900543AA5 /* SearchBar.swift */; };
 		762CCD322A71600900543AA5 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762CCD2F2A71600900543AA5 /* SearchView.swift */; };
 		762CCD332A71600900543AA5 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762CCD302A71600900543AA5 /* SearchViewModel.swift */; };
+		763786E12A863E9B008285F5 /* CardTrackListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763786E02A863E9B008285F5 /* CardTrackListCell.swift */; };
 		76381B982A5BD32A003641AA /* MusicPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76381B972A5BD32A003641AA /* MusicPlayerViewModel.swift */; };
 		763D2A002A52D04D00D80936 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763D29FF2A52D04D00D80936 /* SearchResponse.swift */; };
 		76734C0E2A6532F20070E9EC /* AudioTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76734C0D2A6532F20070E9EC /* AudioTrack.swift */; };
@@ -46,7 +47,7 @@
 		7698AF522A459BED00691292 /* CustomBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7698AF512A459BED00691292 /* CustomBarItem.swift */; };
 		7698AF542A45A13900691292 /* UIBarButtonItem+CumstomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7698AF532A45A13900691292 /* UIBarButtonItem+CumstomView.swift */; };
 		769B50692A4AB258008DFE78 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B50682A4AB258008DFE78 /* Playlist.swift */; };
-		769B506B2A4AB2F8008DFE78 /* PlaylistCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B506A2A4AB2F8008DFE78 /* PlaylistCardCell.swift */; };
+		769B506B2A4AB2F8008DFE78 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B506A2A4AB2F8008DFE78 /* CardCell.swift */; };
 		769B506D2A4AC07A008DFE78 /* PlaylistCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B506C2A4AC07A008DFE78 /* PlaylistCard.swift */; };
 		76B1088D2A5FC35A00CA3B53 /* MyStationDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76B1088C2A5FC35A00CA3B53 /* MyStationDetail.storyboard */; };
 		76C188DA2A58033500173A9E /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C188D92A58033500173A9E /* MusicPlayerViewController.swift */; };
@@ -93,6 +94,7 @@
 		762CCD2E2A71600900543AA5 /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		762CCD2F2A71600900543AA5 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		762CCD302A71600900543AA5 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		763786E02A863E9B008285F5 /* CardTrackListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTrackListCell.swift; sourceTree = "<group>"; };
 		76381B972A5BD32A003641AA /* MusicPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewModel.swift; sourceTree = "<group>"; };
 		763D29FF2A52D04D00D80936 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 		76734C0D2A6532F20070E9EC /* AudioTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrack.swift; sourceTree = "<group>"; };
@@ -107,7 +109,7 @@
 		7698AF512A459BED00691292 /* CustomBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarItem.swift; sourceTree = "<group>"; };
 		7698AF532A45A13900691292 /* UIBarButtonItem+CumstomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+CumstomView.swift"; sourceTree = "<group>"; };
 		769B50682A4AB258008DFE78 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
-		769B506A2A4AB2F8008DFE78 /* PlaylistCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCardCell.swift; sourceTree = "<group>"; };
+		769B506A2A4AB2F8008DFE78 /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
 		769B506C2A4AC07A008DFE78 /* PlaylistCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCard.swift; sourceTree = "<group>"; };
 		76B1088C2A5FC35A00CA3B53 /* MyStationDetail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MyStationDetail.storyboard; sourceTree = "<group>"; };
 		76C188D92A58033500173A9E /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
@@ -202,7 +204,8 @@
 				762C779F2A430BC9008692C2 /* QuickSelectionCell.swift */,
 				76F3AC8E2A444B1B0015A6CC /* MyStationCell.swift */,
 				7674ACC12A4AF998000B9FFA /* CustomMixCell.swift */,
-				769B506A2A4AB2F8008DFE78 /* PlaylistCardCell.swift */,
+				769B506A2A4AB2F8008DFE78 /* CardCell.swift */,
+				763786E02A863E9B008285F5 /* CardTrackListCell.swift */,
 				7698AF512A459BED00691292 /* CustomBarItem.swift */,
 				76734C332A656D9C0070E9EC /* PlaylistDetail */,
 				762C779C2A42EF1A008692C2 /* Detail */,
@@ -422,7 +425,7 @@
 				76E7DCEB2A4C490D009503C3 /* NetworkService.swift in Sources */,
 				76E7DCF02A4C495B009503C3 /* Publisher+Utils.swift in Sources */,
 				76F3AC912A4463AE0015A6CC /* QuickSelection.swift in Sources */,
-				769B506B2A4AB2F8008DFE78 /* PlaylistCardCell.swift in Sources */,
+				769B506B2A4AB2F8008DFE78 /* CardCell.swift in Sources */,
 				769B50692A4AB258008DFE78 /* Playlist.swift in Sources */,
 				76F3AC8F2A444B1B0015A6CC /* MyStationCell.swift in Sources */,
 				762C77742A42C730008692C2 /* AppDelegate.swift in Sources */,
@@ -456,6 +459,7 @@
 				762CCD332A71600900543AA5 /* SearchViewModel.swift in Sources */,
 				762C77A02A430BC9008692C2 /* QuickSelectionCell.swift in Sources */,
 				7615E50B2A57EE4A003975B6 /* DetailCell.swift in Sources */,
+				763786E12A863E9B008285F5 /* CardTrackListCell.swift in Sources */,
 				762C77952A42D8D3008692C2 /* ListenAgain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,8 +632,9 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -638,9 +643,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codeduck.YoutubeMusicAppClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -660,8 +668,9 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -670,9 +679,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codeduck.YoutubeMusicAppClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

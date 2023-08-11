@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AudioTrack: Hashable {
+struct AudioTrack: Hashable, Decodable {
     let id: String
     let uuid = UUID().uuidString
     let imageName: String
@@ -26,5 +26,4 @@ struct AudioTrack: Hashable {
 
         return String(format: "%2d:%02d", minutes, seconds)
     }
-
 }
