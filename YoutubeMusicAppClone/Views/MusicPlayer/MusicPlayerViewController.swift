@@ -74,7 +74,6 @@ class MusicPlayerViewController: UIViewController {
             vm.player?.removeTimeObserver(token)
             vm.timeObserverToken = nil
         }
-        print("remove")
     }
 
     func updateCurrentTimeLabel() {
@@ -169,6 +168,5 @@ class MusicPlayerViewController: UIViewController {
 
     deinit {
         removeTimeObserver()
-        print("deinit")
     }
 }

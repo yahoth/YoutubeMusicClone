@@ -25,7 +25,6 @@ class HomeHeader: UICollectionReusableView {
         thumbnail.contentMode = .scaleAspectFill
         setBorderForView(thumbnail, borderWidth: 1, borderColor: CGColor(gray: 1, alpha: 1), cornerRadius: 25)
         setBorderForView(moreButton, borderWidth: 1, borderColor: CGColor(gray: 0.5, alpha: 0.5), cornerRadius: 12)
-
     }
 
     private func setBorderForView(_ view: UIView, borderWidth: CGFloat, borderColor: CGColor, cornerRadius: CGFloat) {

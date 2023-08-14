@@ -28,7 +28,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="QuickSelectionCell" id="klD-ut-vFv" customClass="QuickSelectionCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="QuickPicksCell" id="klD-ut-vFv" customClass="QuickPicksCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="59" width="430" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9tS-a7-kQD">
@@ -95,14 +95,14 @@
                                             <outlet property="titleLabel" destination="6jV-1t-odT" id="0HK-ym-JwN"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MyStationCell" id="agS-EO-M7Q" customClass="MyStationCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="YourMusicTunerCell" id="agS-EO-M7Q" customClass="YourMusicTunerCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="139" width="430" height="209"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="QDX-Yh-hgo">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="209"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mystation" translatesAutoresizingMaskIntoConstraints="NO" id="PXv-Av-pWP">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yourMusicTuner" translatesAutoresizingMaskIntoConstraints="NO" id="PXv-Av-pWP">
                                                     <rect key="frame" x="0.0" y="0.0" width="430" height="209"/>
                                                 </imageView>
                                             </subviews>
@@ -118,7 +118,7 @@
                                             <outlet property="imageView" destination="PXv-Av-pWP" id="kf4-yr-AmI"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomMixCell" id="sMQ-O2-IcQ" customClass="CustomMixCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MixedForYouCell" id="sMQ-O2-IcQ" customClass="MixedForYouCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
                                         <rect key="frame" x="108" y="358" width="214" height="350"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="weu-Fx-cpZ">
@@ -127,7 +127,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="신나는 운동을 위한 국내 댄스" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hx5-Dm-sUK">
                                                     <rect key="frame" x="0.0" y="222" width="214" height="20.333333333333343"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -203,14 +203,14 @@
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="CardCell" reuseIdentifier="CardCell" id="fgc-sX-L2I" customClass="CardCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="1012" width="430" height="533"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="O2v-1h-mwR">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="O2v-1h-mwR">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="533"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="NdJ-HB-OPy">
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="NdJ-HB-OPy">
                                                     <rect key="frame" x="16" y="16" width="398" height="501"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yFD-Uv-a6Z">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yFD-Uv-a6Z">
                                                             <rect key="frame" x="0.0" y="0.0" width="398" height="96"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TIn-L1-Ewh">
@@ -220,22 +220,22 @@
                                                                         <constraint firstAttribute="height" constant="96" id="Ir3-9k-kGq"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="T7K-v9-dwr">
+                                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="T7K-v9-dwr">
                                                                     <rect key="frame" x="108" y="20" width="290" height="56"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="팝 R&amp;B 잼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lT9-ud-3qd">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="팝 R&amp;B 잼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lT9-ud-3qd">
                                                                             <rect key="frame" x="0.0" y="0.0" width="290" height="23.333333333333332"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="black" pointSize="23"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YouTube Music" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehE-uL-yCz">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="YouTube Music" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehE-uL-yCz">
                                                                             <rect key="frame" x="0.0" y="23.333333333333336" width="290" height="16.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="노래 122곡" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehb-ma-Zkv">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="노래 122곡" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehb-ma-Zkv">
                                                                             <rect key="frame" x="0.0" y="39.666666666666671" width="290" height="16.333333333333329"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -254,10 +254,10 @@
                                                                 <constraint firstItem="TIn-L1-Ewh" firstAttribute="top" secondItem="yFD-Uv-a6Z" secondAttribute="top" id="wYw-wp-8Ot"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwC-wx-peK">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jwC-wx-peK">
                                                             <rect key="frame" x="0.0" y="114" width="398" height="50"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="팝과 R&amp;B의 경계를 허문 음악을 감상해보세요." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tyH-4k-3Pg">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="팝과 R&amp;B의 경계를 허문 음악을 감상해보세요." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tyH-4k-3Pg">
                                                                     <rect key="frame" x="0.0" y="10" width="398" height="30"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -272,9 +272,9 @@
                                                                 <constraint firstItem="tyH-4k-3Pg" firstAttribute="leading" secondItem="jwC-wx-peK" secondAttribute="leading" id="tzJ-zL-rgD"/>
                                                             </constraints>
                                                         </view>
-                                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QkJ-Uq-oid">
+                                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QkJ-Uq-oid">
                                                             <rect key="frame" x="0.0" y="182" width="398" height="241"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uR7-r8-Sa5">
                                                                 <size key="itemSize" width="398" height="60"/>
                                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -285,7 +285,7 @@
                                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="CardTrackListCell" reuseIdentifier="CardTrackListCell" id="Nbc-wO-6d1" customClass="CardTrackListCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="398" height="60"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ObW-Om-t6A">
+                                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="ObW-Om-t6A">
                                                                         <rect key="frame" x="0.0" y="0.0" width="398" height="60"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <subviews>
@@ -293,23 +293,23 @@
                                                                                 <rect key="frame" x="0.0" y="0.0" width="398" height="60"/>
                                                                                 <subviews>
                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kHB-c0-csj" userLabel="thumbnailImageView">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="60"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="width" constant="60" id="R5t-oj-trk"/>
                                                                                             <constraint firstAttribute="width" secondItem="kHB-c0-csj" secondAttribute="height" multiplier="1:1" id="mnw-Qh-hGr"/>
                                                                                         </constraints>
                                                                                     </imageView>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-13" translatesAutoresizingMaskIntoConstraints="NO" id="NBe-NH-j7Y">
-                                                                                        <rect key="frame" x="76" y="0.0" width="276" height="60"/>
+                                                                                        <rect key="frame" x="16.000000000000007" y="0.0" width="124.66666666666669" height="60"/>
                                                                                         <subviews>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This LoveThis LoveThis LoveThis LoveThis LoveThis LoveThis LoveThis Love" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wlg-vP-kna" userLabel="title">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="276" height="36.666666666666664"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="124.66666666666667" height="36.666666666666664"/>
                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maroon5 • 2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaM-Ic-Dh9" userLabel="subTitle">
-                                                                                                <rect key="frame" x="0.0" y="23.666666666666668" width="276" height="36.333333333333329"/>
+                                                                                                <rect key="frame" x="0.0" y="23.666666666666668" width="124.66666666666667" height="36.333333333333329"/>
                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                 <nil key="highlightedColor"/>
@@ -317,7 +317,7 @@
                                                                                         </subviews>
                                                                                     </stackView>
                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipsis.vertical.white" translatesAutoresizingMaskIntoConstraints="NO" id="O62-tT-qqh">
-                                                                                        <rect key="frame" x="368" y="0.0" width="30" height="60"/>
+                                                                                        <rect key="frame" x="156.66666666666663" y="0.0" width="241.33333333333337" height="60"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="width" constant="30" id="3lF-xI-cat"/>
                                                                                         </constraints>
@@ -341,7 +341,7 @@
                                                                 </collectionViewCell>
                                                             </cells>
                                                         </collectionView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MQi-JK-oQV">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MQi-JK-oQV">
                                                             <rect key="frame" x="0.0" y="441" width="398" height="60"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1F9-fu-gUN">
@@ -371,6 +371,9 @@
                                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="play.fill" catalog="system"/>
+                                                                    <connections>
+                                                                        <action selector="playButtonTapped:" destination="fgc-sX-L2I" eventType="touchUpInside" id="H67-0I-OKq"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -512,11 +515,11 @@
     </scenes>
     <resources>
         <image name="ellipsis.vertical.white" width="512" height="512"/>
-        <image name="mystation" width="1852" height="876"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
         <image name="plus.square.on.square" catalog="system" width="128" height="116"/>
         <image name="profileImage" width="1007" height="1309"/>
         <image name="shuffle" catalog="system" width="128" height="95"/>
+        <image name="yourMusicTuner" width="1852" height="876"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

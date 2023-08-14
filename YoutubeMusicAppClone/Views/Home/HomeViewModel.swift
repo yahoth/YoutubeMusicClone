@@ -9,6 +9,8 @@ import UIKit
 import Combine
 
 final class HomeViewModel {
+    typealias Section = HomeViewSection
+
     var apiManager: APIManager
 
     init(apiManager: APIManager) {
@@ -17,11 +19,13 @@ final class HomeViewModel {
 
     let moreButtonTapped = PassthroughSubject<Int, Never>()
 
-    let agains = CurrentValueSubject<[AudioTrack], Never>([])
-    let quickSelections = CurrentValueSubject<[AudioTrack], Never>([])
-    let myStation = PassthroughSubject<MyStation, Never>()
-    let customMixes = CurrentValueSubject<[Playlist], Never>([])
-    let playlistCard = PassthroughSubject<PlaylistCard, Never>()
+    let listenAgain = CurrentValueSubject<[AudioTrack], Never>([])
+    let quickPicks = CurrentValueSubject<[AudioTrack], Never>([])
+    let yourMusicTuner = PassthroughSubject<YourMusicTuner, Never>()
+    let mixedForYou = CurrentValueSubject<[PlaylistInfo], Never>([])
+    let playlistCard = CurrentValueSubject<PlaylistCard?, Never>(nil)
+
+    let didSelectItem = PassthroughSubject<(section: Section, item: Any, tracks: [AudioTrack]), Never>()
 
     var subscriptions = Set<AnyCancellable>()
 
@@ -29,22 +33,18 @@ final class HomeViewModel {
         apiManager.$accessToken.receive(on: RunLoop.main)
             .compactMap { $0 }
             .sink { token in
-                self.apiManager.fetchPlaylistItem(playlistID: "37i9dQZF1DX3ZeFHRhhi7Y", tracks: self.agains) // ListenAgain
-                self.apiManager.fetchPlaylistItem(playlistID: "0HqwnwTY7L4IYeg5iOcMsP", tracks: self.quickSelections) // QuickSelection
-                self.apiManager.fetchFeaturedPlaylists(playlist: self.customMixes) // CustomMix
+                self.apiManager.fetchPlaylistItem(playlistID: "37i9dQZF1DX3ZeFHRhhi7Y", tracks: self.listenAgain) // ListenAgain
+                self.apiManager.fetchPlaylistItem(playlistID: "0HqwnwTY7L4IYeg5iOcMsP", tracks: self.quickPicks) // QuickPicks
+                self.apiManager.fetchFeaturedPlaylists(playlist: self.mixedForYou) // MixedForYou
                 self.apiManager.fetchPlaylist(playlist: self.playlistCard) // PlaylistCard
             }.store(in: &subscriptions)
     }
 
     func refresh() {
-        self.apiManager.fetchPlaylistItemReverse(playlistID: "37i9dQZF1DX3ZeFHRhhi7Y", tracks: self.agains) // ListenAgain
-        self.apiManager.fetchPlaylistItemReverse(playlistID: "0HqwnwTY7L4IYeg5iOcMsP", tracks: self.quickSelections) // QuickSelection
-        self.apiManager.fetchFeaturedPlaylists(playlist: self.customMixes) // CustomMix
+        self.apiManager.fetchPlaylistItemReverse(playlistID: "37i9dQZF1DX3ZeFHRhhi7Y", tracks: self.listenAgain) // ListenAgain
+        self.apiManager.fetchPlaylistItemReverse(playlistID: "0HqwnwTY7L4IYeg5iOcMsP", tracks: self.quickPicks) // QuickPicks
+        self.apiManager.fetchFeaturedPlaylists(playlist: self.mixedForYou) // MixedForYou
         self.apiManager.fetchPlaylist(playlist: self.playlistCard) // PlaylistCard
     }
-
-//    private func fetchMyStation() {
-//        myStation.send(MyStation.mock)
-//    }
 }
 

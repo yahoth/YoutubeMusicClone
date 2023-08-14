@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class PlaylistDetailViewController: UIViewController {
+class PlaylistDetailViewController: UIViewController, MusicPlayerPresentable {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -52,14 +52,7 @@ class PlaylistDetailViewController: UIViewController {
         vm.musicStarted
             .receive(on: RunLoop.main)
             .sink { track in
-                let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
-                let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
-                vc.vm = MusicPlayerViewModel.shared
-                vc.vm.currentPlayingTracks.send(self.vm.playlistTrack.value)
-                vc.vm.item.send(track)
-                let navController = UINavigationController(rootViewController: vc)
-                navController.modalPresentationStyle = .fullScreen
-                self.present(navController, animated: true)
+                self.presentMusicPlayer(with: track, tracks: self.vm.playlistTrack.value)
             }
             .store(in: &subscriptions)
     }
@@ -73,7 +66,7 @@ class PlaylistDetailViewController: UIViewController {
     private func configureCell(section: Section, item: Item, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell? {
         switch section {
         case .info:
-            if let item = item as? Playlist {
+            if let item = item as? PlaylistInfo {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistInfoCell", for: indexPath) as! PlaylistInfoCell
                 cell.configure(item: item)
                 return cell

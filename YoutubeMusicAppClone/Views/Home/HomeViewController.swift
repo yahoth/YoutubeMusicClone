@@ -9,25 +9,26 @@ import UIKit
 import SwiftUI
 import Combine
 
-class HomeViewController: UIViewController {
+enum HomeViewSection: Int, CaseIterable, Hashable {
+    case listenAgain
+    case quickPicks
+    case yourMusicTuner
+    case mixedForYou
+    case playlistCard
+}
+
+class HomeViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var datasource: UICollectionViewDiffableDataSource<Section, Item>!
     typealias Item = AnyHashable
-    enum Section: Int, CaseIterable {
-        case listenAgain
-        case quickSelection
-        case myStation
-        case customMix
-        case playlistCard
-    }
-    
+    typealias Section = HomeViewSection
+
     var vm = HomeViewModel(apiManager: APIManager(networkConfig: .default))
     var subscriptions = Set<AnyCancellable>()
 
     private let refreshControl = UIRefreshControl()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
@@ -110,9 +111,9 @@ class HomeViewController: UIViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections(Section.allCases)
         snapshot.appendItems([], toSection: .listenAgain)
-        snapshot.appendItems([], toSection: .quickSelection)
-        snapshot.appendItems([MyStation.mock], toSection: .myStation)
-        snapshot.appendItems([], toSection: .customMix)
+        snapshot.appendItems([], toSection: .quickPicks)
+        snapshot.appendItems([YourMusicTuner.mock], toSection: .yourMusicTuner)
+        snapshot.appendItems([], toSection: .mixedForYou)
         snapshot.appendItems([], toSection: .playlistCard)
         datasource.apply(snapshot)
         
@@ -131,24 +132,24 @@ class HomeViewController: UIViewController {
             } else {
                 return nil
             }
-        case .quickSelection:
+        case .quickPicks:
             if let item = item as? AudioTrack {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuickSelectionCell", for: indexPath) as! QuickSelectionCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuickPicksCell", for: indexPath) as! QuickPicksCell
                 cell.configure(item: item)
                 return cell
             } else {
                 return nil
             }
-        case .myStation:
-            if item is MyStation {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyStationCell", for: indexPath) as! MyStationCell
+        case .yourMusicTuner:
+            if item is YourMusicTuner {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YourMusicTunerCell", for: indexPath) as! YourMusicTunerCell
                 return cell
             } else {
                 return nil
             }
-        case .customMix:
-            if let item = item as? Playlist {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMixCell", for: indexPath) as! CustomMixCell
+        case .mixedForYou:
+            if let item = item as? PlaylistInfo {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MixedForYouCell", for: indexPath) as! MixedForYouCell
                 cell.configure(item: item)
                 return cell
             } else {
@@ -158,7 +159,9 @@ class HomeViewController: UIViewController {
         case .playlistCard:
             if let item = item as? PlaylistCard {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardCell", for: indexPath) as! CardCell
-                cell.configure(item: item)
+                cell.vm = CardCellViewModel(viewController: self, playlist: item)
+                cell.configureCellAndCollectionView()
+                cell.bind()
                 return cell
             } else {
                 return nil
@@ -176,22 +179,22 @@ class HomeViewController: UIViewController {
     }
     
     private func bind() {
-        vm.agains
+        vm.listenAgain
             .receive(on: RunLoop.main)
             .sink { items in
                 self.applySnapshot(to: .listenAgain, items: Array(items))
             }.store(in: &subscriptions)
         
-        vm.quickSelections
+        vm.quickPicks
             .receive(on: RunLoop.main)
             .sink { items in
-                self.applySnapshot(to: .quickSelection, items: Array(items.prefix(20)))
+                self.applySnapshot(to: .quickPicks, items: Array(items.prefix(20)))
             }.store(in: &subscriptions)
 
-        vm.customMixes
+        vm.mixedForYou
             .receive(on: RunLoop.main)
             .sink { items in
-                self.applySnapshot(to: .customMix, items: Array(items.prefix(20)))
+                self.applySnapshot(to: .mixedForYou, items: Array(items.prefix(20)))
             }.store(in: &subscriptions)
         
         vm.playlistCard
@@ -203,12 +206,46 @@ class HomeViewController: UIViewController {
         vm.moreButtonTapped
             .receive(on: RunLoop.main)
             .sink { sectionIndex in
-                let sb = UIStoryboard(name: "Detail", bundle: nil)
-                let vc = sb.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-                vc.vm = HomeDetailViewModel(with: sectionIndex == 0 ? self.vm.agains.value : self.vm.customMixes.value, apiManager: self.vm.apiManager)
+                let sb = UIStoryboard(name: "MoreContentList", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "MoreContentListViewController") as! MoreContentListViewController
+                vc.vm = MoreContentListViewModel(with: sectionIndex == 0 ? self.vm.listenAgain.value : self.vm.mixedForYou.value, apiManager: self.vm.apiManager)
                 self.navigationController?.pushViewController(vc, animated: true)
             }.store(in: &subscriptions)
+
+        vm.didSelectItem
+            .receive(on: RunLoop.main)
+            .sink { (section, item, tracks) in
+                switch section {
+                case .listenAgain, .quickPicks:
+                    self.presentMusicPlayer(with: item, tracks: tracks)
+                case .yourMusicTuner:
+                    let sb = UIStoryboard(name: "YourMusicTunerDetail", bundle: nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "YourMusicTunerDetailViewController") as! YourMusicTunerDetailViewController
+                    vc.vm = YourMusicTunerDetailViewModel(apiManager: self.vm.apiManager)
+                    let navController = UINavigationController(rootViewController: vc)
+                    navController.modalPresentationStyle = .fullScreen
+                    self.present(navController, animated: true)
+
+                case .mixedForYou, .playlistCard:
+                    self.pushPlaylistDetailView(with: item, section: section)
+                }
+            }.store(in: &subscriptions)
     }
+
+    private func pushPlaylistDetailView(with item: Any, section: Section) {
+        let sb = UIStoryboard(name: "PlaylistDetail", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "PlaylistDetailViewController") as! PlaylistDetailViewController
+        if section == .mixedForYou {
+            guard let item = item as? PlaylistInfo else {return}
+            vc.vm = PlaylistDetailViewModel(apiManager: self.vm.apiManager, playlistInfo: item)
+        } else {
+            guard let item = item as? PlaylistCard else {return}
+            let info = PlaylistInfo(id: item.id, description: item.description, imageName: item.imageName, title: item.title)
+            vc.vm = PlaylistDetailViewModel(apiManager: self.vm.apiManager, playlistInfo: info, tracks: item.tracks)
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
     
     private func layout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -291,47 +328,26 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate {
+extension HomeViewController: UICollectionViewDelegate, MusicPlayerPresentable {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
               let item = datasource.itemIdentifier(for: indexPath) else { return }
-
+        
         switch section {
         case .listenAgain:
-            presentMusicPlyer(with: item, tracks: vm.agains.value)
+            vm.didSelectItem.send((section: .listenAgain, item: item, tracks: vm.listenAgain.value))
+            
+        case .quickPicks:
+            vm.didSelectItem.send((section: .quickPicks, item: item, tracks: vm.quickPicks.value))
 
-        case .quickSelection:
-            presentMusicPlyer(with: item, tracks: vm.quickSelections.value)
+        case .yourMusicTuner:
+            vm.didSelectItem.send((section: .yourMusicTuner, item: item, tracks: []))
 
-        case .myStation:
-            let sb = UIStoryboard(name: "MyStationDetail", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "MyStationDetailViewController") as! MyStationDetailViewController
-            vc.vm = MyStationDetailViewModel(apiManager: self.vm.apiManager)
-            let navController = UINavigationController(rootViewController: vc)
-            navController.modalPresentationStyle = .fullScreen
-            present(navController, animated: true)
-
-        case .customMix:
-            let sb = UIStoryboard(name: "PlaylistDetail", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "PlaylistDetailViewController") as! PlaylistDetailViewController
-            guard let item = item as? Playlist else {return}
-            vc.vm = PlaylistDetailViewModel(apiManager: self.vm.apiManager, playlistInfo: item)
-            self.navigationController?.pushViewController(vc, animated: true)
-
+        case .mixedForYou:
+            vm.didSelectItem.send((section: .mixedForYou, item: item, tracks: []))
+            
         case .playlistCard:
-            print("play list card clicked")
+            vm.didSelectItem.send((section: .playlistCard, item: item, tracks: []))
         }
-    }
-
-    private func presentMusicPlyer(with item: Any, tracks: [AudioTrack]) {
-        guard let audioTrack = item as? AudioTrack else { return }
-        let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
-        vc.vm = MusicPlayerViewModel.shared
-        vc.vm.currentPlayingTracks.send(tracks)
-        vc.vm.item.send(audioTrack)
-        let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .fullScreen
-        present(navController, animated: true)
     }
 }

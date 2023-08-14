@@ -4,8 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,29 +20,13 @@
                     </tabBar>
                     <connections>
                         <segue destination="ecf-H8-XAF" kind="relationship" relationship="viewControllers" id="38A-rm-oEc"/>
-                        <segue destination="Tzb-Ck-6uX" kind="relationship" relationship="viewControllers" id="Ce9-kO-Z1z"/>
+                        <segue destination="ElW-ml-g80" kind="relationship" relationship="viewControllers" id="Ce9-kO-Z1z"/>
                         <segue destination="CII-4A-dho" kind="relationship" relationship="viewControllers" id="mgm-X8-3II"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CpW-Eh-9jH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="135.1145038167939" y="3.5211267605633805"/>
-        </scene>
-        <!--보관함-->
-        <scene sceneID="UiN-vz-6jk">
-            <objects>
-                <viewController storyboardIdentifier="StoreViewController" id="Tzb-Ck-6uX" customClass="StoreViewController" customModule="YoutubeMusicAppClone" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="GdD-3x-OiC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="PA5-w2-qNk"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="보관함" image="store" id="xrC-55-IpF"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oCK-rc-x0D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="848" y="794"/>
         </scene>
         <!--홈-->
         <scene sceneID="6Mr-iR-9Dg">
@@ -75,10 +57,10 @@
             </objects>
             <point key="canvasLocation" x="-506.1068702290076" y="1464.7887323943662"/>
         </scene>
-        <!--BrowseViewController-->
+        <!--ExploreViewController-->
         <scene sceneID="xNb-HV-ZK1">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="BrowseViewController" storyboardName="Browse" referencedIdentifier="BrowseViewController" id="CII-4A-dho" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardIdentifier="BrowseViewController" storyboardName="Explore" referencedIdentifier="ExploreViewController" id="CII-4A-dho" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="9vA-hx-3Vt"/>
                     <navigationItem key="navigationItem" id="moP-vC-0wY"/>
                 </viewControllerPlaceholder>
@@ -86,12 +68,18 @@
             </objects>
             <point key="canvasLocation" x="135" y="1056"/>
         </scene>
+        <!--LibraryViewController-->
+        <scene sceneID="Svj-oc-k65">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="StoreViewController" storyboardName="Library" referencedIdentifier="LibraryViewController" id="ElW-ml-g80" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="UPF-rF-Gxn"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bBc-8Y-Wvt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="848" y="794"/>
+        </scene>
     </scenes>
     <resources>
         <image name="home" width="25" height="25.333333969116211"/>
-        <image name="store" width="25" height="25.333333969116211"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

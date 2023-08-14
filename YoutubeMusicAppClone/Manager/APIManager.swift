@@ -33,7 +33,7 @@ final class APIManager {
 
     @Published var accessToken: String?
 
-    // MyStationDetail
+    // YourMusicTunerDetail
     func fetchArtists(artists: PassthroughSubject<[RelatedArtistsResponse.Artists], Never>) {
         guard let accessToken else { return print("access token is nil")}
 
@@ -114,7 +114,7 @@ final class APIManager {
             }.store(in: &subscriptions)
     }
 
-    // Fetch Playlist item: ListeAgain, QuickSelection
+    // Fetch Playlist item: ListeAgain, QuickPicks
     func fetchPlaylistItem(playlistID: String, tracks: CurrentValueSubject<[AudioTrack], Never>){
         guard let accessToken else { return print("access token is nil")}
 
@@ -152,6 +152,7 @@ final class APIManager {
             }
             .store(in: &subscriptions)
     }
+    //Refresh 확인을 위한 메소드(임시)
     func fetchPlaylistItemReverse(playlistID: String, tracks: CurrentValueSubject<[AudioTrack], Never>){
         guard let accessToken else { return print("access token is nil")}
 
@@ -191,7 +192,7 @@ final class APIManager {
     }
 
     // FeaturedPlaylists
-    func fetchFeaturedPlaylists(playlist: CurrentValueSubject<[Playlist], Never>) {
+    func fetchFeaturedPlaylists(playlist: CurrentValueSubject<[PlaylistInfo], Never>) {
         guard let accessToken else { return print("access token is nil")}
 
         let base: String = "https://api.spotify.com"
@@ -201,14 +202,14 @@ final class APIManager {
         let resource: Resource<FeaturedPlaylistResponse> = Resource(base: base, path: path, params: params, header: header)
 
         networkService.load(resource)
-            .map({ response -> [Playlist] in
+            .map({ response -> [PlaylistInfo] in
                 let playlists = response.playlists.items.map { item in
                     let id = item.id
                     let description = item.description
-                    let images = item.images
-                    let name = item.name
+                    let imageName = item.images[0].url
+                    let title = item.name
 
-                    let track = Playlist(id: id, description: description, images: images, name: name)
+                    let track = PlaylistInfo(id: id, description: description, imageName: imageName, title: title)
                     return track
                 }
                 return playlists
@@ -226,8 +227,8 @@ final class APIManager {
             }.store(in: &subscriptions)
     }
 
-    // Playlist
-    func fetchPlaylist(playlist: PassthroughSubject<PlaylistCard, Never>) {
+    // PlaylistInfo
+    func fetchPlaylist(playlist: CurrentValueSubject<PlaylistCard?, Never>) {
         guard let accessToken else { return print("access token is nil")}
 
         let base: String = "https://api.spotify.com"
@@ -238,6 +239,7 @@ final class APIManager {
 
         networkService.load(resource)
             .map { response -> PlaylistCard in
+                print("response: \(response)")
                 let id = response.id
                 let title = response.name
                 let imageName = response.images[0].url
@@ -247,9 +249,9 @@ final class APIManager {
                     let imageName = item.track.album.images[0].url
                     let title = item.track.name
                     let artist = item.track.album.artists[0].name
-                    let releaseDate = item.track.album.releaseDate
-                    let previewURL = item.track.album.previewURL
-                    let duration = item.track.album.duration
+//                    let releaseDate = item.track.album.releaseDate
+                    let previewURL = item.track.previewURL
+                    let duration = item.track.duration
 
                     let track = AudioTrack(id: id, imageName: imageName, title: title, artist: artist, previewURL: previewURL, duration: duration)
                     return track
