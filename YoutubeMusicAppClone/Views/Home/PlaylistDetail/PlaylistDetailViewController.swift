@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class PlaylistDetailViewController: UIViewController, MusicPlayerPresentable {
+class PlaylistDetailViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 

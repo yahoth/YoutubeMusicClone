@@ -48,8 +48,6 @@
 		768F55952A8782910084FE07 /* FeaturedPlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768F55942A8782910084FE07 /* FeaturedPlaylistResponse.swift */; };
 		768F55972A8782A40084FE07 /* PlaylistItemsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768F55962A8782A40084FE07 /* PlaylistItemsResponse.swift */; };
 		768F55992A8782AE0084FE07 /* PlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768F55982A8782AE0084FE07 /* PlaylistResponse.swift */; };
-		768F559C2A8A137C0084FE07 /* UIViewController +MusicPlayerPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768F559B2A8A137C0084FE07 /* UIViewController +MusicPlayerPresentable.swift */; };
-		768F559E2A8A18720084FE07 /* UIView+FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768F559D2A8A18720084FE07 /* UIView+FindViewController.swift */; };
 		768F55A22A8A30610084FE07 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768F55A12A8A30610084FE07 /* BaseViewController.swift */; };
 		7698AF522A459BED00691292 /* CustomBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7698AF512A459BED00691292 /* CustomBarItem.swift */; };
 		7698AF542A45A13900691292 /* UIBarButtonItem+CumstomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7698AF532A45A13900691292 /* UIBarButtonItem+CumstomView.swift */; };
@@ -116,8 +114,6 @@
 		768F55942A8782910084FE07 /* FeaturedPlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistResponse.swift; sourceTree = "<group>"; };
 		768F55962A8782A40084FE07 /* PlaylistItemsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemsResponse.swift; sourceTree = "<group>"; };
 		768F55982A8782AE0084FE07 /* PlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistResponse.swift; sourceTree = "<group>"; };
-		768F559B2A8A137C0084FE07 /* UIViewController +MusicPlayerPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController +MusicPlayerPresentable.swift"; sourceTree = "<group>"; };
-		768F559D2A8A18720084FE07 /* UIView+FindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+FindViewController.swift"; sourceTree = "<group>"; };
 		768F55A12A8A30610084FE07 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		7698AF512A459BED00691292 /* CustomBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarItem.swift; sourceTree = "<group>"; };
 		7698AF532A45A13900691292 /* UIBarButtonItem+CumstomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+CumstomView.swift"; sourceTree = "<group>"; };
@@ -316,8 +312,6 @@
 			isa = PBXGroup;
 			children = (
 				7698AF532A45A13900691292 /* UIBarButtonItem+CumstomView.swift */,
-				768F559B2A8A137C0084FE07 /* UIViewController +MusicPlayerPresentable.swift */,
-				768F559D2A8A18720084FE07 /* UIView+FindViewController.swift */,
 				768F55A12A8A30610084FE07 /* BaseViewController.swift */,
 			);
 			path = Extensions;
@@ -459,7 +453,6 @@
 				762C778C2A42D166008692C2 /* LibraryViewController.swift in Sources */,
 				76F3AC9A2A44775A0015A6CC /* MainTabBarController.swift in Sources */,
 				76C188DA2A58033500173A9E /* MusicPlayerViewController.swift in Sources */,
-				768F559C2A8A137C0084FE07 /* UIViewController +MusicPlayerPresentable.swift in Sources */,
 				76E7DCEB2A4C490D009503C3 /* NetworkService.swift in Sources */,
 				76E7DCF02A4C495B009503C3 /* Publisher+Utils.swift in Sources */,
 				768F55A22A8A30610084FE07 /* BaseViewController.swift in Sources */,
@@ -481,7 +474,6 @@
 				7674ACC22A4AF998000B9FFA /* MixedForYouCell.swift in Sources */,
 				762C778A2A42D15C008692C2 /* ExploreViewController.swift in Sources */,
 				762C77932A42D396008692C2 /* HomeHeader.swift in Sources */,
-				768F559E2A8A18720084FE07 /* UIView+FindViewController.swift in Sources */,
 				7615E5092A56EAB0003975B6 /* YourMusicTunerDetailViewModel.swift in Sources */,
 				76734C392A6574F30070E9EC /* PlaylistTrackCell.swift in Sources */,
 				76E7DCED2A4C492A009503C3 /* Resource.swift in Sources */,

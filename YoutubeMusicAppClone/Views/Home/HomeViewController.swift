@@ -328,7 +328,7 @@ class HomeViewController: BaseViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate, MusicPlayerPresentable {
+extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
               let item = datasource.itemIdentifier(for: indexPath) else { return }
