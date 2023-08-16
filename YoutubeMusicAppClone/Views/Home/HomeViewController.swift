@@ -51,13 +51,10 @@ class HomeViewController: BaseViewController {
 
     private func setNavigationBarlogo() {
         let logoImage = UIImage(named: "logo")
-        let logoImageView = UIImageView(image: logoImage)
-        logoImageView.frame = CGRect(x: -12, y: 0, width: 80, height: 44)
-        logoImageView.contentMode = .scaleAspectFit
-        let logoView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 44))
-        logoView.clipsToBounds = false
-        logoView.addSubview(logoImageView)
-        let logoItem = UIBarButtonItem(customView: logoView)
+        let logoConfig = CustomBarItemConfiguration(image: logoImage, handler: {
+            print("Logo")
+        })
+        let logoItem = UIBarButtonItem.generate(config: logoConfig, width: 80)
         navigationItem.leftBarButtonItem = logoItem
     }
     
