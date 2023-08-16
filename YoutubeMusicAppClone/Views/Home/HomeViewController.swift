@@ -182,7 +182,7 @@ class HomeViewController: BaseViewController {
         vm.listenAgain
             .receive(on: RunLoop.main)
             .sink { items in
-                self.applySnapshot(to: .listenAgain, items: Array(items))
+                self.applySnapshot(to: .listenAgain, items: Array(items.prefix(20)))
             }.store(in: &subscriptions)
         
         vm.quickPicks
