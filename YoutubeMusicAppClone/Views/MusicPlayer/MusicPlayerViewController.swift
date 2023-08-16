@@ -48,7 +48,7 @@ class MusicPlayerViewController: UIViewController {
     private func setNavigationItem() {
         let closeViewImage = UIImage(systemName: "chevron.down")
         let closeViewConfig = CustomBarItemConfiguration(image: closeViewImage) {
-            self.vm.pause()
+//            self.vm.pause()
             self.dismiss(animated: true)
         }
         let closeViewItem = UIBarButtonItem.generate(config: closeViewConfig)
@@ -144,6 +144,12 @@ class MusicPlayerViewController: UIViewController {
                 self.setupTimeObserver()
                 self.vm.play()
             }.store(in: &subscriptions)
+
+        vm.$isPlaying
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isPlaying in
+                self?.playAndPauseButton.setImage(UIImage(systemName: isPlaying ? "pause.fill" : "play.fill"), for: .normal)
+            }.store(in: &subscriptions)
     }
 
     private func configure(item: AudioTrack) {
@@ -155,7 +161,7 @@ class MusicPlayerViewController: UIViewController {
     }
 
     @IBAction func playAndPauseButtonTapped(_ sender: Any) {
-        vm.playAndPauseButtonTapped(button: playAndPauseButton)
+        vm.togglePlayback()
     }
 
     @IBAction func rewindButtonTapped(_ sender: Any) {

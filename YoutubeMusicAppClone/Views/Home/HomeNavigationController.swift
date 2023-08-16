@@ -12,9 +12,12 @@ class HomeNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let backImage = UIImage(systemName: "arrow.backward")
-        navigationBar.backIndicatorImage = backImage
-        navigationBar.backIndicatorTransitionMaskImage = backImage
+        let backImage = UIImage(systemName: "chevron.left")
+        let backImageConfig = UIImage.SymbolConfiguration(scale: .medium)
+        if let resizedImage =  backImage?.applyingSymbolConfiguration(backImageConfig) {
+            navigationBar.backIndicatorImage = resizedImage
+            navigationBar.backIndicatorTransitionMaskImage = resizedImage
+        }
         navigationBar.tintColor = .white
     }
 }

@@ -21,7 +21,7 @@ struct SearchView: View {
             NavigationView {
                 VStack(spacing: 20) {
                     SearchBar(vm: vm, dismiss: dismiss)
-                        .padding(.horizontal, 8)
+                        .padding(8)
 
                     if vm.isTextEmpty {
                         VStack(alignment: .center) {
@@ -62,6 +62,7 @@ struct SearchView: View {
                                         VStack(alignment: .leading) {
                                             Text(result.title)
                                                 .lineLimit(2)
+                                                .font(.body.weight(.bold))
                                             Text("\(result.artist) • \(result.FormattedDurationTime)")
                                                 .foregroundColor(.gray)
                                         }

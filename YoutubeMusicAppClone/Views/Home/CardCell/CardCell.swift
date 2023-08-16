@@ -64,6 +64,7 @@ class CardCell: UICollectionViewCell {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
         snapshot.appendItems(Array(self.vm.tracks.prefix(3)))
+        snapshot.appendItems([])
         datasource.apply(snapshot)
         collectionView.collectionViewLayout = layout()
         collectionView.delegate = self

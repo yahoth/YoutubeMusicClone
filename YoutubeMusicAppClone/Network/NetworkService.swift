@@ -25,7 +25,7 @@ final class NetworkService {
     
     func load<T>(_ resource: Resource<T>) -> AnyPublisher<T, Error> {
         guard let request = resource.urlRequest else {
-            return .fail(NetworkError.invalidRequest)
+            return Fail(error: NetworkError.invalidRequest).eraseToAnyPublisher()
         }
         
         return session

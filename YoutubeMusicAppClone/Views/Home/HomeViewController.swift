@@ -268,6 +268,7 @@ class HomeViewController: BaseViewController {
                 section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: padding, trailing: padding)
                 section.orthogonalScrollingBehavior = .continuous
                 section.boundarySupplementaryItems = [header]
+                
                 return section
                 
             case 1:

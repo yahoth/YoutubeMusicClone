@@ -62,7 +62,6 @@
 		76E7DCE62A4C4652009503C3 /* SpotifyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E7DCE52A4C4652009503C3 /* SpotifyImage.swift */; };
 		76E7DCEB2A4C490D009503C3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E7DCEA2A4C490D009503C3 /* NetworkService.swift */; };
 		76E7DCED2A4C492A009503C3 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E7DCEC2A4C492A009503C3 /* Resource.swift */; };
-		76E7DCF02A4C495B009503C3 /* Publisher+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E7DCEF2A4C495B009503C3 /* Publisher+Utils.swift */; };
 		76E7DCF32A4C5112009503C3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 76E7DCF22A4C5112009503C3 /* Kingfisher */; };
 		76F3AC8F2A444B1B0015A6CC /* YourMusicTunerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F3AC8E2A444B1B0015A6CC /* YourMusicTunerCell.swift */; };
 		76F3AC932A4463B80015A6CC /* MyStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F3AC922A4463B80015A6CC /* MyStation.swift */; };
@@ -128,7 +127,6 @@
 		76E7DCE52A4C4652009503C3 /* SpotifyImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyImage.swift; sourceTree = "<group>"; };
 		76E7DCEA2A4C490D009503C3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		76E7DCEC2A4C492A009503C3 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
-		76E7DCEF2A4C495B009503C3 /* Publisher+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Utils.swift"; sourceTree = "<group>"; };
 		76F3AC8E2A444B1B0015A6CC /* YourMusicTunerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMusicTunerCell.swift; sourceTree = "<group>"; };
 		76F3AC922A4463B80015A6CC /* MyStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStation.swift; sourceTree = "<group>"; };
 		76F3AC942A4475740015A6CC /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
@@ -187,7 +185,6 @@
 			children = (
 				762C77752A42C730008692C2 /* SceneDelegate.swift */,
 				762C77732A42C730008692C2 /* AppDelegate.swift */,
-				76E7DCEE2A4C4939009503C3 /* Utils */,
 				76E7DCE92A4C48E4009503C3 /* Network */,
 				7605CEAE2A5EC0ED001206E8 /* Manager */,
 				76F3AC962A4476010015A6CC /* Views */,
@@ -312,7 +309,6 @@
 			isa = PBXGroup;
 			children = (
 				7698AF532A45A13900691292 /* UIBarButtonItem+CumstomView.swift */,
-				768F55A12A8A30610084FE07 /* BaseViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -337,19 +333,12 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		76E7DCEE2A4C4939009503C3 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				76E7DCEF2A4C495B009503C3 /* Publisher+Utils.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		76F3AC962A4476010015A6CC /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				762C77792A42C730008692C2 /* Main.storyboard */,
 				76F3AC992A44775A0015A6CC /* MainTabBarController.swift */,
+				768F55A12A8A30610084FE07 /* BaseViewController.swift */,
 				762C778F2A42D310008692C2 /* Home */,
 				76C188DB2A58033B00173A9E /* MusicPlayer */,
 				763D29F72A52C80000D80936 /* SearchSwiftUI */,
@@ -454,7 +443,6 @@
 				76F3AC9A2A44775A0015A6CC /* MainTabBarController.swift in Sources */,
 				76C188DA2A58033500173A9E /* MusicPlayerViewController.swift in Sources */,
 				76E7DCEB2A4C490D009503C3 /* NetworkService.swift in Sources */,
-				76E7DCF02A4C495B009503C3 /* Publisher+Utils.swift in Sources */,
 				768F55A22A8A30610084FE07 /* BaseViewController.swift in Sources */,
 				769B506B2A4AB2F8008DFE78 /* CardCell.swift in Sources */,
 				769B50692A4AB258008DFE78 /* PlaylistInfo.swift in Sources */,

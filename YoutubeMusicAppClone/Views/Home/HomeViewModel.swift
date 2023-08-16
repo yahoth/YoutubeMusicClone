@@ -23,7 +23,7 @@ final class HomeViewModel {
     let quickPicks = CurrentValueSubject<[AudioTrack], Never>([])
     let yourMusicTuner = PassthroughSubject<YourMusicTuner, Never>()
     let mixedForYou = CurrentValueSubject<[PlaylistInfo], Never>([])
-    let playlistCard = CurrentValueSubject<PlaylistCard?, Never>(nil)
+    let playlistCard = CurrentValueSubject<PlaylistCard?, Never>(PlaylistCard(id: "", title: "", imageName: "", description: "", tracks: []))
 
     let didSelectItem = PassthroughSubject<(section: Section, item: Any, tracks: [AudioTrack]), Never>()
 
@@ -41,10 +41,7 @@ final class HomeViewModel {
     }
 
     func refresh() {
-        self.apiManager.fetchPlaylistItemReverse(playlistID: "37i9dQZF1DX3ZeFHRhhi7Y", tracks: self.listenAgain) // ListenAgain
-        self.apiManager.fetchPlaylistItemReverse(playlistID: "0HqwnwTY7L4IYeg5iOcMsP", tracks: self.quickPicks) // QuickPicks
-        self.apiManager.fetchFeaturedPlaylists(playlist: self.mixedForYou) // MixedForYou
-        self.apiManager.fetchPlaylist(playlist: self.playlistCard) // PlaylistCard
+        apiManager.requestAccessToken()
     }
 }
 

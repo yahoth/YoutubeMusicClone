@@ -62,7 +62,7 @@ final class APIManager {
 
     func search(keyword: String) -> AnyPublisher<[AudioTrack], Error>{
         guard let accessToken else {
-            return .fail(SpotifyError.invalidToken)
+            return Fail(error: SpotifyError.invalidToken).eraseToAnyPublisher()
         }
 
         let resource = Resource<SearchResponse>(
@@ -239,7 +239,6 @@ final class APIManager {
 
         networkService.load(resource)
             .map { response -> PlaylistCard in
-                print("response: \(response)")
                 let id = response.id
                 let title = response.name
                 let imageName = response.images[0].url

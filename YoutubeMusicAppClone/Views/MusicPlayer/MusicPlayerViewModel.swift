@@ -19,36 +19,44 @@ final class MusicPlayerViewModel {
 
     let item = CurrentValueSubject<AudioTrack?, Never>(nil)
     var subscriptions = Set<AnyCancellable>()
+    private var endOfSongSubscription: AnyCancellable?
 
     var currentPlayingTracks = CurrentValueSubject<[AudioTrack]?, Never>([])
 
     var workItem: DispatchWorkItem?
+
+    @Published private(set) var isPlaying = false
     
     private init() {
-        fetchPlayer()
+        bind()
     }
 
-    func fetchPlayer() {
+    private func bind() {
+        //fetch player
         item.receive(on: RunLoop.main)
             .sink { item in
                 guard let previewStr = item?.previewURL else {
                     return self.player = AVPlayer()
                 }
-                    let previewURL = URL(string: previewStr)
-                    guard let previewURL = previewURL else { return }
-                    self.playerItem = AVPlayerItem(url: previewURL)
+                let previewURL = URL(string: previewStr)
+                guard let previewURL = previewURL else { return }
+                self.playerItem = AVPlayerItem(url: previewURL)
                 self.player?.replaceCurrentItem(with: self.playerItem)
             }
             .store(in: &subscriptions)
+
+        //play next
+        endOfSongSubscription = NotificationCenter.default.publisher(for: .AVPlayerItemDidPlayToEndTime, object: nil)
+            .sink(receiveValue: { [weak self] _ in
+                self?.fastFowardButtonTapped()
+            })
     }
 
-    func playAndPauseButtonTapped(button: UIButton) {
+    func togglePlayback() {
         if player?.timeControlStatus == .playing {
-            player?.pause()
-            button.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            pause()
         } else {
-            player?.play()
-            button.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            play()
         }
     }
 
@@ -75,12 +83,18 @@ final class MusicPlayerViewModel {
 
     }
     
-    func pause() {
+    private func pause() {
         player?.pause()
+        isPlaying = false
 
     }
 
     func play() {
         player?.play()
+        isPlaying = true
+    }
+
+    deinit {
+        endOfSongSubscription?.cancel()
     }
 }
