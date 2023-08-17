@@ -43,7 +43,7 @@ class MoreContentListViewController: BaseViewController {
                 } else if let playlistInfo = item as? PlaylistInfo {
                     let sb = UIStoryboard(name: "PlaylistDetail", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "PlaylistDetailViewController") as! PlaylistDetailViewController
-                    vc.vm = PlaylistDetailViewModel(apiManager: self.vm.apiManager, playlistInfo: playlistInfo)
+                    vc.vm = PlaylistDetailViewModel(playlistInfo: playlistInfo)
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }.store(in: &subscriptions)

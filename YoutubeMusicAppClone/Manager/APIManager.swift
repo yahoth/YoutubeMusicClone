@@ -14,6 +14,8 @@ enum SpotifyError: Error {
 
 final class APIManager {
 
+    static let shared = APIManager(networkConfig: .default)
+    
     let networkService: NetworkService
 
     init(networkConfig: URLSessionConfiguration) {

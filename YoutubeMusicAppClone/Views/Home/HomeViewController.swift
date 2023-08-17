@@ -24,7 +24,7 @@ class HomeViewController: BaseViewController {
     typealias Item = AnyHashable
     typealias Section = HomeViewSection
 
-    var vm = HomeViewModel(apiManager: APIManager(networkConfig: .default))
+    var vm = HomeViewModel()
     var subscriptions = Set<AnyCancellable>()
 
     private let refreshControl = UIRefreshControl()
@@ -64,7 +64,7 @@ class HomeViewController: BaseViewController {
         
         let searchConfig = CustomBarItemConfiguration(image: UIImage(systemName: "magnifyingglass")) {
             print("search")
-            let vm = SearchViewModel(apiManager: self.vm.apiManager)
+            let vm = SearchViewModel()
             let searchView = SearchView(vm: vm) {
                 self.dismiss(animated: true)
             }
@@ -205,7 +205,7 @@ class HomeViewController: BaseViewController {
             .sink { sectionIndex in
                 let sb = UIStoryboard(name: "MoreContentList", bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: "MoreContentListViewController") as! MoreContentListViewController
-                vc.vm = MoreContentListViewModel(with: sectionIndex == 0 ? self.vm.listenAgain.value : self.vm.mixedForYou.value, apiManager: self.vm.apiManager)
+                vc.vm = MoreContentListViewModel(with: sectionIndex == 0 ? self.vm.listenAgain.value : self.vm.mixedForYou.value)
                 self.navigationController?.pushViewController(vc, animated: true)
             }.store(in: &subscriptions)
 
@@ -218,7 +218,7 @@ class HomeViewController: BaseViewController {
                 case .yourMusicTuner:
                     let sb = UIStoryboard(name: "YourMusicTunerDetail", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "YourMusicTunerDetailViewController") as! YourMusicTunerDetailViewController
-                    vc.vm = YourMusicTunerDetailViewModel(apiManager: self.vm.apiManager)
+                    vc.vm = YourMusicTunerDetailViewModel()
                     let navController = UINavigationController(rootViewController: vc)
                     navController.modalPresentationStyle = .fullScreen
                     self.present(navController, animated: true)
@@ -234,11 +234,11 @@ class HomeViewController: BaseViewController {
         let vc = sb.instantiateViewController(withIdentifier: "PlaylistDetailViewController") as! PlaylistDetailViewController
         if section == .mixedForYou {
             guard let item = item as? PlaylistInfo else {return}
-            vc.vm = PlaylistDetailViewModel(apiManager: self.vm.apiManager, playlistInfo: item)
+            vc.vm = PlaylistDetailViewModel(playlistInfo: item)
         } else {
             guard let item = item as? PlaylistCard else {return}
             let info = PlaylistInfo(id: item.id, description: item.description, imageName: item.imageName, title: item.title)
-            vc.vm = PlaylistDetailViewModel(apiManager: self.vm.apiManager, playlistInfo: info, tracks: item.tracks)
+            vc.vm = PlaylistDetailViewModel(playlistInfo: info, tracks: item.tracks)
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }

@@ -12,12 +12,10 @@ final class MoreContentListViewModel {
     
     @Published var items: [AnyHashable] = []
 
-    var apiManager: APIManager
+    let apiManager: APIManager = APIManager.shared
 
-    init(with items: [AnyHashable], apiManager: APIManager) {
+    init(with items: [AnyHashable]) {
         self.items = items
-        self.apiManager = apiManager
-        print("MoreViewModel init")
     }
 
     let didSelectItem = PassthroughSubject<AnyHashable, Never>()

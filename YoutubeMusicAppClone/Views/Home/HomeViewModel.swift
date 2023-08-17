@@ -11,11 +11,7 @@ import Combine
 final class HomeViewModel {
     typealias Section = HomeViewSection
 
-    var apiManager: APIManager
-
-    init(apiManager: APIManager) {
-        self.apiManager = apiManager
-    }
+    let apiManager: APIManager = APIManager.shared
 
     let moreButtonTapped = PassthroughSubject<Int, Never>()
 

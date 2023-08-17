@@ -101,6 +101,7 @@ class MusicPlayerViewController: UIViewController {
         updateCurrentTimeLabel()
     }
 
+
     @objc func updateSliderAndLabel() {
         let currentTime = CMTimeGetSeconds(vm.player?.currentTime() ?? CMTime())
         playbackSlider.value = Float(currentTime)

@@ -22,6 +22,8 @@ struct SearchBar: View {
             TextField("노래, 앨범, 아티스트 검색", text: $vm.text) {
                 vm.search(keyword: vm.text, searchState: .searchButtonClick)
             }
+            .autocapitalization(.none)
+            .disableAutocorrection(true)
             .onChange(of: vm.text) { _ in
                 if !vm.isTextEmpty {
                     vm.search(keyword: vm.text, searchState: .searching)
@@ -61,6 +63,6 @@ struct SearchBar: View {
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(vm: SearchViewModel(apiManager: APIManager(networkConfig: .default)), dismiss: {})
+        SearchBar(vm: SearchViewModel(), dismiss: {})
     }
 }

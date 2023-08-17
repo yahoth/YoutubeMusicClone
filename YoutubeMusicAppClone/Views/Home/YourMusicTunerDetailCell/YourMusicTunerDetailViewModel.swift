@@ -9,11 +9,7 @@ import Foundation
 import Combine
 
 final class YourMusicTunerDetailViewModel {
-    var apiManager: APIManager
-    
-    init(apiManager: APIManager) {
-        self.apiManager = apiManager
-    }
+    let apiManager: APIManager = APIManager.shared
 
     let artists = PassthroughSubject<[RelatedArtistsResponse.Artists], Never>()
 

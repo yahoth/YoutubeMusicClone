@@ -12,7 +12,7 @@ final class PlaylistDetailViewModel {
 
     var subscriptions = Set<AnyCancellable>()
 
-    var apiManager: APIManager!
+    let apiManager: APIManager = APIManager.shared
 
     @Published var playlistInfo: PlaylistInfo
 
@@ -22,8 +22,7 @@ final class PlaylistDetailViewModel {
 
     var tracks: [AudioTrack]?
 
-    init(apiManager: APIManager, playlistInfo: PlaylistInfo, tracks: [AudioTrack]? = nil) {
-        self.apiManager = apiManager
+    init(playlistInfo: PlaylistInfo, tracks: [AudioTrack]? = nil) {
         self.playlistInfo = playlistInfo
         self.tracks = tracks
         bind()
