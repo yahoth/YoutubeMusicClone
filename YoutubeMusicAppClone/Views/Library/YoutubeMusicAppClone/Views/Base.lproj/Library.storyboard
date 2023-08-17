@@ -18,25 +18,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Library View" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efu-wU-r2l">
-                                <rect key="frame" x="149.33333333333334" y="438.66666666666669" width="94.333333333333343" height="0.0"/>
+                                <rect key="frame" x="149.33333333333334" y="428.33333333333331" width="94.333333333333343" height="20.333333333333314"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileImage" translatesAutoresizingMaskIntoConstraints="NO" id="dA8-Kh-IKO">
-                                <rect key="frame" x="66.666666666666657" y="204" width="259.66666666666674" height="138.66666666666663"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="dA8-Kh-IKO" secondAttribute="height" multiplier="15:8" id="Eeg-v2-APu"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PA5-w2-qNk"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="dA8-Kh-IKO" firstAttribute="top" secondItem="PA5-w2-qNk" secondAttribute="top" constant="145" id="SyB-Z0-uID"/>
-                            <constraint firstItem="efu-wU-r2l" firstAttribute="top" secondItem="dA8-Kh-IKO" secondAttribute="bottom" constant="96" id="ccy-iE-al4"/>
                             <constraint firstItem="efu-wU-r2l" firstAttribute="centerX" secondItem="PA5-w2-qNk" secondAttribute="centerX" id="mP1-gr-8We"/>
-                            <constraint firstItem="dA8-Kh-IKO" firstAttribute="centerX" secondItem="PA5-w2-qNk" secondAttribute="centerX" id="tca-Ed-0lU"/>
                             <constraint firstItem="efu-wU-r2l" firstAttribute="centerY" secondItem="PA5-w2-qNk" secondAttribute="centerY" id="wgS-La-FFM"/>
                         </constraints>
                     </view>
@@ -48,7 +39,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="profileImage" width="1007" height="1309"/>
         <image name="store" width="25" height="25.333333969116211"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

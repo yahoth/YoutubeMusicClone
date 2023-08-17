@@ -14,6 +14,7 @@ final class SearchViewModel: ObservableObject {
 
     init(apiManager: APIManager) {
         self.apiManager = apiManager
+        print("SearchViewModel init")
     }
 
     enum SearchState {
@@ -55,5 +56,9 @@ final class SearchViewModel: ObservableObject {
             }
             .store(in: &subscriptions)
         self.text = keyword
+    }
+
+    deinit {
+        print("SearchViewModel Deinit")
     }
 }

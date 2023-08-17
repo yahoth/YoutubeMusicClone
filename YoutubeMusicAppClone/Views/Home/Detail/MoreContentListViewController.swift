@@ -29,13 +29,13 @@ class MoreContentListViewController: BaseViewController {
     
     private func bind() {
         vm.$items.receive(on: RunLoop.main)
-            .sink { items in
+            .sink { [unowned self] items in
                 self.applySnapshot(items: items)
             }.store(in: &subscriptions)
 
         vm.didSelectItem
             .receive(on: RunLoop.main)
-            .sink { item in
+            .sink { [unowned self] item in
                 if let audioTrack = item as? AudioTrack {
                     guard let items = self.vm.items as? [AudioTrack] else { return }
                     self.presentMusicPlayer(with: audioTrack, tracks: items)
@@ -92,6 +92,11 @@ class MoreContentListViewController: BaseViewController {
         let layout = UICollectionViewCompositionalLayout(section: section)
         
         return layout
+    }
+
+    deinit {
+        print("MoreContentListViewController deinit")
+        subscriptions.forEach({ $0.cancel() })
     }
 }
 

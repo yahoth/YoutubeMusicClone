@@ -6,9 +6,9 @@
 //
 
 import UIKit
-import Kingfisher
 import Combine
 import AVFoundation
+import Kingfisher
 
 class MusicPlayerViewController: UIViewController {
 
@@ -39,20 +39,66 @@ class MusicPlayerViewController: UIViewController {
         setNavigationItem()
     }
 
-    @IBAction func playbackSliderValueChaged(_ sender: UISlider) {
-        let currentTime = CMTime(seconds: Double(sender.value), preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        vm.player?.seek(to: currentTime)
-        updateCurrentTimeLabel()
+    private func bind() {
+        vm.item.receive(on: RunLoop.main)
+            .compactMap { $0 }
+            .sink { item in
+                self.configure(item: item)
+                self.setupPlaybackSlider()
+                self.setupTimeObserver()
+                self.vm.play()
+            }.store(in: &subscriptions)
+
+        vm.$isPlaying
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isPlaying in
+                self?.playAndPauseButton.setImage(UIImage(systemName: isPlaying ? "pause.fill" : "play.fill"), for: .normal)
+            }.store(in: &subscriptions)
     }
 
+    //MARK: - Configure View
     private func setNavigationItem() {
         let closeViewImage = UIImage(systemName: "chevron.down")
         let closeViewConfig = CustomBarItemConfiguration(image: closeViewImage) {
-//            self.vm.pause()
             self.dismiss(animated: true)
         }
         let closeViewItem = UIBarButtonItem.generate(config: closeViewConfig)
         navigationItem.leftBarButtonItems = [closeViewItem]
+    }
+
+    private func configure(item: AudioTrack) {
+        let imageURL = URL(string: item.imageName)
+        thumbnailImageView.kf.setImage(with: imageURL)
+        titleLabel.text = item.title
+        artistLabel.text = item.artist
+        playAndPauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+    }
+
+    //MARK: - Setup & Configure Slider, Time label
+    private func setupPlaybackSlider() {
+        let assetDuration = vm.playerItem?.asset.duration
+        playbackSlider.minimumValue = 0
+
+        let maximauValue = Float(CMTimeGetSeconds(assetDuration ?? CMTime()))
+        playbackSlider.maximumValue = isValueValid(value: maximauValue) ? maximauValue : 100
+        playbackSlider.value = 0
+    }
+
+    private func configurePlaybackSlider() {
+        let normalConfig = UIImage.SymbolConfiguration(pointSize: 12)
+        let highlightedConfig = UIImage.SymbolConfiguration(pointSize: 20)
+
+        let normalThumb = UIImage(systemName: "circle.fill", withConfiguration: normalConfig)
+        let highlightedThumb = UIImage(systemName: "circle.fill", withConfiguration: highlightedConfig)
+
+        playbackSlider.setThumbImage(normalThumb, for: .normal)
+        playbackSlider.setThumbImage(highlightedThumb, for: .highlighted)
+    }
+
+    @IBAction func playbackSliderValueChaged(_ sender: UISlider) {
+        let currentTime = CMTime(seconds: Double(sender.value), preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        vm.player?.seek(to: currentTime)
+        updateCurrentTimeLabel()
     }
 
     @objc func updateSliderAndLabel() {
@@ -60,20 +106,6 @@ class MusicPlayerViewController: UIViewController {
         playbackSlider.value = Float(currentTime)
         updateCurrentTimeLabel()
         updateDurationTimeLabel()
-    }
-
-    func setupTimeObserver() {
-        let interval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        vm.timeObserverToken = vm.player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [weak self] time in
-            self?.updateSliderAndLabel()
-        } as AnyObject
-    }
-
-    func removeTimeObserver() {
-        if let token = vm.timeObserverToken {
-            vm.player?.removeTimeObserver(token)
-            vm.timeObserverToken = nil
-        }
     }
 
     func updateCurrentTimeLabel() {
@@ -100,27 +132,22 @@ class MusicPlayerViewController: UIViewController {
         return value > 0 && !value.isNaN
     }
 
-    private func setupPlaybackSlider() {
-        let assetDuration = vm.playerItem?.asset.duration
-        playbackSlider.minimumValue = 0
-
-        let maximauValue = Float(CMTimeGetSeconds(assetDuration ?? CMTime()))
-        playbackSlider.maximumValue = isValueValid(value: maximauValue) ? maximauValue : 100
-        playbackSlider.value = 0
+    //MARK: - Player Setup
+    func setupTimeObserver() {
+        let interval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        vm.timeObserverToken = vm.player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [weak self] time in
+            self?.updateSliderAndLabel()
+        } as AnyObject
     }
 
-    private func configurePlaybackSlider() {
-        let normalConfig = UIImage.SymbolConfiguration(pointSize: 12)
-        let highlightedConfig = UIImage.SymbolConfiguration(pointSize: 20)
-
-        let normalThumb = UIImage(systemName: "circle.fill", withConfiguration: normalConfig)
-        let highlightedThumb = UIImage(systemName: "circle.fill", withConfiguration: highlightedConfig)
-
-        playbackSlider.setThumbImage(normalThumb, for: .normal)
-        playbackSlider.setThumbImage(highlightedThumb, for: .highlighted)
+    func removeTimeObserver() {
+        if let token = vm.timeObserverToken {
+            vm.player?.removeTimeObserver(token)
+            vm.timeObserverToken = nil
+        }
     }
 
-    //Mute 모드일 때도 재생가능
+    // Mute 모드 시 재생가능
     private func setupAudioSession() {
         do {
             let audioSession = AVAudioSession.sharedInstance()
@@ -135,31 +162,7 @@ class MusicPlayerViewController: UIViewController {
         }
     }
 
-    private func bind() {
-        vm.item.receive(on: RunLoop.main)
-            .compactMap { $0 }
-            .sink { item in
-                self.configure(item: item)
-                self.setupPlaybackSlider()
-                self.setupTimeObserver()
-                self.vm.play()
-            }.store(in: &subscriptions)
-
-        vm.$isPlaying
-            .receive(on: RunLoop.main)
-            .sink { [weak self] isPlaying in
-                self?.playAndPauseButton.setImage(UIImage(systemName: isPlaying ? "pause.fill" : "play.fill"), for: .normal)
-            }.store(in: &subscriptions)
-    }
-
-    private func configure(item: AudioTrack) {
-        let imageURL = URL(string: item.imageName)
-        thumbnailImageView.kf.setImage(with: imageURL)
-        titleLabel.text = item.title
-        artistLabel.text = item.artist
-        playAndPauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-    }
-
+//MARK: - Player 조작
     @IBAction func playAndPauseButtonTapped(_ sender: Any) {
         vm.togglePlayback()
     }

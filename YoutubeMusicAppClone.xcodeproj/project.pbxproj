@@ -342,8 +342,8 @@
 				762C778F2A42D310008692C2 /* Home */,
 				76C188DB2A58033B00173A9E /* MusicPlayer */,
 				763D29F72A52C80000D80936 /* SearchSwiftUI */,
-				762C77902A42D333008692C2 /* Explore */,
 				762C77912A42D33C008692C2 /* Library */,
+				762C77902A42D333008692C2 /* Explore */,
 			);
 			path = Views;
 			sourceTree = "<group>";

@@ -23,8 +23,6 @@ final class MusicPlayerViewModel {
 
     var currentPlayingTracks = CurrentValueSubject<[AudioTrack]?, Never>([])
 
-    var workItem: DispatchWorkItem?
-
     @Published private(set) var isPlaying = false
     
     private init() {
@@ -75,14 +73,16 @@ final class MusicPlayerViewModel {
         guard let tracks = currentPlayingTracks.value else { return }
         let currentTrackIndex = tracks.firstIndex { $0 == item.value }
         guard let currentTrackIndex else { return }
+        // 두 번 넘어가지 않게 예외 처리
+        guard let currentItem = player?.currentItem, currentItem.status == .readyToPlay else { return }
+
         if currentTrackIndex + 1 > tracks.count - 1 {
             item.send(tracks[0])
         } else {
             item.send(tracks[currentTrackIndex + 1])
         }
-
     }
-    
+
     private func pause() {
         player?.pause()
         isPlaying = false
