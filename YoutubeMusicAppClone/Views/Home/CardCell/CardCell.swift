@@ -37,6 +37,7 @@ class CardCell: UICollectionViewCell {
     }
 
     func bind() {
+        // Input
         vm.didSelectItem
             .receive(on: RunLoop.main)
             .sink { item in

@@ -52,7 +52,7 @@ struct SearchBar: View {
             )
 
             Button {
-                //
+                print("mic")
             } label: {
                 Image(systemName: "mic.fill")
             }

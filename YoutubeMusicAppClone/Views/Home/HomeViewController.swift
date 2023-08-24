@@ -176,6 +176,7 @@ class HomeViewController: BaseViewController {
     }
     
     private func bind() {
+        // Output
         vm.listenAgain
             .receive(on: RunLoop.main)
             .sink { items in
@@ -199,7 +200,8 @@ class HomeViewController: BaseViewController {
             .sink { item in
                 self.applySnapshot(to: .playlistCard, items: [item])
             }.store(in: &subscriptions)
-        
+
+        // Input Action
         vm.moreButtonTapped
             .receive(on: RunLoop.main)
             .sink { sectionIndex in
@@ -244,7 +246,7 @@ class HomeViewController: BaseViewController {
 
     
     private func layout() -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
             let padding: CGFloat = 20
             let interGroupSpacing: CGFloat = 16
             let interItemSpacing: CGFloat = 16

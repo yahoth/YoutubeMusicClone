@@ -54,6 +54,7 @@ class YourMusicTunerDetailViewController: UIViewController {
     }
     
     private func bind() {
+        // Output
         vm.$artists
             .receive(on: RunLoop.main)
             .sink { [unowned self] artists in

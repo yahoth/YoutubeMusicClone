@@ -28,8 +28,44 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ListenAgainCell" reuseIdentifier="ListenAgainCell" id="O02-Pk-LAg" customClass="ListenAgainCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
+                                        <rect key="frame" x="109.66666666666667" y="59" width="211" height="284"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EIZ-4s-Ldl">
+                                            <rect key="frame" x="0.0" y="0.0" width="211" height="284"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이브, 프시케 그리고 푸른 수염의 아내" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8pP-rT-TZY">
+                                                    <rect key="frame" x="0.0" y="219" width="211" height="17"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eaJ-jt-Uaj">
+                                                    <rect key="frame" x="0.0" y="0.0" width="211" height="211"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="eaJ-jt-Uaj" secondAttribute="height" multiplier="1:1" id="h9d-Sl-XvE"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="eaJ-jt-Uaj" firstAttribute="leading" secondItem="EIZ-4s-Ldl" secondAttribute="leading" id="U7J-Ye-Kvf"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8pP-rT-TZY" secondAttribute="bottom" id="dxW-Di-CyB"/>
+                                                <constraint firstItem="eaJ-jt-Uaj" firstAttribute="top" secondItem="EIZ-4s-Ldl" secondAttribute="top" id="fGn-Q4-uNE"/>
+                                                <constraint firstAttribute="trailing" secondItem="eaJ-jt-Uaj" secondAttribute="trailing" id="mLd-k2-HWA"/>
+                                                <constraint firstItem="8pP-rT-TZY" firstAttribute="leading" secondItem="EIZ-4s-Ldl" secondAttribute="leading" id="o17-al-Kde"/>
+                                                <constraint firstItem="8pP-rT-TZY" firstAttribute="top" secondItem="eaJ-jt-Uaj" secondAttribute="bottom" constant="8" id="uFb-Ch-wxv"/>
+                                                <constraint firstAttribute="trailing" secondItem="8pP-rT-TZY" secondAttribute="trailing" id="zE6-SA-alK"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="211" height="284"/>
+                                        <connections>
+                                            <outlet property="thumbnailImageView" destination="eaJ-jt-Uaj" id="Wpe-Iz-3sP"/>
+                                            <outlet property="titleLabel" destination="8pP-rT-TZY" id="hE4-Q0-V6p"/>
+                                        </connections>
+                                    </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="QuickPicksCell" id="klD-ut-vFv" customClass="QuickPicksCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="59" width="430" height="70"/>
+                                        <rect key="frame" x="0.0" y="353" width="430" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9tS-a7-kQD">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="70"/>
@@ -96,7 +132,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="YourMusicTunerCell" id="agS-EO-M7Q" customClass="YourMusicTunerCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="139" width="430" height="209"/>
+                                        <rect key="frame" x="0.0" y="433" width="430" height="209"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="QDX-Yh-hgo">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="209"/>
@@ -119,7 +155,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MixedForYouCell" id="sMQ-O2-IcQ" customClass="MixedForYouCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
-                                        <rect key="frame" x="108" y="358" width="214" height="350"/>
+                                        <rect key="frame" x="108" y="652" width="214" height="350"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="weu-Fx-cpZ">
                                             <rect key="frame" x="0.0" y="0.0" width="214" height="350"/>
@@ -162,42 +198,6 @@
                                             <outlet property="artistsLabel" destination="nPH-g5-Tpz" id="ztV-au-2kP"/>
                                             <outlet property="thumbnailImageView" destination="yF2-v4-PEA" id="k44-tV-5Mu"/>
                                             <outlet property="titleLabel" destination="hx5-Dm-sUK" id="Vlh-fK-me2"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ListenAgainCell" reuseIdentifier="ListenAgainCell" id="O02-Pk-LAg" customClass="ListenAgainCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
-                                        <rect key="frame" x="109.66666666666667" y="718" width="211" height="284"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EIZ-4s-Ldl">
-                                            <rect key="frame" x="0.0" y="0.0" width="211" height="284"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이브, 프시케 그리고 푸른 수염의 아내" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8pP-rT-TZY">
-                                                    <rect key="frame" x="0.0" y="219" width="211" height="17"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eaJ-jt-Uaj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="211" height="211"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="eaJ-jt-Uaj" secondAttribute="height" multiplier="1:1" id="h9d-Sl-XvE"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="eaJ-jt-Uaj" firstAttribute="leading" secondItem="EIZ-4s-Ldl" secondAttribute="leading" id="U7J-Ye-Kvf"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8pP-rT-TZY" secondAttribute="bottom" id="dxW-Di-CyB"/>
-                                                <constraint firstItem="eaJ-jt-Uaj" firstAttribute="top" secondItem="EIZ-4s-Ldl" secondAttribute="top" id="fGn-Q4-uNE"/>
-                                                <constraint firstAttribute="trailing" secondItem="eaJ-jt-Uaj" secondAttribute="trailing" id="mLd-k2-HWA"/>
-                                                <constraint firstItem="8pP-rT-TZY" firstAttribute="leading" secondItem="EIZ-4s-Ldl" secondAttribute="leading" id="o17-al-Kde"/>
-                                                <constraint firstItem="8pP-rT-TZY" firstAttribute="top" secondItem="eaJ-jt-Uaj" secondAttribute="bottom" constant="8" id="uFb-Ch-wxv"/>
-                                                <constraint firstAttribute="trailing" secondItem="8pP-rT-TZY" secondAttribute="trailing" id="zE6-SA-alK"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="211" height="284"/>
-                                        <connections>
-                                            <outlet property="thumbnailImageView" destination="eaJ-jt-Uaj" id="Wpe-Iz-3sP"/>
-                                            <outlet property="titleLabel" destination="8pP-rT-TZY" id="hE4-Q0-V6p"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="CardCell" reuseIdentifier="CardCell" id="fgc-sX-L2I" customClass="CardCell" customModule="YoutubeMusicAppClone" customModuleProvider="target">
@@ -395,9 +395,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="NdJ-HB-OPy" firstAttribute="leading" secondItem="O2v-1h-mwR" secondAttribute="leading" constant="16" id="20z-ve-skw"/>
-                                                <constraint firstAttribute="bottom" secondItem="NdJ-HB-OPy" secondAttribute="bottom" constant="16" id="Ahs-eV-SgM"/>
                                                 <constraint firstItem="NdJ-HB-OPy" firstAttribute="top" secondItem="O2v-1h-mwR" secondAttribute="top" constant="16" id="Bk6-g0-sq0"/>
-                                                <constraint firstAttribute="trailing" secondItem="NdJ-HB-OPy" secondAttribute="trailing" constant="16" id="G4k-sr-3Um"/>
+                                                <constraint firstItem="NdJ-HB-OPy" firstAttribute="centerY" secondItem="O2v-1h-mwR" secondAttribute="centerY" id="abi-RL-G7u"/>
+                                                <constraint firstItem="NdJ-HB-OPy" firstAttribute="centerX" secondItem="O2v-1h-mwR" secondAttribute="centerX" id="bsq-sa-vfB"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" red="0.9713304639" green="0.78665191763601916" blue="0.20331262618234222" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
@@ -510,7 +510,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1187.4418604651162" y="939.9141630901288"/>
+            <point key="canvasLocation" x="-1215" y="823"/>
         </scene>
     </scenes>
     <resources>

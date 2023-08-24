@@ -37,6 +37,7 @@ class PlaylistDetailViewController: BaseViewController {
     }
 
     private func bind() {
+        // Output
         vm.$playlistInfo
             .receive(on: RunLoop.main)
             .sink { [unowned self] info in
@@ -49,7 +50,8 @@ class PlaylistDetailViewController: BaseViewController {
             .sink { [unowned self] track in
                 self.applySnapshot(to: .track, items: track)
             }.store(in: &subscriptions)
-
+        
+        // Input
         vm.musicStarted
             .receive(on: RunLoop.main)
             .sink { [unowned self] track in

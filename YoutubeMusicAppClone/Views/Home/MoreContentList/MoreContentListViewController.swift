@@ -28,11 +28,14 @@ class MoreContentListViewController: BaseViewController {
     }
     
     private func bind() {
-        vm.$items.receive(on: RunLoop.main)
+        // Output
+        vm.$items
+            .receive(on: RunLoop.main)
             .sink { [unowned self] items in
                 self.applySnapshot(items: items)
             }.store(in: &subscriptions)
 
+        //Input
         vm.didSelectItem
             .receive(on: RunLoop.main)
             .sink { [unowned self] item in

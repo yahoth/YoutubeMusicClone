@@ -24,68 +24,13 @@ struct SearchView: View {
                         .padding(8)
 
                     if vm.isTextEmpty {
-                        VStack(alignment: .center) {
-                            Text("No search results")
-                        }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.black).onTapGesture {
-                            hideKeyboard()
-                        }
+                        searchEntryView()
                     } else if vm.searchState == .searching {
-                        ScrollView(showsIndicators: false) {
-                            VStack(alignment: .leading, spacing: 0) {
-                                ForEach(vm.searchResults, id: \.uuid) { result in
-                                    HStack(spacing: 20) {
-                                        Image(systemName: "magnifyingglass")
-
-                                        Text("\(result.artist) \(result.title)")
-                                            .lineLimit(1)
-
-                                        Spacer()
-
-                                        Image(systemName: "arrow.up.left")
-                                    }
-                                    .padding(20)
-                                    .background(Color.black)
-                                    .onTapGesture {
-                                        vm.search(keyword: "\(result.artist) \(result.title)", searchState: .suggestedClick)
-                                        hideKeyboard()
-                                    }
-                                }
-                            }
-                        }
+                        searchSuggestionView()
                     } else {
-                        ScrollView(showsIndicators: false) {
-                            VStack(alignment: .leading, spacing: 16) {
-                                ForEach(vm.searchResults, id: \.uuid) { result in
-                                    HStack(spacing: 16) {
-                                        let imageURL = URL(string: result.images[2].url)
-                                        KFImage(imageURL)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 60, height: 60)
-
-                                        VStack(alignment: .leading) {
-                                            Text(result.title)
-                                                .lineLimit(2)
-                                                .font(.body.weight(.bold))
-                                            Text("\(result.artist) • \(result.FormattedDurationTime)")
-                                                .foregroundColor(.gray)
-                                        }
-
-                                        Spacer()
-
-                                        Image(systemName: "ellipsis")
-                                            .rotationEffect(Angle(degrees: 90))
-                                    }
-                                    .onTapGesture {
-                                        vm.selectedAudioTrack = result
-                                        isPresented.toggle()
-                                    }
-                                    .padding(.horizontal, 20)
-                                }
-                            }
-                        }
+                        searchResultsView()
                     }
-                    
+
                     Spacer()
                 }
                 .fullScreenCover(isPresented: $isPresented) {
@@ -102,6 +47,74 @@ struct SearchView: View {
         }
         .onDisappear {
             print("Search View deinit")
+        }
+    }
+
+    @ViewBuilder
+    func searchEntryView() -> some View {
+        VStack(alignment: .center) {
+            Text("No search results")
+        }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.black).onTapGesture {
+            hideKeyboard()
+        }
+    }
+
+    func searchSuggestionView() -> some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(vm.searchResults, id: \.uuid) { result in
+                    HStack(spacing: 20) {
+                        Image(systemName: "magnifyingglass")
+
+                        Text("\(result.artist) \(result.title)")
+                            .lineLimit(1)
+
+                        Spacer()
+
+                        Image(systemName: "arrow.up.left")
+                    }
+                    .padding(20)
+                    .background(Color.black)
+                    .onTapGesture {
+                        vm.search(keyword: "\(result.artist) \(result.title)", searchState: .suggestedClick)
+                        hideKeyboard()
+                    }
+                }
+            }
+        }
+    }
+
+    func searchResultsView() -> some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 16) {
+                ForEach(vm.searchResults, id: \.uuid) { result in
+                    HStack(spacing: 16) {
+                        let imageURL = URL(string: result.images[2].url)
+                        KFImage(imageURL)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 60, height: 60)
+
+                        VStack(alignment: .leading) {
+                            Text(result.title)
+                                .lineLimit(2)
+                                .font(.body.weight(.bold))
+                            Text("\(result.artist) • \(result.FormattedDurationTime)")
+                                .foregroundColor(.gray)
+                        }
+
+                        Spacer()
+
+                        Image(systemName: "ellipsis")
+                            .rotationEffect(Angle(degrees: 90))
+                    }
+                    .onTapGesture {
+                        vm.selectedAudioTrack = result
+                        isPresented.toggle()
+                    }
+                    .padding(.horizontal, 20)
+                }
+            }
         }
     }
 }
@@ -132,5 +145,4 @@ struct MusicPlayerView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         //
     }
-
 }

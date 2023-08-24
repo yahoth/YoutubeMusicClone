@@ -33,6 +33,7 @@ final class PlaylistDetailViewModel {
     }
 
     private func bind() {
+        // Output
         if tracks != nil {
             $tracks
                 .compactMap { $0 }

@@ -41,7 +41,9 @@ class MusicPlayerViewController: UIViewController {
     }
 
     private func bind() {
-        vm.item.receive(on: RunLoop.main)
+        // Output
+        vm.item
+            .receive(on: RunLoop.main)
             .compactMap { $0 }
             .sink { [weak self] item in
                 guard let self = self else { return }
