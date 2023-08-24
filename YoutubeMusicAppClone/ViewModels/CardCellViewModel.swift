@@ -23,4 +23,9 @@ final class CardCellViewModel {
     }
 
     let didSelectItem = PassthroughSubject<AudioTrack, Never>()
+
+    deinit {
+        print("CardCell VM deinit")
+    }
+
 }

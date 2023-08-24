@@ -15,7 +15,7 @@ class CardTrackListCell: UICollectionViewCell {
     @IBOutlet weak var subTitleLabel: UILabel!
 
     func configure(item: AudioTrack) {
-        thumbnailImageView.kf.setImage(with: URL(string: item.imageName))
+        thumbnailImageView.kf.setImage(with: URL(string: item.images[2].url))
         titleLabel.text = item.title
         subTitleLabel.text = item.artist
     }

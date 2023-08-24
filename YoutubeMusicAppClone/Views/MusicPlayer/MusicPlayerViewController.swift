@@ -37,16 +37,21 @@ class MusicPlayerViewController: UIViewController {
         bind()
         configurePlaybackSlider()
         setNavigationItem()
+//        noPreviewAlert()
     }
 
     private func bind() {
         vm.item.receive(on: RunLoop.main)
             .compactMap { $0 }
-            .sink { item in
+            .sink { [weak self] item in
+                guard let self = self else { return }
                 self.configure(item: item)
                 self.setupPlaybackSlider()
                 self.setupTimeObserver()
                 self.vm.play()
+                if item.previewURL == nil {
+                    self.showAlertForMissingPreview()
+                }
             }.store(in: &subscriptions)
 
         vm.$isPlaying
@@ -56,18 +61,27 @@ class MusicPlayerViewController: UIViewController {
             }.store(in: &subscriptions)
     }
 
+    private func showAlertForMissingPreview() {
+        let alert = UIAlertController(title: nil, message: "There is no preview for this song.", preferredStyle: .alert)
+        let yes = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(yes)
+        present(alert, animated: true)
+    }
+
     //MARK: - Configure View
     private func setNavigationItem() {
         let closeViewImage = UIImage(systemName: "chevron.down")
-        let closeViewConfig = CustomBarItemConfiguration(image: closeViewImage) {
-            self.dismiss(animated: true)
+        let closeViewConfig = CustomBarItemConfiguration(image: closeViewImage) { [weak self] in
+//            self?.vm.player = nil
+//            self?.vm.playerItem = nil
+            self?.dismiss(animated: true)
         }
         let closeViewItem = UIBarButtonItem.generate(config: closeViewConfig)
         navigationItem.leftBarButtonItems = [closeViewItem]
     }
 
     private func configure(item: AudioTrack) {
-        let imageURL = URL(string: item.imageName)
+        let imageURL = URL(string: item.images[0].url)
         thumbnailImageView.kf.setImage(with: imageURL)
         titleLabel.text = item.title
         artistLabel.text = item.artist
@@ -123,10 +137,14 @@ class MusicPlayerViewController: UIViewController {
     }
 
     func updateDurationTimeLabel() {
-        let durationTime = Int(CMTimeGetSeconds(vm.playerItem?.asset.duration ?? CMTime()))
-        let minutes = durationTime / 60
-        let seconds = durationTime % 60
-        durationLabel.text = String(format: "%02d:%02d", minutes, seconds)
+        if let duration = vm.playerItem?.asset.duration {
+            let durationTime = Int(CMTimeGetSeconds(duration))
+            let minutes = durationTime / 60
+            let seconds = durationTime % 60
+            durationLabel.text = String(format: "%02d:%02d", minutes, seconds)
+        } else {
+            durationLabel.text = "00:00"
+        }
     }
 
     func isValueValid(value: Float) -> Bool {
@@ -178,5 +196,6 @@ class MusicPlayerViewController: UIViewController {
 
     deinit {
         removeTimeObserver()
+        print("Music Player VC deinit")
     }
 }

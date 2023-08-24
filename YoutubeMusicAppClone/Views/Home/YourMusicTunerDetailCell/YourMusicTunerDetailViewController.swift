@@ -19,7 +19,7 @@ class YourMusicTunerDetailViewController: UIViewController {
     enum Section {
         case main
     }
-    var vm: YourMusicTunerDetailViewModel!
+    var vm = YourMusicTunerDetailViewModel()
     var subscriptions = Set<AnyCancellable>()
 
     override func viewDidLoad() {
@@ -45,17 +45,19 @@ class YourMusicTunerDetailViewController: UIViewController {
     private func setNavigationItem() {
         let titleConfig = CustomBarItemConfiguration(title: "아티스트 선택", handler: {print("아티스트 선택")})
         let titleItem = UIBarButtonItem.generate(config: titleConfig, fontSize: 20)
-        let dismissConfig = CustomBarItemConfiguration(image: UIImage(systemName: "xmark"), handler: {self.dismiss(animated: true)})
+        let dismissConfig = CustomBarItemConfiguration(image: UIImage(systemName: "xmark"), handler: { [weak self] in
+            self?.dismiss(animated: true)
+        })
         let dismissItem = UIBarButtonItem.generate(config: dismissConfig)
         navigationItem.leftBarButtonItems = [titleItem]
         navigationItem.rightBarButtonItems = [dismissItem]
     }
     
     private func bind() {
-        vm.artists
+        vm.$artists
             .receive(on: RunLoop.main)
-            .sink { artissts in
-                self.applySnapshot(to: .main, items: artissts)
+            .sink { [unowned self] artists in
+                self.applySnapshot(to: .main, items: artists)
             }.store(in: &subscriptions)
     }
 
@@ -98,5 +100,9 @@ class YourMusicTunerDetailViewController: UIViewController {
         section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: padding, trailing: padding)
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
+    }
+
+    deinit {
+        print("YMTD VC deinit")
     }
 }

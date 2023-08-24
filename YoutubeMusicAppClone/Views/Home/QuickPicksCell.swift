@@ -18,7 +18,7 @@ class QuickPicksCell: UICollectionViewCell {
     }
     
     func configure(item: AudioTrack) {
-        let url = URL(string: item.imageName)
+        let url = URL(string: item.images[1].url)
         thumbnailImageView.kf.setImage(with: url)
         titleLabel.text = item.title
         artistLabel.text = item.artist

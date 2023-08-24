@@ -36,8 +36,10 @@ final class APIManager {
     @Published var accessToken: String?
 
     // YourMusicTunerDetail
-    func fetchArtists(artists: PassthroughSubject<[RelatedArtistsResponse.Artists], Never>) {
-        guard let accessToken else { return print("access token is nil")}
+    func fetchArtists() -> AnyPublisher<[RelatedArtistsResponse.Artists], Error> {
+        guard let accessToken else {
+            return Fail(error: SpotifyError.invalidToken).eraseToAnyPublisher()
+        }
 
         let resource = Resource<RelatedArtistsResponse>(
             base: "https://api.spotify.com/",
@@ -46,20 +48,11 @@ final class APIManager {
             header: ["Authorization": accessToken]
         )
 
-        networkService.load(resource)
+        return networkService.load(resource)
             .compactMap { response in
                 response.artists
             }
-            .receive(on: RunLoop.main)
-            .sink { completion in
-                switch completion {
-                case .failure(let error):
-                    print("error: \(error)")
-                case .finished: break
-                }
-            } receiveValue: { items in
-                artists.send(items)
-            }.store(in: &subscriptions)
+            .eraseToAnyPublisher()
     }
 
     func search(keyword: String) -> AnyPublisher<[AudioTrack], Error>{
@@ -80,18 +73,17 @@ final class APIManager {
                 let tracks = searchResult.tracks.items.map { item in
 
                     let id = item.id
-                    let imageName = item.album.images[0].url
+                    let images = item.album.images
                     let title = item.name
                     let artist = item.album.artists[0].name
                     let previewURL = item.previewURL
                     let duration = item.duration
-                    let track = AudioTrack(id: id, imageName: imageName, title: title, artist: artist, previewURL: previewURL, duration: duration)
+                    let track = AudioTrack(id: id, images: images, title: title, artist: artist, previewURL: previewURL, duration: duration)
                     return track
                 }
                 return tracks
             }
             .eraseToAnyPublisher()
-
     }
 
     func requestAccessToken() {
@@ -116,7 +108,7 @@ final class APIManager {
             }.store(in: &subscriptions)
     }
 
-    // Fetch Playlist item: ListeAgain, QuickPicks
+    // Fetch Playlist item: ListeAgain, QuickPicks, PlaylistDetail(MixedForYou)
     func fetchPlaylistItem(playlistID: String, tracks: CurrentValueSubject<[AudioTrack], Never>){
         guard let accessToken else { return print("access token is nil")}
 
@@ -127,19 +119,19 @@ final class APIManager {
         let resource: Resource<PlaylistItemsResponse> = Resource(base: base, path: path, params: params, header: header)
 
         networkService.load(resource)
-            .map { tracks in
-                let tracks = tracks.items.map { item in
-                    let artist = item.track.album.artists[0].name
-                    let image = item.track.album.images[0]
-                    let title = item.track.name
-                    let id = item.track.id
-                    let preview = item.track.previewURL
-                    let duration = item.track.duration
-                    let track = AudioTrack(id: id, imageName: image.url, title: title, artist: artist, previewURL: preview, duration: duration)
+            .map { response -> [AudioTrack] in
+                return response.items.compactMap {
+                    guard let track = $0.track else { return nil }
+                    let artist = track.album.artists[0].name
+                    let images = track.album.images
+                    let title = track.name
+                    let id = track.id
+                    let preview = track.previewURL
+                    let duration = track.duration
 
-                    return track
+                    let audioTrack = AudioTrack(id: id, images: images, title: title, artist: artist, previewURL: preview, duration: duration)
+                    return audioTrack
                 }
-                return tracks
             }
             .receive(on: RunLoop.main)
             .sink { completion in
@@ -151,44 +143,6 @@ final class APIManager {
                 }
             } receiveValue: { items in
                 tracks.send(items)
-            }
-            .store(in: &subscriptions)
-    }
-    //Refresh 확인을 위한 메소드(임시)
-    func fetchPlaylistItemReverse(playlistID: String, tracks: CurrentValueSubject<[AudioTrack], Never>){
-        guard let accessToken else { return print("access token is nil")}
-
-        let base: String = "https://api.spotify.com"
-        let path: String = "/v1/playlists/\(playlistID)/tracks"
-        let params: [String: String] = [:]
-        let header: [String: String] = ["Authorization": accessToken]
-        let resource: Resource<PlaylistItemsResponse> = Resource(base: base, path: path, params: params, header: header)
-
-        networkService.load(resource)
-            .map { tracks in
-                let tracks = tracks.items.map { item in
-                    let artist = item.track.album.artists[0].name
-                    let image = item.track.album.images[0]
-                    let title = item.track.name
-                    let id = item.track.id
-                    let preview = item.track.previewURL
-                    let duration = item.track.duration
-                    let track = AudioTrack(id: id, imageName: image.url, title: title, artist: artist, previewURL: preview, duration: duration)
-
-                    return track
-                }
-                return tracks
-            }
-            .receive(on: RunLoop.main)
-            .sink { completion in
-                switch completion {
-                case .failure(let error):
-                    print("sink error: \(error)")
-                case .finished:
-                    break
-                }
-            } receiveValue: { items in
-                tracks.send(items.reversed())
             }
             .store(in: &subscriptions)
     }
@@ -247,14 +201,13 @@ final class APIManager {
                 let description = response.description
                 let tracks = response.tracks.items.map { item -> AudioTrack in
                     let id = item.track.id
-                    let imageName = item.track.album.images[0].url
+                    let images = item.track.album.images
                     let title = item.track.name
                     let artist = item.track.album.artists[0].name
-//                    let releaseDate = item.track.album.releaseDate
                     let previewURL = item.track.previewURL
                     let duration = item.track.duration
 
-                    let track = AudioTrack(id: id, imageName: imageName, title: title, artist: artist, previewURL: previewURL, duration: duration)
+                    let track = AudioTrack(id: id, images: images, title: title, artist: artist, previewURL: previewURL, duration: duration)
                     return track
                 }
                 let playlist = PlaylistCard(id: id, title: title, imageName: imageName, description: description, tracks: tracks)
@@ -271,6 +224,10 @@ final class APIManager {
                 playlist.send(items)
             }.store(in: &subscriptions)
     }
+    deinit {
+        print("APIManager deinit")
+    }
+
 }
 
 extension APIManager {
@@ -284,5 +241,6 @@ extension APIManager {
         }
         return value
     }
+
 }
 

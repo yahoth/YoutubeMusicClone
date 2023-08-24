@@ -32,26 +32,27 @@ class PlaylistDetailViewController: BaseViewController {
     }
 
     @IBAction func playButtonClicked(_ sender: Any) {
-        vm.musicStarted.send(vm.playlistTrack.value[0])
+        guard let audioTrack = vm.playlistTrack.value.first else { return }
+        vm.musicStarted.send(audioTrack)
     }
 
     private func bind() {
         vm.$playlistInfo
             .receive(on: RunLoop.main)
-            .sink { info in
+            .sink { [unowned self] info in
                 self.applySnapshot(to: .info, items: [info])
             }.store(in: &subscriptions)
 
         vm.playlistTrack
             .compactMap { $0 }
             .receive(on: RunLoop.main)
-            .sink { track in
+            .sink { [unowned self] track in
                 self.applySnapshot(to: .track, items: track)
             }.store(in: &subscriptions)
 
         vm.musicStarted
             .receive(on: RunLoop.main)
-            .sink { track in
+            .sink { [unowned self] track in
                 self.presentMusicPlayer(with: track, tracks: self.vm.playlistTrack.value)
             }
             .store(in: &subscriptions)
@@ -85,7 +86,7 @@ class PlaylistDetailViewController: BaseViewController {
     }
 
     private func configureCollectionView() {
-        datasource = UICollectionViewDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
+        datasource = UICollectionViewDiffableDataSource(collectionView: collectionView) { [unowned self] collectionView, indexPath, item in
             guard let section = Section(rawValue: indexPath.section) else { return nil }
             let cell = self.configureCell(section: section, item: item, collectionView: collectionView, indexPath: indexPath)
             return cell
@@ -102,7 +103,7 @@ class PlaylistDetailViewController: BaseViewController {
     }
 
     private func layout() -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { [unowned self] sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
             switch sectionIndex {
 
             case 0:
@@ -135,6 +136,10 @@ class PlaylistDetailViewController: BaseViewController {
             }
         }
         return layout
+    }
+
+    deinit {
+        print("PlaylistDetailVC deinit")
     }
 }
 

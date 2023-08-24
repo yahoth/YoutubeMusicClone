@@ -21,7 +21,7 @@ class PlaylistTrackCell: UICollectionViewCell {
     }
 
     func configure(item: AudioTrack) {
-        let imageURL = URL(string: item.imageName)
+        let imageURL = URL(string: item.images[2].url)
         thumbnailImageView.kf.setImage(with: imageURL)
         titleLabel.text = item.title
         subtitleLabel.text = item.artist

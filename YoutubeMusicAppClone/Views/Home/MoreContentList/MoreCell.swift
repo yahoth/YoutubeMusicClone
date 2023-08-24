@@ -21,7 +21,7 @@ class MoreCell: UICollectionViewCell {
     
     func configure(item: AnyHashable) {
         if let item = item as? AudioTrack {
-            let imageURL = URL(string: item.imageName)
+            let imageURL = URL(string: item.images[1].url)
             thumbnailImageView.kf.setImage(with: imageURL)
             titleLabel.text = item.title
             subTitleLabel.text = item.artist

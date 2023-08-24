@@ -12,7 +12,7 @@ struct PlaylistItemsResponse: Hashable, Decodable {
     let items: [Items]
 
     struct Items: Hashable, Decodable {
-        let track: Track
+        let track: Track?
     }
 
     struct Track: Hashable, Decodable {

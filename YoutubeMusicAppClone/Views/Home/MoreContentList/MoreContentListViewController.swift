@@ -96,7 +96,6 @@ class MoreContentListViewController: BaseViewController {
 
     deinit {
         print("MoreContentListViewController deinit")
-        subscriptions.forEach({ $0.cancel() })
     }
 }
 

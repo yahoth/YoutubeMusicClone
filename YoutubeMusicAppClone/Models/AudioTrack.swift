@@ -10,7 +10,7 @@ import Foundation
 struct AudioTrack: Hashable, Decodable {
     let id: String
     var uuid = UUID().uuidString
-    let imageName: String
+    let images: [SpotifyImage]
     let title: String
     let artist: String
     let previewURL: String?

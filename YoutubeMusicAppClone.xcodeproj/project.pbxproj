@@ -147,23 +147,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7605CEAE2A5EC0ED001206E8 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				7605CEAF2A5EC0FC001206E8 /* APIManager.swift */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
 		760D4DCF2A56DE1F00C6CC09 /* YourMusicTunerDetailCell */ = {
 			isa = PBXGroup;
 			children = (
 				76B1088C2A5FC35A00CA3B53 /* YourMusicTunerDetail.storyboard */,
 				760D4DD22A56DE4500C6CC09 /* YourMusicTunerDetailViewController.swift */,
 				760D4DD42A56DEBA00C6CC09 /* YourMusicTunerDetailCell.swift */,
-				7615E5082A56EAB0003975B6 /* YourMusicTunerDetailViewModel.swift */,
 			);
 			path = YourMusicTunerDetailCell;
+			sourceTree = "<group>";
+		};
+		760EF7892A8F87B7003C20BB /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				76E7DCE32A4C0CFD009503C3 /* HomeViewModel.swift */,
+				763786E22A877196008285F5 /* CardCellViewModel.swift */,
+				76734C3A2A65842F0070E9EC /* PlaylistDetailViewModel.swift */,
+				7615E50C2A57F53D003975B6 /* MoreContentListViewModel.swift */,
+				7615E5082A56EAB0003975B6 /* YourMusicTunerDetailViewModel.swift */,
+				76381B972A5BD32A003641AA /* MusicPlayerViewModel.swift */,
+				762CCD302A71600900543AA5 /* SearchViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		762C77672A42C730008692C2 = {
@@ -188,7 +193,7 @@
 				762C77752A42C730008692C2 /* SceneDelegate.swift */,
 				762C77732A42C730008692C2 /* AppDelegate.swift */,
 				76E7DCE92A4C48E4009503C3 /* Network */,
-				7605CEAE2A5EC0ED001206E8 /* Manager */,
+				760EF7892A8F87B7003C20BB /* ViewModels */,
 				76F3AC962A4476010015A6CC /* Views */,
 				762C77972A42DA7D008692C2 /* Models */,
 				7698AF552A45C0A900691292 /* Extensions */,
@@ -203,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				767F789F2A431B830006D60A /* Home.storyboard */,
-				76E7DCE32A4C0CFD009503C3 /* HomeViewModel.swift */,
 				762C77872A42D12B008692C2 /* HomeViewController.swift */,
 				76F3AC942A4475740015A6CC /* HomeNavigationController.swift */,
 				762C77922A42D396008692C2 /* HomeHeader.swift */,
@@ -214,7 +218,7 @@
 				763786E42A877202008285F5 /* CardCell */,
 				7698AF512A459BED00691292 /* CustomBarItem.swift */,
 				76734C332A656D9C0070E9EC /* PlaylistDetail */,
-				762C779C2A42EF1A008692C2 /* Detail */,
+				762C779C2A42EF1A008692C2 /* MoreContentList */,
 				760D4DCF2A56DE1F00C6CC09 /* YourMusicTunerDetailCell */,
 			);
 			path = Home;
@@ -251,21 +255,19 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		762C779C2A42EF1A008692C2 /* Detail */ = {
+		762C779C2A42EF1A008692C2 /* MoreContentList */ = {
 			isa = PBXGroup;
 			children = (
 				762C77982A42EE7E008692C2 /* MoreContentList.storyboard */,
-				7615E50C2A57F53D003975B6 /* MoreContentListViewModel.swift */,
 				762C779A2A42EE93008692C2 /* MoreContentListViewController.swift */,
 				7615E50A2A57EE4A003975B6 /* MoreCell.swift */,
 			);
-			path = Detail;
+			path = MoreContentList;
 			sourceTree = "<group>";
 		};
 		763786E42A877202008285F5 /* CardCell */ = {
 			isa = PBXGroup;
 			children = (
-				763786E22A877196008285F5 /* CardCellViewModel.swift */,
 				769B506A2A4AB2F8008DFE78 /* CardCell.swift */,
 				763786E02A863E9B008285F5 /* CardTrackListCell.swift */,
 			);
@@ -275,7 +277,6 @@
 		763D29F72A52C80000D80936 /* SearchSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				762CCD302A71600900543AA5 /* SearchViewModel.swift */,
 				762CCD2F2A71600900543AA5 /* SearchView.swift */,
 				762CCD2E2A71600900543AA5 /* SearchBar.swift */,
 			);
@@ -286,7 +287,6 @@
 			isa = PBXGroup;
 			children = (
 				76734C342A656DAB0070E9EC /* PlaylistDetail.storyboard */,
-				76734C3A2A65842F0070E9EC /* PlaylistDetailViewModel.swift */,
 				76734C312A656D9A0070E9EC /* PlaylistDetailViewController.swift */,
 				76734C362A6574DB0070E9EC /* PlaylistInfoCell.swift */,
 				76734C382A6574F30070E9EC /* PlaylistTrackCell.swift */,
@@ -320,7 +320,6 @@
 			isa = PBXGroup;
 			children = (
 				76C188DC2A58038F00173A9E /* MusicPlayer.storyboard */,
-				76381B972A5BD32A003641AA /* MusicPlayerViewModel.swift */,
 				76C188D92A58033500173A9E /* MusicPlayerViewController.swift */,
 				7605CEAC2A5C05F9001206E8 /* CustomRoundButton.swift */,
 			);
@@ -332,6 +331,7 @@
 			children = (
 				76E7DCEA2A4C490D009503C3 /* NetworkService.swift */,
 				76E7DCEC2A4C492A009503C3 /* Resource.swift */,
+				7605CEAF2A5EC0FC001206E8 /* APIManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";

@@ -20,7 +20,7 @@ final class PlaylistDetailViewModel {
 
     let musicStarted = PassthroughSubject<AudioTrack, Never>()
 
-    var tracks: [AudioTrack]?
+    @Published var tracks: [AudioTrack]?
 
     init(playlistInfo: PlaylistInfo, tracks: [AudioTrack]? = nil) {
         self.playlistInfo = playlistInfo
@@ -28,13 +28,22 @@ final class PlaylistDetailViewModel {
         bind()
     }
 
+    deinit {
+        print("PlaylistDetail VM deinit")
+    }
+
     private func bind() {
-        if let tracks {
-            playlistTrack.send(tracks)
+        if tracks != nil {
+            $tracks
+                .compactMap { $0 }
+                .receive(on: RunLoop.main)
+                .sink { [unowned self] tracks in
+                    self.playlistTrack.send(tracks)
+                }.store(in: &subscriptions)
         } else {
             $playlistInfo
                 .receive(on: RunLoop.main)
-                .sink { info in
+                .sink { [unowned self] info in
                     self.apiManager.fetchPlaylistItem(playlistID: info.id, tracks: self.playlistTrack)
                 }.store(in: &subscriptions)
         }

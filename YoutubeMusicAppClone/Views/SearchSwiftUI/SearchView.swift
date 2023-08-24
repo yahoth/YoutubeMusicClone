@@ -38,7 +38,6 @@ struct SearchView: View {
 
                                         Text("\(result.artist) \(result.title)")
                                             .lineLimit(1)
-//                                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
                                         Spacer()
 
@@ -58,7 +57,7 @@ struct SearchView: View {
                             VStack(alignment: .leading, spacing: 16) {
                                 ForEach(vm.searchResults, id: \.uuid) { result in
                                     HStack(spacing: 16) {
-                                        let imageURL = URL(string: result.imageName)
+                                        let imageURL = URL(string: result.images[2].url)
                                         KFImage(imageURL)
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
@@ -95,14 +94,14 @@ struct SearchView: View {
                         MusicPlayerView(vm: playerViewModel)
                     }
                     .onAppear {
-                        vm.$selectedAudioTrack.receive(on: RunLoop.main)
-                            .sink { audioTrack in
-                                playerViewModel.item.send(audioTrack)
-                                playerViewModel.currentPlayingTracks.send(self.vm.searchResults)
-                            }.store(in: &subscriptions)
+                        playerViewModel.item.send(vm.selectedAudioTrack)
+                        playerViewModel.currentPlayingTracks.send(vm.searchResults)
                     }
                 }
             }.navigationBarHidden(true)
+        }
+        .onDisappear {
+            print("Search View deinit")
         }
     }
 }
@@ -118,10 +117,14 @@ struct MusicPlayerView: UIViewControllerRepresentable {
     typealias UIViewControllerType = UINavigationController
     var vm: MusicPlayerViewModel
 
+    init(vm: MusicPlayerViewModel) {
+        self.vm = vm
+    }
+
     func makeUIViewController(context: Context) -> UIViewControllerType {
         let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
-        vc.vm = self.vm
+        vc.vm = vm
         let navigationController = UINavigationController(rootViewController: vc)
         return navigationController
     }

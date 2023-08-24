@@ -211,14 +211,13 @@ class HomeViewController: BaseViewController {
 
         vm.didSelectItem
             .receive(on: RunLoop.main)
-            .sink { (section, item, tracks) in
+            .sink { [unowned self] (section, item, tracks) in
                 switch section {
                 case .listenAgain, .quickPicks:
                     self.presentMusicPlayer(with: item, tracks: tracks)
                 case .yourMusicTuner:
                     let sb = UIStoryboard(name: "YourMusicTunerDetail", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "YourMusicTunerDetailViewController") as! YourMusicTunerDetailViewController
-                    vc.vm = YourMusicTunerDetailViewModel()
                     let navController = UINavigationController(rootViewController: vc)
                     navController.modalPresentationStyle = .fullScreen
                     self.present(navController, animated: true)
@@ -252,9 +251,9 @@ class HomeViewController: BaseViewController {
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
             let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
 
-            switch sectionIndex {
+            switch HomeViewSection(rawValue: sectionIndex) {
 
-            case 0:
+            case .listenAgain:
                 let itemWidth = (self.collectionView.bounds.size.width - (2 * padding) - (2 * interGroupSpacing)) / 3
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(150))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -268,7 +267,7 @@ class HomeViewController: BaseViewController {
                 
                 return section
                 
-            case 1:
+            case .quickPicks:
                 let itemWidth: CGFloat = self.collectionView.bounds.size.width - (padding * 2)
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(100))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -282,7 +281,7 @@ class HomeViewController: BaseViewController {
                 section.boundarySupplementaryItems = [header]
                 return section
 
-            case 2:
+            case .yourMusicTuner:
                 let sectionWidth = self.collectionView.bounds.size.width - (2 * padding)
                 let sectionHeight = sectionWidth / 2
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(sectionWidth), heightDimension: .absolute(sectionHeight))
@@ -294,7 +293,7 @@ class HomeViewController: BaseViewController {
                 section.boundarySupplementaryItems = [header]
                 return section
 
-            case 3:
+            case .mixedForYou:
                 let interItemSpacing: CGFloat = 16
                 let groupWidth = self.collectionView.bounds.size.width - padding * 2
                 let itemWidth = (groupWidth - interItemSpacing) / 2
@@ -310,7 +309,7 @@ class HomeViewController: BaseViewController {
                 section.boundarySupplementaryItems = [header]
                 return section
                 
-            case 4:
+            case .playlistCard:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(520))

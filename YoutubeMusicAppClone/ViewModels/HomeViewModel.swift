@@ -39,5 +39,10 @@ final class HomeViewModel {
     func refresh() {
         apiManager.requestAccessToken()
     }
+
+    deinit {
+        print("Home VM deinit")
+    }
+
 }
 

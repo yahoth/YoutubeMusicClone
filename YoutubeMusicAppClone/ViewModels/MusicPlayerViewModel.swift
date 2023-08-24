@@ -32,7 +32,8 @@ final class MusicPlayerViewModel {
     private func bind() {
         //fetch player
         item.receive(on: RunLoop.main)
-            .sink { item in
+            .sink { [weak self] item in
+                guard let self = self else { return }
                 guard let previewStr = item?.previewURL else {
                     return self.player = AVPlayer()
                 }
@@ -94,6 +95,7 @@ final class MusicPlayerViewModel {
     }
 
     deinit {
-        endOfSongSubscription?.cancel()
+        print("Music Player VM deinit")
+//        endOfSongSubscription?.cancel()
     }
 }

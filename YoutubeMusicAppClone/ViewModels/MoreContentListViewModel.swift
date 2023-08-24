@@ -12,8 +12,6 @@ final class MoreContentListViewModel {
     
     @Published var items: [AnyHashable] = []
 
-    let apiManager: APIManager = APIManager.shared
-
     init(with items: [AnyHashable]) {
         self.items = items
     }

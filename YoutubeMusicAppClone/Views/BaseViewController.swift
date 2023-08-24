@@ -18,8 +18,8 @@ class BaseViewController: UIViewController {
         let sb = UIStoryboard(name: "MusicPlayer", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "MusicPlayerViewController") as! MusicPlayerViewController
         vc.vm = MusicPlayerViewModel.shared
-        vc.vm.currentPlayingTracks.send(tracks)
-        vc.vm.item.send(audioTrack)
+        vc.vm?.currentPlayingTracks.send(tracks)
+        vc.vm?.item.send(audioTrack)
         let navController = UINavigationController(rootViewController: vc)
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
