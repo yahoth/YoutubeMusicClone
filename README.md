@@ -31,3 +31,11 @@
 
 
 # 구동방법
+1. 이 프로젝트를 설치하세요
+2. 개발자용 Spotify 웹사이트 에서 Spotify 계정을 생성/로그인하세요 . https://developer.spotify.com/
+3. DashBoardf로 가서 Create app을 선택하세요
+4. 원하는 이름과 설명을 입력하고 대시보드에서 방금 만든 앱을 선택하세요
+5. Setting을 선택하고 Basic Information에서 ClientID와 ClientSecret을 복사합니다
+6. 프로젝트에 있는 **UserSensitiveData.swift** (./YoutubeMusicAppClone/UserSensitiveData)을 엽니다.
+7. 해당 파일에 있는 변수에 값을 할당하면 준비가 완료됩니다
+
