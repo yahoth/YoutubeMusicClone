@@ -14,7 +14,7 @@ enum HomeViewSection: Int, CaseIterable, Hashable {
     case quickPicks
     case yourMusicTuner
     case mixedForYou
-    case playlistCard₩
+    case playlistCard
 }
 
 class HomeViewController: BaseViewController {
