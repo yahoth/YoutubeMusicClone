@@ -23,13 +23,13 @@ final class APIManager {
         requestAccessToken()
     }
 
-    private var clientID: String {
-      return infoPlistValue(forKey: "ClientID")
-    }
+//    private var clientID: String {
+//      return infoPlistValue(forKey: "ClientID")
+//    }
 
-    private var clientSecret: String {
-      return infoPlistValue(forKey: "ClientSecret")
-    }
+//    private var clientSecret: String {
+//      return infoPlistValue(forKey: "ClientSecret")
+//    }
 
     var subscriptions = Set<AnyCancellable>()
 
@@ -91,8 +91,7 @@ final class APIManager {
         let path: String = "/api/token"
         let params: [String: String] = [:]
         let header: [String: String] = ["Content-Type": "application/x-www-form-urlencoded"]
-        let httpMethod = "POST"
-        let request = Resource<SpotifyAccessToken>(base: base, path: path, params: params, header: header, httpMethod: httpMethod, clientID: clientID, clientSecret: clientSecret)
+        let request = Resource<SpotifyAccessToken>(base: base, path: path, params: params, header: header, httpMethod: "POST", clientID: clientID, clientSecret: clientSecret)
 
         networkService.load(request)
             .receive(on: RunLoop.main)
@@ -231,16 +230,16 @@ final class APIManager {
 }
 
 extension APIManager {
-    private func infoPlistValue(forKey: String) -> String {
-        guard let filePath = Bundle.main.path(forResource: "Info", ofType: "plist") else {
-          fatalError("Couldn't find file 'Info.plist'.")
-        }
-        let plist = NSDictionary(contentsOfFile: filePath)
-        guard let value = plist?.object(forKey: forKey) as? String else {
-          fatalError("Couldn't find key '\(forKey)' in 'Info.plist'.")
-        }
-        return value
-    }
+//    private func infoPlistValue(forKey: String) -> String {
+//        guard let filePath = Bundle.main.path(forResource: "Info", ofType: "plist") else {
+//          fatalError("Couldn't find file 'Info.plist'.")
+//        }
+//        let plist = NSDictionary(contentsOfFile: filePath)
+//        guard let value = plist?.object(forKey: forKey) as? String else {
+//          fatalError("Couldn't find key '\(forKey)' in 'Info.plist'.")
+//        }
+//        return value
+//    }
 
 }
 

@@ -45,9 +45,6 @@ struct SearchView: View {
                 }
             }.navigationBarHidden(true)
         }
-        .onDisappear {
-            print("Search View deinit")
-        }
     }
 
     @ViewBuilder

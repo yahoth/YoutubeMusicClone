@@ -26,8 +26,9 @@ final class HomeViewModel {
     var subscriptions = Set<AnyCancellable>()
 
     func fetch() {
-        apiManager.$accessToken.receive(on: RunLoop.main)
+        apiManager.$accessToken
             .compactMap { $0 }
+            .receive(on: RunLoop.main)
             .sink { token in
                 self.apiManager.fetchPlaylistItem(playlistID: "37i9dQZF1DX3ZeFHRhhi7Y", tracks: self.listenAgain) // ListenAgain
                 self.apiManager.fetchPlaylistItem(playlistID: "0HqwnwTY7L4IYeg5iOcMsP", tracks: self.quickPicks) // QuickPicks

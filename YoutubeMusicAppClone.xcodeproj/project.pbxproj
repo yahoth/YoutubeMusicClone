@@ -64,6 +64,7 @@
 		76E7DCEB2A4C490D009503C3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E7DCEA2A4C490D009503C3 /* NetworkService.swift */; };
 		76E7DCED2A4C492A009503C3 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E7DCEC2A4C492A009503C3 /* Resource.swift */; };
 		76E7DCF32A4C5112009503C3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 76E7DCF22A4C5112009503C3 /* Kingfisher */; };
+		76F1A0B02A98B377009897CA /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F1A0AF2A98B377009897CA /* UserData.swift */; };
 		76F3AC8F2A444B1B0015A6CC /* YourMusicTunerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F3AC8E2A444B1B0015A6CC /* YourMusicTunerCell.swift */; };
 		76F3AC932A4463B80015A6CC /* MyStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F3AC922A4463B80015A6CC /* MyStation.swift */; };
 		76F3AC952A4475740015A6CC /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F3AC942A4475740015A6CC /* HomeNavigationController.swift */; };
@@ -129,6 +130,7 @@
 		76E7DCE52A4C4652009503C3 /* SpotifyImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyImage.swift; sourceTree = "<group>"; };
 		76E7DCEA2A4C490D009503C3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		76E7DCEC2A4C492A009503C3 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		76F1A0AF2A98B377009897CA /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		76F3AC8E2A444B1B0015A6CC /* YourMusicTunerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourMusicTunerCell.swift; sourceTree = "<group>"; };
 		76F3AC922A4463B80015A6CC /* MyStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStation.swift; sourceTree = "<group>"; };
 		76F3AC942A4475740015A6CC /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
@@ -193,13 +195,14 @@
 				762C77752A42C730008692C2 /* SceneDelegate.swift */,
 				762C77732A42C730008692C2 /* AppDelegate.swift */,
 				76E7DCE92A4C48E4009503C3 /* Network */,
-				760EF7892A8F87B7003C20BB /* ViewModels */,
-				76F3AC962A4476010015A6CC /* Views */,
 				762C77972A42DA7D008692C2 /* Models */,
+				76F3AC962A4476010015A6CC /* Views */,
+				760EF7892A8F87B7003C20BB /* ViewModels */,
 				7698AF552A45C0A900691292 /* Extensions */,
 				762C777C2A42C730008692C2 /* Assets.xcassets */,
 				762C777E2A42C730008692C2 /* LaunchScreen.storyboard */,
 				762C77812A42C730008692C2 /* Info.plist */,
+				76F1A0AF2A98B377009897CA /* UserData.swift */,
 			);
 			path = YoutubeMusicAppClone;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				7674ACC22A4AF998000B9FFA /* MixedForYouCell.swift in Sources */,
 				762C778A2A42D15C008692C2 /* ExploreViewController.swift in Sources */,
 				762C77932A42D396008692C2 /* HomeHeader.swift in Sources */,
+				76F1A0B02A98B377009897CA /* UserData.swift in Sources */,
 				7615E5092A56EAB0003975B6 /* YourMusicTunerDetailViewModel.swift in Sources */,
 				76734C392A6574F30070E9EC /* PlaylistTrackCell.swift in Sources */,
 				76E7DCED2A4C492A009503C3 /* Resource.swift in Sources */,

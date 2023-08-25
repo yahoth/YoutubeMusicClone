@@ -65,8 +65,8 @@ class HomeViewController: BaseViewController {
         let searchConfig = CustomBarItemConfiguration(image: UIImage(systemName: "magnifyingglass")) {
             print("search")
             let vm = SearchViewModel()
-            let searchView = SearchView(vm: vm) {
-                self.dismiss(animated: true)
+            let searchView = SearchView(vm: vm) { [weak self] in
+                self?.dismiss(animated: true)
             }
             let vc = UIHostingController(rootView: searchView)
             vc.modalPresentationStyle = .fullScreen
@@ -87,18 +87,18 @@ class HomeViewController: BaseViewController {
     }
     
     private func configureCollectionView() {
-        datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
+        datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
             guard let section = Section(rawValue: indexPath.section) else { return nil }
             
-            let cell = self.configureCell(section: section, item: item, collectionView: collectionView, indexPath: indexPath)
+            let cell = self?.configureCell(section: section, item: item, collectionView: collectionView, indexPath: indexPath)
             
             return cell
         })
         
-        datasource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+        datasource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) in
             guard let section = Section(rawValue: indexPath.section) else { return nil }
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HomeHeader", for: indexPath) as? HomeHeader else { return nil }
-            header.vm = self.vm
+            header.vm = self?.vm
             header.sectionIndex = section.rawValue
             header.configure()
             
@@ -179,32 +179,32 @@ class HomeViewController: BaseViewController {
         // Output
         vm.listenAgain
             .receive(on: RunLoop.main)
-            .sink { items in
+            .sink { [unowned self] items in
                 self.applySnapshot(to: .listenAgain, items: Array(items.prefix(20)))
             }.store(in: &subscriptions)
         
         vm.quickPicks
             .receive(on: RunLoop.main)
-            .sink { items in
+            .sink { [unowned self] items in
                 self.applySnapshot(to: .quickPicks, items: Array(items.prefix(20)))
             }.store(in: &subscriptions)
 
         vm.mixedForYou
             .receive(on: RunLoop.main)
-            .sink { items in
+            .sink { [unowned self] items in
                 self.applySnapshot(to: .mixedForYou, items: Array(items.prefix(20)))
             }.store(in: &subscriptions)
         
         vm.playlistCard
             .receive(on: RunLoop.main)
-            .sink { item in
+            .sink { [unowned self] item in
                 self.applySnapshot(to: .playlistCard, items: [item])
             }.store(in: &subscriptions)
 
         // Input Action
         vm.moreButtonTapped
             .receive(on: RunLoop.main)
-            .sink { sectionIndex in
+            .sink { [unowned self] sectionIndex in
                 let sb = UIStoryboard(name: "MoreContentList", bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: "MoreContentListViewController") as! MoreContentListViewController
                 vc.vm = MoreContentListViewModel(with: sectionIndex == 0 ? self.vm.listenAgain.value : self.vm.mixedForYou.value)
@@ -234,10 +234,10 @@ class HomeViewController: BaseViewController {
         let sb = UIStoryboard(name: "PlaylistDetail", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "PlaylistDetailViewController") as! PlaylistDetailViewController
         if section == .mixedForYou {
-            guard let item = item as? PlaylistInfo else {return}
+            guard let item = item as? PlaylistInfo else { return }
             vc.vm = PlaylistDetailViewModel(playlistInfo: item)
         } else {
-            guard let item = item as? PlaylistCard else {return}
+            guard let item = item as? PlaylistCard else { return }
             let info = PlaylistInfo(id: item.id, description: item.description, imageName: item.imageName, title: item.title)
             vc.vm = PlaylistDetailViewModel(playlistInfo: info, tracks: item.tracks)
         }
